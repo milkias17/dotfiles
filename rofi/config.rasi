@@ -1,0 +1,11 @@
+configuration {
+	font: "Inter Regular 12";
+	show-icons: true;
+	terminal: "kitty -1";
+	icon-theme: "Tela Blue Dark";
+	theme: "/home/mike/.config/rofi/themes/nord.rasi";
+    modi: "window,run,drun,windowcd";
+    window-thumbnail: true;
+    lines: 8;
+}
+@import "~/.config/rofi/themes/nord.rasi"

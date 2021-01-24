@@ -1,0 +1,12 @@
+configuration {
+	font: "Iosevka Nerd Font 12";
+    modi: "run,drun";
+    show-icons: true;
+	terminal: "kitty -1";
+	lines: 1;
+	columns: 5;
+}
+
+element-icon {
+	size: 30;
+}
