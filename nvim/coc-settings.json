@@ -1,0 +1,46 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": ["css", "java", "html", "markdown"],
+
+    // explorer
+    "explorer.width": 30,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.previewAction.onHover": false,
+    "explorer.keyMappings.global": {
+        "<cr>": ["expandable?", "expand", "open"],
+        "v": "open:vsplit"
+  },
+  "coc.preferences.extensionUpdateCheck": "weekly",
+
+  // Python
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+
+  // C
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": [
+        "c",
+        "cpp",
+        "objc",
+        "objcc"
+      ],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  },
+
+  // other
+  "project.enable": true
+
+}
