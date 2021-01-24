@@ -358,7 +358,6 @@ groups.append(ScratchPad("scratchpad", [
             y = 0.2,
             width = 0.6,
             height = 0.7)
-    # DropDown("term", terminal, on_focus_lost_hide=True, height=0.4)
 ]))
 keys.extend([
     Key('M-<minus>', lazy.group['scratchpad'].dropdown_toggle('term')),
@@ -368,30 +367,6 @@ follow_mouse_focus = True
 bring_front_click = True
 cursor_warp = False
 
-# Stable Version
-# floating_layout = layout.Floating(float_rules=[
-    # {'wmclass': 'confirm'},
-    # {'wmclass': 'dialog'},
-    # {'wmclass': 'download'},
-    # {'wmclass': 'error'},
-    # {'wmclass': 'file_progress'},
-    # {'wmclass': 'notification'},
-    # {'wmclass': 'splash'},
-    # {'wmclass': 'toolbar'},
-    # {'wmclass': 'confirmreset'},  # gitk
-    # {'wmclass': 'makebranch'},  # gitk
-    # {'wmclass': 'maketag'},  # gitk
-    # {'wname': 'branchdialog'},  # gitk
-    # {'wname': 'pinentry'},  # GPG key password entry
-    # {'wmclass': 'ssh-askpass'},  # ssh-askpass
-    # {'wmclass': 'Gnome-calculator'},
-    # {'wmclass': 'usbmaker'}
-    # ],
-    # border_focus = colors['background'],
-    # border_normal = colors['background'],
-    # border_width = 1)
-
-# Git Version
 floating_layout = layout.Floating(float_rules= [
     Match(title='Quit and close tabs?'),
     Match(wm_type='utility'),
