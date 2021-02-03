@@ -16,7 +16,7 @@ import colorschemes
 
 mod = "mod4"
 terminal = "kitty -1"
-browser = "firefox"
+browser = "brave"
 fm = "thunar"
 home = os.path.expanduser("~")
 
