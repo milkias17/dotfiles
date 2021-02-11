@@ -1,6 +1,7 @@
 import os
+from libqtile.command.client import InteractiveCommandClient
 import subprocess
-from libqtile import layout, bar, widget, hook
+from libqtile import layout, bar, widget, hook, qtile
 from libqtile.config import(
     EzKey as Key,
     EzDrag as Drag,
@@ -19,12 +20,13 @@ terminal = "kitty -1"
 browser = "brave"
 fm = "thunar"
 home = os.path.expanduser("~")
+config_home = f'{home}/.config'
 
 # Call Autostart script
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser("~/.config/qtile/autostart.sh")
-    subprocess.call([home])
+    startup_file = f'{config_home}/qtile/autostart.sh'
+    subprocess.call([startup_file])
 
 @hook.subscribe.client_new
 def modify_window(client):
@@ -35,7 +37,37 @@ def modify_window(client):
             targetgroup = client.qtile.groups_map[group.name]
             targetgroup.cmd_toscreen(toggle=False)
             break
+
+# Center floating windows
+# @hook.subscribe.float_change
+def center_window():
+    client = qtile.current_window
+    if not client.floating:
+        return
+    if client.inspect()['wm_class'] == ('xterm', 'XTerm'):
+        return
+
+    screen_rect = qtile.current_screen.get_rect()
+
+    center_x = screen_rect.x + screen_rect.width / 2
+    center_y = screen_rect.y + screen_rect.height / 2
+
+    x = center_x - client.width / 2
+    y = center_y - client.height / 2
+        
+    # don't go off the right...
+    x = min(x, screen_rect.x + screen_rect.width - client.width)
+    # or left...
+    x = max(x, screen_rect.x)
+    # or bottom...
+    y = min(y, screen_rect.y + screen_rect.height - client.height)
+    # or top
+    y = max(y, screen_rect.y)
     
+    client.x = int(round(x))
+    client.y = int(round(y))
+    qtile.current_group.layout_all()
+
 keybinds = {
     # Change focus in stack
     'M-k' : lazy.layout.up(),
@@ -61,13 +93,14 @@ keybinds = {
     'M-b' : lazy.spawn(browser),
     'M-d' : lazy.spawn("rofi -show drun"),
     'M-S-f' : lazy.spawn(fm),
-    'M-<F1>' : lazy.spawn(f'{home}/.config/rofi/scripts/config-files'),
-    'M-<F2>' : lazy.spawn(f"{home}/.config/rofi/scripts/font-preview"),
+    'M-<F1>' : lazy.spawn(f'{config_home}/rofi/scripts/config-files'),
+    'M-<F2>' : lazy.spawn(f"{config_home}/rofi/scripts/font-preview"),
     'M-S-c' : lazy.spawn('gnome-calculator'),
     'M-S-x' : lazy.spawn('xkill'),
+    '<Print>': lazy.spawn('flameshot gui'),
 
     # Reload Qtile and Powermenu
-    'M-S-e' : lazy.spawn(f'{home}/.config/rofi/scripts/powermenu'),
+    'M-S-e' : lazy.spawn(f'{config_home}/rofi/scripts/powermenu'),
     'M-S-r' : lazy.restart(),
     'M-S-q' : lazy.shutdown(),
     'M-C-l' : lazy.spawn(f'betterlockscreen -l'),
@@ -75,7 +108,6 @@ keybinds = {
     # Layout operations
     'M-<Tab>' : lazy.next_layout(),
     'M-S-<Tab>' : lazy.prev_layout(),
-    'M-C-<Return>' : lazy.layout.toggle_split(),
     'M-<space>' : lazy.layout.flip(),
 
     # Window operations
@@ -149,13 +181,14 @@ screens = [
                     foreground = colors['foreground'],
                     volume_app = 'pavucontrol',
                     volume_up_command = f"{home}/bin/i3-volume -i 10 -lny -x 500",
-                    volume_down_command = f"{home}/bin/i3-volume -d 10 -lny -x 500"
+                    volume_down_command = f"{home}/bin/i3-volume -d 10 -lny -x 500",
+                    mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('pavucontrol')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
                     background = colors['blue'],
-                    foreground = colors['background'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -164,12 +197,13 @@ screens = [
                     padding = 2,
                     font = fonts[0],
                     text = "",
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
                     fontsize = 20
                 ),
                 widget.CheckUpdates(
-                    background = colors['background'],
+                    background = colors['magenta'],
+                    fonts = fonts[1],
                     foreground = colors['foreground'],
                     colour_have_updates = colors['foreground'],
                     colour_no_updates = colors['foreground'],
@@ -178,7 +212,7 @@ screens = [
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['blue'],
                     padding = 0,
                     font = fonts[0],
@@ -192,7 +226,7 @@ screens = [
                     width = 20,
                     text = '',
                     background = colors['blue'],
-                    foreground = colors['background'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -202,20 +236,21 @@ screens = [
                     font = fonts[0],
                     fontsize = 20,
                     text = "",
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['foreground']
                 ),
                 widget.CPU(
                     format = '{load_percent}%',
                     font = fonts[1],
                     fontsize = 12,
-                    background = colors['background'],
-                    foreground = colors['foreground']
+                    background = colors['magenta'],
+                    foreground = colors['foreground'],
+                    mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('xfce4-taskmanager')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['blue'],
                     padding = 0,
                     font = fonts[0],
@@ -235,34 +270,36 @@ screens = [
                     font = fonts[1],
                     fontsize = 12,
                     format = '{MemUsed}M',
+                    mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('xfce4-taskmanager')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
                     background = colors['blue'],
-                    foreground = colors['background'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
                    ),
                 widget.TextBox(
                     padding = 0,
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
                     text = "",
                     fontsize = 20,
                     font = fonts[0],
                 ),
                 widget.Clock(
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
                     format = "%A, %B %d  [ %I:%M %p ]",
-                    font = fonts[1]
+                    font = fonts[1],
+                    mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('gsimplecal')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['background'],
+                    background = colors['magenta'],
                     foreground = colors['blue'],
                     padding = 0,
                     font = fonts[0],
@@ -274,27 +311,25 @@ screens = [
                 ),
             ],
             25,
-            background = colors['background'],
-            opacity = 0.87,
-            margin = [0, -4, 0, -4]
+            background = colors['background']
         )
     )
 ]
 
 layout_theme = dict(
-    border_width = 0,
+    border_width = 2,
     margin = 6,
-    border_focus = colors['background'],
+    border_focus = colors['foreground'],
     border_normal = colors['background'],
     single_margin = 0,
-    single_border = 0
+    single_border_width = 0
 )
 
 layouts = [
     layout.MonadTall(**layout_theme),
     layout.Max(),
     layout.Floating(border_normal = colors['background'],
-                    border_focus = colors['background'],
+                    border_focus = colors['foreground'],
                     border_width = 1)
 ]
 
@@ -310,14 +345,14 @@ mouse = [
 
 
 group_names = [str(i) for i in range(1, 10)]
-group_labels = ["", "", "", "", "漣", "", "", "", ""]
+group_labels = ["", "", "", "", "", "", "", "", ""]
 group_matches = ["Brave-browser|firefox",
+                 "",
                  "Eclipse|code-oss",
                  "Thunar",
                  "Kodi",
-    "Lxappearance|Kvantum Manager|Nitrogen|Pavucontrol|me-guoyunhe-fontweak-MainWindow|Grub-customizer",
-    "TelegramDesktop|discord|Hexchat",
-                 "qBittorrent|xdman-Main",
+                 "TelegramDesktop|discord|Hexchat",
+                 "qBittorrent",
                  "Com.github.needleandthread.vocal|Audacious",
                  ""]
 groups = list()
@@ -326,20 +361,15 @@ for i in range(len(group_names)):
     if not group_matches[i]:
         tmp = Group(group_names[i], label=group_labels[i])
     else:
-        matche_names = group_matches[i].split("|")
+        match_names = group_matches[i].split("|")
         matches = list()
-        for match in matche_names:
+        for match in match_names:
             matches.append(Match(wm_class=match))
         tmp = Group(group_names[i], label=group_labels[i], matches=matches)
 
     groups.append(tmp)
 
 keys = [Key(k, v) for k, v in keybinds.items()]
-
-# Screenshot keybind
-keys.append(Key('<Print>', 
-                lazy.spawn(f'scrot {home}/Pictures/Screenshots/%Y-%m-%d-%T-scrot.png'),
-                lazy.spawn("dunstify 'Screenshot Taken!'")))
 
 for i in groups:
     if i.name == 'scratchpad':
@@ -358,6 +388,7 @@ groups.append(ScratchPad("scratchpad", [
             y = 0.2,
             width = 0.6,
             height = 0.7)
+    # DropDown("term", terminal, on_focus_lost_hide=True, height=0.4)
 ]))
 keys.extend([
     Key('M-<minus>', lazy.group['scratchpad'].dropdown_toggle('term')),
@@ -367,6 +398,35 @@ follow_mouse_focus = True
 bring_front_click = True
 cursor_warp = False
 
+# Stable Version
+# floating_layout = layout.Floating(float_rules=[
+    # {'wmclass': 'confirm'},
+    # {'wmclass': 'dialog'},
+    # {'wmclass': 'download'},
+    # {'wmclass': 'error'},
+    # {'wmclass': 'file_progress'},
+    # {'wmclass': 'notification'},
+    # {'wmclass': 'splash'},
+    # {'wmclass': 'toolbar'},
+    # {'wmclass': 'confirmreset'},  # gitk
+    # {'wmclass': 'makebranch'},  # gitk
+    # {'wmclass': 'maketag'},  # gitk
+    # {'wname': 'branchdialog'},  # gitk
+    # {'wname': 'pinentry'},  # GPG key password entry
+    # {'wmclass': 'ssh-askpass'},  # ssh-askpass
+    # {'wmclass': 'Gnome-calculator'},
+    # {'wmclass': 'usbmaker'},
+    # {'wmclass': 'ocs-url'},
+    # {'wmclass': 'Redshift-gtk'},
+    # {'wmclass': 'Lxpolkit'},
+    # {'wmclass': 'Gcolor2'},
+    # {'wmclass': 'Gsimplecal'}
+    # ],
+    # border_focus = colors['foreground'],
+    # border_normal = colors['background'],
+    # border_width = 2)
+
+# Git Version
 floating_layout = layout.Floating(float_rules= [
     Match(title='Quit and close tabs?'),
     Match(wm_type='utility'),
@@ -392,15 +452,17 @@ floating_layout = layout.Floating(float_rules= [
     Match(title='pinentry'),  # GPG key password entry
     Match(wm_class='Lxpolkit'),
     Match(wm_class='Redshift-gtk'),
+    Match(wm_class='Xfce4-taskmanager'),
+    Match(wm_class='ocs-url'),
     Match(wm_class='usbmaker'),
     Match(wm_class='Gnome-calculator'),
     Match(wm_class='Gcolor2'),
     Match(wm_class='Gsimplecal'),
-    Match(wm_class='xdman-Main')
+    Match(wm_class='flameshot')
 ],
-    border_focus = colors['background'],
+    border_focus = colors['foreground'],
     border_normal = colors['background'],
-    border_width = 1
+    border_width = 2
 )
 
 focus_on_window_activation = "smart"
