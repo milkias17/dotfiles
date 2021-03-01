@@ -38,36 +38,6 @@ def modify_window(client):
             targetgroup.cmd_toscreen(toggle=False)
             break
 
-# Center floating windows
-# @hook.subscribe.float_change
-def center_window():
-    client = qtile.current_window
-    if not client.floating:
-        return
-    if client.inspect()['wm_class'] == ('xterm', 'XTerm'):
-        return
-
-    screen_rect = qtile.current_screen.get_rect()
-
-    center_x = screen_rect.x + screen_rect.width / 2
-    center_y = screen_rect.y + screen_rect.height / 2
-
-    x = center_x - client.width / 2
-    y = center_y - client.height / 2
-        
-    # don't go off the right...
-    x = min(x, screen_rect.x + screen_rect.width - client.width)
-    # or left...
-    x = max(x, screen_rect.x)
-    # or bottom...
-    y = min(y, screen_rect.y + screen_rect.height - client.height)
-    # or top
-    y = max(y, screen_rect.y)
-    
-    client.x = int(round(x))
-    client.y = int(round(y))
-    qtile.current_group.layout_all()
-
 keybinds = {
     # Change focus in stack
     'M-k' : lazy.layout.up(),
@@ -75,6 +45,7 @@ keybinds = {
     'M-h' : lazy.layout.left(),
     'M-l' : lazy.layout.right(),
     'M-n' : lazy.layout.next(),
+    'M-p' : lazy.layout.previous(),
 
     # Change position in stack
     'M-S-k' : lazy.layout.shuffle_up(),
@@ -124,6 +95,16 @@ keybinds = {
 colors = colorschemes.nord
 fonts = ['Iosevka Nerd Font', 'Inter Medium']
 
+widget_defaults = dict(
+    font = fonts[1],
+    fontsize = 12,
+    foreground = colors['foreground'],
+    background = colors['background'],
+    padding = 3
+)
+
+extension_defaults = widget_defaults.copy()
+
 screens = [
     Screen(
         top = bar.Bar(
@@ -132,27 +113,24 @@ screens = [
                     active = colors['foreground'],
                     background = colors['background'],
                     block_highlight_text_color = colors['foreground'],
-                    border_width = 4,
                     font = fonts[0],
                     fontsize = 18,
                     foreground = colors['foreground'],
-                    highlight_method = 'block',
+                    highlight_method = 'line',
                     highlight_color = colors['cyan_alt'],
-                    inactive = colors['foreground'],
-                    spacing = 3,
+                    inactive = "#717A8B",
+                    spacing = 4,
                     urgent_alert_method = 'block',
                     urgent_border = colors['red'],
                     urgent_text = colors['foreground'],
                     margin_x = 0,
                     margin_y = 2,
-                    padding_x = 2,
-                    padding_y = 0,
+                    padding = 4,
+                    border_width = 4,
                     rounded = False,
-                    this_current_screen_border = colors['cyan_alt']
+                    this_current_screen_border = colors['background']
                 ),
                 widget.WindowName(
-                    font = fonts[1],
-                    fontsize = 12,
                     foreground = colors['foreground'],
                     padding = 30,
                 ),
@@ -161,7 +139,7 @@ screens = [
                     width = 20,
                     text = '',
                     background = colors['background'],
-                    foreground = colors['blue'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -171,13 +149,11 @@ screens = [
                     font = fonts[0],
                     fontsize = 20,
                     text = "",
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground']
                 ),
                 widget.Volume(
-                    font = fonts[1],
-                    fontsize = 12,
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
                     volume_app = 'pavucontrol',
                     volume_up_command = f"{home}/bin/i3-volume -i 10 -lny -x 500",
@@ -187,8 +163,8 @@ screens = [
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['blue'],
-                    foreground = colors['magenta'],
+                    background = colors['magenta'],
+                    foreground = colors['cyan_alt'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -197,13 +173,12 @@ screens = [
                     padding = 2,
                     font = fonts[0],
                     text = "",
-                    background = colors['magenta'],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground'],
                     fontsize = 20
                 ),
                 widget.CheckUpdates(
-                    background = colors['magenta'],
-                    fonts = fonts[1],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground'],
                     colour_have_updates = colors['foreground'],
                     colour_no_updates = colors['foreground'],
@@ -212,21 +187,21 @@ screens = [
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['magenta'],
-                    foreground = colors['blue'],
+                    background = colors['cyan_alt'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
                    ),
                 widget.CurrentLayout(
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['blue'],
-                    foreground = colors['magenta'],
+                    background = colors['magenta'],
+                    foreground = colors['cyan_alt'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -236,22 +211,20 @@ screens = [
                     font = fonts[0],
                     fontsize = 20,
                     text = "",
-                    background = colors['magenta'],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground']
                 ),
                 widget.CPU(
                     format = '{load_percent}%',
-                    font = fonts[1],
-                    fontsize = 12,
-                    background = colors['magenta'],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground'],
                     mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('xfce4-taskmanager')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['magenta'],
-                    foreground = colors['blue'],
+                    background = colors['cyan_alt'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
@@ -261,52 +234,49 @@ screens = [
                     font = fonts[0],
                     fontsize = 20,
                     text =  "",
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground']
                 ),
                 widget.Memory(
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground'],
-                    font = fonts[1],
-                    fontsize = 12,
                     format = '{MemUsed}M',
                     mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('xfce4-taskmanager')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['blue'],
-                    foreground = colors['magenta'],
+                    background = colors['magenta'],
+                    foreground = colors['cyan_alt'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
                    ),
                 widget.TextBox(
                     padding = 0,
-                    background = colors['magenta'],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground'],
                     text = "",
                     fontsize = 20,
                     font = fonts[0],
                 ),
                 widget.Clock(
-                    background = colors['magenta'],
+                    background = colors['cyan_alt'],
                     foreground = colors['foreground'],
                     format = "%A, %B %d  [ %I:%M %p ]",
-                    font = fonts[1],
                     mouse_callbacks = {'Button1' : lambda: qtile.cmd_spawn('gsimplecal')}
                 ),
                 widget.TextBox(
                     width = 20,
                     text = '',
-                    background = colors['magenta'],
-                    foreground = colors['blue'],
+                    background = colors['cyan_alt'],
+                    foreground = colors['magenta'],
                     padding = 0,
                     font = fonts[0],
                     fontsize = 50,
                    ),
                 widget.Systray(
-                    background = colors['blue'],
+                    background = colors['magenta'],
                     foreground = colors['foreground']
                 ),
             ],
@@ -345,7 +315,7 @@ mouse = [
 
 
 group_names = [str(i) for i in range(1, 10)]
-group_labels = ["", "", "", "", "", "", "", "", ""]
+group_labels = ["", "", "", "", "", "", "", "", ""]
 group_matches = ["Brave-browser|firefox",
                  "",
                  "Eclipse|code-oss",
@@ -382,13 +352,7 @@ for i in groups:
 
 # ============== ScratchPad ===================
 groups.append(ScratchPad("scratchpad", [
-    DropDown("term", "xterm",
-            on_focus_lost_hide=True,
-            x = 0.2,
-            y = 0.2,
-            width = 0.6,
-            height = 0.7)
-    # DropDown("term", terminal, on_focus_lost_hide=True, height=0.4)
+    DropDown("term", "xterm", on_focus_lost_hide=True, height=0.4)
 ]))
 keys.extend([
     Key('M-<minus>', lazy.group['scratchpad'].dropdown_toggle('term')),
@@ -428,22 +392,8 @@ cursor_warp = False
 
 # Git Version
 floating_layout = layout.Floating(float_rules= [
-    Match(title='Quit and close tabs?'),
-    Match(wm_type='utility'),
-    Match(wm_type='notification'),
-    Match(wm_type='toolbar'),
-    Match(wm_type='splash'),
-    Match(wm_type='dialog'),
-    Match(wm_class='Conky'),
-    Match(wm_class='Firefox'),
-    Match(wm_class='file_progress'),
-    Match(wm_class='confirm'),
-    Match(wm_class='dialog'),
-    Match(wm_class='download'),
-    Match(wm_class='error'),
-    Match(wm_class='notification'),
-    Match(wm_class='splash'),
-    Match(wm_class='toolbar'),
+    # Run the utility of `xprop` to see the wm class and name of an X client.
+    *layout.Floating.default_float_rules,
     Match(wm_class='confirmreset'),  # gitk
     Match(wm_class='makebranch'),  # gitk
     Match(wm_class='maketag'),  # gitk
@@ -464,7 +414,6 @@ floating_layout = layout.Floating(float_rules= [
     border_normal = colors['background'],
     border_width = 2
 )
-
 focus_on_window_activation = "smart"
 auto_fullscreen = True
 
