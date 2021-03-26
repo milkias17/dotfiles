@@ -1,15 +1,26 @@
+" Autoinstall vim-plug if doesn't exist
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 call plug#begin('~/.nvim/plugged/')
 
 " ################################################# Useful Utilities ############################################################
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'preservim/nerdcommenter' " Commenter for vim
+"Plug 'preservim/nerdcommenter' " Commenter for vim
+Plug 'tpope/vim-commentary' " Commenter for vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion
 Plug 'voldikss/vim-floaterm' " Float Term
 Plug 'norcalli/nvim-colorizer.lua' "Color highlighting
 Plug 'tpope/vim-surround'
 Plug 'tweekmonster/startuptime.vim'
+Plug 'tpope/vim-eunuch'
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'nvim-lua/completion-nvim'
 
 " ################################################# Colorschemes ############################################################
 Plug 'sickill/vim-monokai' " Monokai colorscheme
@@ -28,14 +39,7 @@ Plug 'Yggdroot/indentLine' " Show indentation
 Plug 'ryanoasis/vim-devicons' " Beautiful Icons for vim
 
 " ################################################ Cool Plugins ################################################################
-" Live preview for html/css/javascript
-Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-" Live reload for markdown
-"Plug 'shime/vim-livedown'
-" See all vim keyboard shortcuts
-"Plug 'liuchengxu/vim-which-key'
-"Plug 'mhinz/vim-startify' " Startup screen for vim
-" Ranger integration
-"Plug 'francoiscabrol/ranger.vim'
-"Plug 'rbgrouleff/bclose.vim'
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} " Live preview 
+Plug 'shime/vim-livedown' " Live reload for markdown
+"Plug 'liuchengxu/vim-which-key' " See all vim keyboard shortcuts
 call plug#end()

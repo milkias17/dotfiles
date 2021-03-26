@@ -5,22 +5,23 @@ set options 'Qtile\nPicom\ni3\nVim\nPolybar\nKitty\nAlacritty\nDunst'
 set chosen (echo -e $options | rofi -dmenu -p 'Config File' -i)
 
 set term 'kitty'
+set launch $term -e nvim $HOME/.config
 
 switch $chosen
     case Qtile
-        $term -e nvim $HOME/.config/qtile/config.py
+        $launch/qtile/config.py
     case Picom
-        $term -e nvim $HOME/.config/picom.conf
+        $launch/picom.conf
     case i3
-        $term -e nvim $HOME/.config/i3/config
+        $launch/i3/config
     case Vim
-        $term -e nvim $HOME/.config/nvim/init.vim
+        $lauch/nvim/init.vim
     case Polybar
-        $term -e nvim $HOME/.config/polybar/config
+        $lauch/polybar/config
     case $term
-        $term -e nvim $HOME/.config/$term/$term.conf
+        $lauch/$term/$term.conf
     case Alacritty
-        $term -e nvim $HOME/.config/alacritty/alacritty.yml
+        $lauch/alacritty/alacritty.yml
     case Dunst
-        $term -e nvim $HOME/.config/dunst/dunstrc
+        $lauch/dunst/dunstrc
 end

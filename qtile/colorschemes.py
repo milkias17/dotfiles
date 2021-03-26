@@ -1,44 +1,34 @@
-nord = dict(
-    foreground = "#d8dee9",
-    background = "#2e3440",
-    black = "#3b4252",
-    red = "#bf616a",
-    green = "#a3be8c",
-    blue = "#81a1c1",
-    magenta = "#b48ead",
-    cyan = "#88c0d0",
-    white = "#e5e9f0",
+nord = dict()
+gruvbox = dict()
 
-    black_alt = "#373e4d",
-    red_alt = "#94545d",
-    green_alt = "#809575",
-    yellow_alt = "#b29e75",
-    blue_alt = "#68809a",
-    magenta_alt = "#8c738c",
-    cyan_alt = "#6d96a5",
-    white_alt = "#aeb3bb",
-    
-)
+properties = ['foreground', 'background', 'black',
+              'red', 'green', 'yellow',
+              'blue', 'magenta', 'cyan',
+              'white', 'black_alt', 'red_alt',
+              'green_alt', 'yellow_alt', 'blue_alt',
+              'magenta_alt', 'cyan_alt', 'white_alt'
+              ]
 
-one_dark = dict(
-    foreground = "#d8dee9",
-    background = "#282C34",
-    black = "#282c34",
-    red = "#E06C75",
-    green = "#98C379",
-    yellow = "#E5C07B",
-    blue = "#61AFEF",
-    magenta = "#C678DD",
-    cyan = "#56B6C2",
-    white = "#ABB2BF",
 
-    black_alt = "#393E48",
-    red_alt = "#94545d ",
-    green_alt = "#809575 ",
-    yellow_alt = "#b29e75",
-    blue_alt = "#68809a",
-    magenta_alt = "#8c738c ",
-    cyan_alt = "#6d96a5 ",
-    white_alt = "#aeb3bb",
-    
-)
+nord_colors = [ 
+    "#d8dee9", "#2e3440", "#3b4252",
+    "#bf616a", "#a3be8c", "#ebcb8b",
+    "#81a1c1", "#b48ead", "#88c0d0",
+    "#e5e9f0", "#373e4d", "#94545d",
+    "#809575", "#b29e75", "#68809a", 
+    "#8c738c", "#6d96a5", "#aeb3bb" 
+]
+gruvbox_colors = [
+    '#ebdbb2', "#272727", "#272727",
+    "#cc231c", "#989719", "#d79920",
+    "#448488", "#b16185", "#689d69",
+    "#a89983", "#928373", "#fb4833",
+    "#b8ba25", "#fabc2e", "#83a597",
+    "#d3859a", "#8ec07b", "#ebdbb2"
+]
+
+for num in range(len(properties)):
+    tmp = properties[num]
+    gruvbox[tmp] = gruvbox_colors[num]
+    nord[tmp] = nord_colors[num]
+

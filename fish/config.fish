@@ -1,17 +1,24 @@
 # Env variables
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
-set -Ux BROWSER firefox
-set -U fish_user_paths $HOME/bin/ $HOME/.local/bin/ /opt/appimages/
+set -Ux BROWSER brave
+set -U fish_user_paths $HOME/{bin/,.local/bin/} /opt/appimages/
 
 # Aliases
 alias check="ping google.com"
 alias c="clear"
-alias ls="lsd"
-alias ll="lsd -l"
-alias la="lsd -a"
-alias l="lsd -F"
-alias lt="lsd --tree"
+
+
+if test "$TERM" = "xterm" || test "$TERM" = "linux"
+    echo "hello" > /dev/null
+else
+    alias ls="lsd"
+    alias ll="lsd -l"
+    alias la="lsd -a"
+    alias l="lsd -F"
+    alias lt="lsd --tree"
+end
+
 alias vim="nvim"
 alias pai="sudo pacman -S"
 alias par="sudo pacman -Rns"
@@ -24,9 +31,13 @@ alias yu="yay -Syu"
 alias ys="yay -Ss"
 alias window="xprop | grep -i 'class'"
 alias grep="grep --color=auto"
-alias ..="cd .."
+alias v="/bin/vim"
 
 thefuck --alias | source
+
+if test "$TERM" = "linux"
+    setfont ter-v16n
+end
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return

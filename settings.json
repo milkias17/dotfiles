@@ -1,0 +1,61 @@
+{
+  "editor.suggestSelection": "first",
+  "workbench.iconTheme": "material-icon-theme",
+  "python.languageServer": "Microsoft",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "editor.fontFamily": "'FiraCode Nerd Font', 'Source Code Pro', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "editor.fontLigatures": true,
+  "workbench.colorTheme": "One Dark Pro",
+  "python.showStartPage": false,
+  "editor.lineNumbers": "relative",
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "w"],
+      "commands": [":w!"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q!"]
+    },
+    {
+      "before": ["<C-l>"],
+      "after": ["<C-w>", "l"]
+    },
+    {
+      "before": ["<C-h>"],
+      "after": ["<C-w>", "h"]
+    },
+    {
+      "before": ["0"],
+      "after": ["^"]
+    },
+    {
+      "before": ["^"],
+      "after": ["0"]
+    }
+  ],
+  "vim.leader": ",",
+  "vim.highlightedyank.enable": true,
+  "vim.handleKeys": {
+    "<C-f>": false,
+    "<C-j>": false,
+    "<C-b>": false,
+    "C-<tab>": false,
+    "<C-k>": false,
+    "<C-n>": false,
+    "<C-w>": false
+  }
+}

@@ -1,0 +1,11 @@
+terminal = 'kitty -1'
+browser = 'brave'
+fm = 'thunar'
+guake_term = 'xterm'
+entertainment = 'kodi'
+chat = 'telegram-desktop'
+screenshot = 'flameshot gui'
+calculator = 'gnome-calculator'
+screen_locker = 'betterlockscreen -l'
+editor = 'kitty -e nvim'
+task_manager = "xfce4-taskmanager"

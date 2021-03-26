@@ -1,5 +1,0 @@
-#!/bin/env fish
-
-set choice (fc-list | cut --delimiter " " --fields 1 | cut --delimiter ":" --fields 1 | rofi -dmenu -i -width 70 -lines 15 -p Fonts)
-
-display "$choice"

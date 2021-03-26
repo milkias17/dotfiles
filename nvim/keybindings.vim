@@ -1,5 +1,6 @@
 " Remap VIM 0 to first non-blank character
-map 0 ^
+nnoremap 0 ^
+nnoremap ^ 0
 
 " Move line using alt+jk
 nnoremap <M-j> :m +1<CR>==
@@ -14,22 +15,26 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 " Comment code
-vmap <silent> <C-_> <plug>NERDCommenterToggle
-nmap <silent> <C-_> <plug>NERDCommenterToggle
+"vmap <silent> <C-_> <plug>NERDCommenterToggle
+"nmap <silent> <C-_> <plug>NERDCommenterToggle
 
 " Insert mode navigation
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>^
+inoremap <M-e> <C-o>$
+inoremap <M-a> <C-o>^
 
 " Keybinds for splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+imap <C-h> <C-w>h
+imap <C-j> <C-w>j
+imap <C-k> <C-w>k
+imap <C-l> <C-w>l
 
 " Keybinds for resizing splits
-noremap <silent> <C-Left> :vertical resize +3<CR>
-noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Left> :vertical resize -3<CR>
+noremap <silent> <C-Right> :vertical resize +3<CR>
 noremap <silent> <C-Up> :resize +3<CR>
 noremap <silent> <C-Down> :resize -3<CR>
 
@@ -96,7 +101,3 @@ nmap <F5> :e!<CR>
 
 " Search for variables
 nmap <M-f> :BTags<CR>
-
-" Setup ranger integration
-let g:ranger_map_keys = 0
-nmap <M-o> :Ranger<CR>
