@@ -5,6 +5,7 @@ arc-gtk-theme
 arena-chess-gui
 autoexec
 awesome-git
+axel
 base
 bash-pipes
 bashtop
@@ -24,6 +25,7 @@ dunst
 eclipse-java
 edex-ui-git
 evince
+figlet
 firefox
 flameshot
 fontweak
@@ -59,8 +61,10 @@ joplin-appimage
 jq
 keepass
 kitty
+kodi-x11
 kvantum-qt5
 libreoffice-fresh
+lichess-nativefier
 lightdm-webkit2-theme-glorious
 linux-lts
 lite
@@ -86,6 +90,7 @@ ocs-url
 opensiddur-hebrew-fonts
 otf-font-awesome
 pacman-contrib
+papirus-icon-theme
 pavucontrol
 pfetch-git
 plymouth-theme-dark-arch

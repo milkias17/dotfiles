@@ -2,21 +2,28 @@
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER brave
-set -U fish_user_paths $HOME/{bin/,.local/bin/} /opt/appimages/
+set -U fish_user_paths $HOME/{'', '.local/'}bin/ /opt/appimages/
+
+# Fix resizing issues
+set --unexport {COLUMNS,LINES}
 
 # Aliases
 alias check="ping google.com"
 alias c="clear"
 
-
 if test "$TERM" = "xterm" || test "$TERM" = "linux"
     echo "hello" > /dev/null
+    alias ll="ls -l"
+    alias la="ls -a"
+    alias l="ls -F"
+    alias lla="ls -la"
 else
     alias ls="lsd"
     alias ll="lsd -l"
     alias la="lsd -a"
     alias l="lsd -F"
     alias lt="lsd --tree"
+    alias lla="lsd -la"
 end
 
 alias vim="nvim"
@@ -31,10 +38,8 @@ alias yu="yay -Syu"
 alias ys="yay -Ss"
 alias window="xprop | grep -i 'class'"
 alias grep="grep --color=auto"
-alias v="/bin/vim"
 
-thefuck --alias | source
-
+# TTY font
 if test "$TERM" = "linux"
     setfont ter-v16n
 end
