@@ -11,8 +11,10 @@ from libqtile.config import (
     ScratchPad,
     DropDown,
 )
+import pywal
 import colorschemes
 from apps import *
+from settings import enable_pywal
 
 mod = "mod4"
 home = os.path.expanduser("~")
@@ -44,7 +46,7 @@ keybinds = {
     "M-p": lazy.layout.previous(),
     # Change position in stack
     "M-S-k": lazy.layout.shuffle_up(),
-    "M-S-j": lazy.layout.shuffle_up(),
+    "M-S-j": lazy.layout.shuffle_down(),
     "M-S-h": lazy.layout.swap_left(),
     "M-S-l": lazy.layout.swap_right(),
     # Resize windows in stack
@@ -63,9 +65,10 @@ keybinds = {
     "M-<F1>": lazy.spawn(f"{config_home}/rofi/scripts/config-files"),
     "M-<F2>": lazy.spawn(task_manager),
     "M-S-x": lazy.spawn("xkill"),
-    "<Print>": lazy.spawn(screenshot),
+    "M-<Print>": lazy.spawn(screenshot),
     "M-C-n": lazy.spawn(f"{home}/bin/cycle_walls"),
     "M-C-p": lazy.spawn(f"{home}/bin/cycle_walls prev"),
+    "M-S-z": lazy.spawn(f"{home}/bin/google-error"),
     # Reload Qtile and Powermenu
     "M-S-e": lazy.spawn(f"{config_home}/rofi/scripts/powermenu"),
     "M-S-r": lazy.restart(),
@@ -88,14 +91,20 @@ keybinds = {
 
 fonts = ["Iosevka Nerd Font", "Inter Medium"]
 
-colors = colorschemes.nord
-color1 = colors["blue_alt"]
-color2 = colors["black"]
+if enable_pywal:
+    colors = colorschemes.current_scheme
+    pywal.sequences.send(colorschemes.data)
+    color1 = colors["magenta_alt"]
+    color2 = colors["black"]
+else:
+    colors = colorschemes.nord
+    color1 = colors["blue_alt"]
+    color2 = colors['black']
 
 widget_defaults = dict(
     font=fonts[1],
     fontsize=12,
-    foreground=colors["foreground"],
+    foreground=colors['white'],
     background=colors["background"],
     padding=3,
 )
@@ -113,6 +122,7 @@ screens = [
     Screen(
         top=bar.Bar(
             [
+                widget.Spacer(length=10),
                 widget.GroupBox(
                     active=colors["foreground"],
                     background=colors["background"],
@@ -137,119 +147,89 @@ screens = [
                 widget.Spacer(length=15),
                 widget.TaskList(
                     highlight_method="block",
-                    border=colors["blue"],
                     icon_size=18,
                     fontsize=14,
                     max_title_width=150,
+                    border=colors['cyan_alt'],
+                    urgent_border=colors['cyan_alt']
                 ),
                 widget.Spacer(),
-                widget.TextBox(
-                    width=20,
-                    # text = '',
-                    text="⚈",
-                    background=colors["background"],
-                    foreground=color1,
-                    padding=0,
-                    font=fonts[0],
-                    fontsize=36,
-                ),
                 widget.TextBox(
                     padding=2,
                     font=fonts[0],
                     fontsize=20,
                     text="",
-                    background=color1,
-                    foreground=colors["foreground"],
                 ),
                 widget.Volume(
-                    background=color1,
-                    foreground=colors["foreground"],
                     volume_app="pavucontrol",
                     volume_up_command=f"{home}/bin/i3-volume -i 10 -lny -x 500",
                     volume_down_command=f"{home}/bin/i3-volume -d 10 -lny -x 500",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
                 ),
-                return_powerline(),
+                widget.Sep(padding=15),
                 widget.TextBox(
                     padding=2,
                     font=fonts[0],
                     text="",
-                    background=color2,
-                    foreground=colors["foreground"],
                     fontsize=20,
                 ),
                 widget.CheckUpdates(
-                    background=color2,
-                    foreground=colors["foreground"],
                     colour_have_updates=colors["foreground"],
                     colour_no_updates=colors["foreground"],
                     display_format="{updates}",
                 ),
-                return_powerline(False),
+                widget.Sep(padding=15),
                 widget.CurrentLayout(
-                    background=color1,
-                    foreground=colors["foreground"],
                 ),
-                return_powerline(),
+                widget.Sep(padding=15),
                 widget.TextBox(
                     padding=2,
                     font=fonts[0],
                     fontsize=20,
                     text="",
-                    background=color2,
-                    foreground=colors["foreground"],
                 ),
                 widget.CPU(
                     format="{load_percent}%",
-                    background=color2,
-                    foreground=colors["foreground"],
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(task_manager)},
                 ),
-                return_powerline(False),
+                widget.Sep(padding=15),
                 widget.TextBox(
                     padding=2,
                     font=fonts[0],
                     fontsize=20,
                     text="",
-                    background=color1,
-                    foreground=colors["foreground"],
                 ),
                 widget.Memory(
-                    background=color1,
-                    foreground=colors["foreground"],
                     format="{MemUsed}M",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(task_manager)},
                 ),
-                return_powerline(),
+                widget.Sep(padding=15),
                 widget.TextBox(
                     padding=0,
-                    background=color2,
-                    foreground=colors["foreground"],
                     text="",
                     fontsize=20,
                     font=fonts[0],
                 ),
                 widget.Clock(
-                    background=color2,
-                    foreground=colors["foreground"],
                     format="%A, %B %d  [ %I:%M %p ]",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("gsimplecal")},
                 ),
-                return_powerline(False),
-                widget.Systray(background=color1, foreground=colors["foreground"]),
+                widget.Sep(padding=15),
+                widget.Systray(foreground=colors['foreground']),
             ],
             25,
             background=colors["background"],
+            margin=[5, 16, 0, 16], # N E S W
         )
     )
 ]
 
 layout_theme = dict(
     border_width=2,
-    margin=6,
-    border_focus=colors["foreground"],
+    margin=4,
+    border_focus=colors["blue"],
     border_normal=colors["background"],
-    single_margin=0,
+    single_margin=4,
     single_border_width=0,
 )
 
@@ -266,12 +246,12 @@ layouts = [
 mouse = [
     Drag("M-1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag("M-3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click("A-1", lazy.window.bring_to_front()),
+    Click("M-2", lazy.window.bring_to_front()),
 ]
 
 
-group_names = [str(i) for i in range(1, 10)]
-group_labels = ["", "", "", "", "", "", "", "", ""]
+group_names = [str(i) for i in range(1, 8)]
+group_labels = ["", "", "", "", "", "", ""]
 group_matches = [
     "Brave-browser|firefox",
     "",
@@ -280,8 +260,6 @@ group_matches = [
     "Kodi",
     "TelegramDesktop|discord|Hexchat",
     "qBittorrent",
-    "Com.github.needleandthread.vocal|Audacious",
-    "",
 ]
 groups = list()
 
@@ -329,7 +307,6 @@ cursor_warp = False
 
 floating_layout = layout.Floating(
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
@@ -339,10 +316,8 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),  # GPG key password entry
         Match(role="pop-up"),
         Match(wm_class="Lxpolkit"),
+        Match(wm_class='Toplevel'),
         Match(wm_class="Redshift-gtk"),
-        Match(wm_class="Pychess"),
-        Match(wm_class="Toplevel"),
-        Match(wm_class="Arena_x86_64_linux"),
         Match(wm_class=task_manager),
         Match(wm_class="ocs-url"),
         Match(wm_class="usbmaker"),
@@ -351,7 +326,7 @@ floating_layout = layout.Floating(
         Match(wm_class="Gsimplecal"),
         Match(wm_class="flameshot"),
     ],
-    border_focus=colors["foreground"],
+    border_focus=colors["blue"],
     border_normal=colors["background"],
     border_width=2,
 )

@@ -1,3 +1,5 @@
+from settings import random_wal, enable_pywal
+
 terminal = "kitty -1"
 browser = "brave"
 fm = "thunar"
@@ -16,5 +18,9 @@ startup_apps = [
     "lxsession &",
     "nm-applet &",
     "xset b off",
-    "nitrogen --restore",
 ]
+
+if not random_wal and enable_pywal:
+    startup_apps.append("wal -R")
+elif not enable_pywal:
+    startup_apps.append("nitrogen --restore")
