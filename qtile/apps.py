@@ -1,7 +1,7 @@
 from settings import random_wal, enable_pywal
 
 terminal = "kitty -1"
-browser = "brave"
+browser = "firefox"
 fm = "thunar"
 guake_term = "kitty"
 entertainment = "kodi"

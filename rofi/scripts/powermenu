@@ -1,33 +1,37 @@
-#!/bin/fish
-#
-set uptime (uptime -p | sed 's/up //g')
+#!/bin/sh
+
+uptime=$(uptime -p | sed 's/up\s//g')
 
 # Options
-set logout "Logout\x00icon\x1fsystem-log-out"
-set suspend "Suspend\x00icon\x1fsystem-suspend"
-set reboot "Reboot\x00icon\x1fsystem-reboot"
-set lock "Lock\x00icon\x1fsystem-lock-screen"
-set shutdown "Shutdown\x00icon\x1fsystem-shutdown"
+logout="Logout\x00icon\x1fsystem-log-out"
+suspend="Suspend\x00icon\x1fsystem-suspend"
+reboot="Reboot\x00icon\x1fsystem-reboot"
+lock="Lock\x00icon\x1fsystem-lock-screen"
+shutdown="Shutdown\x00icon\x1fsystem-shutdown"
 
 # Rofi Choices
-set options $lock\n$logout\n$suspend\n$shutdown\n$reboot
+options="$lock\n$logout\n$suspend\n$shutdown\n$reboot"
 
-set chosen (echo -e $options | rofi -dmenu -p $uptime -theme $HOME/.config/rofi/themes/powermenu.rasi -i)
+chosen=$(echo -e $options | rofi -sep '\n' -dmenu -p "$uptime" -theme $HOME/.config/rofi/themes/powermenu.rasi -i)
 
-switch $chosen
-    case Logout
-        if test "$DESKTOP_SESSION" = "i3"
+case $chosen in
+    Logout)
+        if [ "$DESKTOP_SESSION" = "i3" ]; then
             i3-msg exit
-        else if test "$DESKTOP_SESSION" = "qtile"
+        elif [ "$DESKTOP_SESSION" = "qtile" ]; then
             qtile cmd-obj -o cmd -f shutdown
-        end
-    case Suspend
+        fi
+    ;;
+    Suspend)
         systemctl suspend
-    case Reboot
+    ;;
+    Reboot)
         reboot
-    case Shutdown
+    ;;
+    Shutdown)
         shutdown now
-    case Lock
+    ;;
+    Lock)
         betterlockscreen -l
-end
-
+    ;;
+esac

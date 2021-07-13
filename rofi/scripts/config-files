@@ -1,27 +1,35 @@
-#!/bin/fish
+#!/bin/sh
 
-set options 'Qtile\nPicom\ni3\nVim\nPolybar\nKitty\nAlacritty\nDunst'
+options="Qtile\nPicom\ni3\nVim\nPolybar\nKitty\nAlacritty\nDunst"
 
-set chosen (echo -e $options | rofi -dmenu -p 'Config File' -i)
+chosen=$(echo -e $options | rofi -dmenu -p 'Config File' -i)
+term="kitty"
+launch="$term -e nvim $HOME/.config"
 
-set term 'kitty'
-set launch $term -e nvim $HOME/.config
-
-switch $chosen
-    case Qtile
+case $chosen in 
+    Qtile)
         $launch/qtile/config.py
-    case Picom
+    ;;
+    Picom)
         $launch/picom.conf
-    case i3
+    ;;
+    i3)
         $launch/i3/config
-    case Vim
-        $lauch/nvim/init.vim
-    case Polybar
-        $lauch/polybar/config
-    case $term
-        $lauch/$term/$term.conf
-    case Alacritty
-        $lauch/alacritty/alacritty.yml
-    case Dunst
-        $lauch/dunst/dunstrc
-end
+    ;;
+    Vim)
+        $launch/nvim/init.vim
+    ;;
+    Polybar)
+        $launch/polybar/config
+    ;;
+    $term)
+        $launch/$term/$term.conf
+    ;;
+    Alacritty)
+        $launch/alacritty/alacritty.yml
+    ;;
+    Dunst)
+        $launch/dunst/dunstrc
+    ;;
+
+esac

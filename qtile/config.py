@@ -1,4 +1,4 @@
-import os
+import os, psutil
 from libqtile import layout, bar, widget, hook, qtile
 from libqtile.config import (
     EzKey as Key,
@@ -15,6 +15,8 @@ import pywal
 import colorschemes
 from apps import *
 from settings import enable_pywal
+from libqtile.log_utils import logger
+from libqtile.window import Internal
 
 mod = "mod4"
 home = os.path.expanduser("~")
@@ -27,14 +29,48 @@ def autostart():
 
 @hook.subscribe.client_new
 def folow_window(client):
+    """ When an application with a set match is opened, automatically switch to the new applications group """
     for group in groups:
         match = next((m for m in group.matches if m.compare(client)), None)
 
         if match:
-            targetgroup = client.qtile.groups_map[group.name]
+            targetgroup = qtile.groups_map[group.name]
             targetgroup.cmd_toscreen(toggle=False)
             break
 
+@hook.subscribe.setgroup
+def always_on_top():
+    """ This makes the firefox picture in picture mode change its group to current group whenever I change group """
+    windows = qtile.windows_map.values()
+    for window in windows:
+        if not isinstance(window, Internal):
+            try:
+                if window.window.get_name() == "Picture-in-Picture":
+                        window.togroup()
+            except AttributeError:
+                continue
+
+@hook.subscribe.client_new
+def swallow(window):
+    """ Implements swallow functionality which basically minimizes terminal window if you start a GUI app through it """
+    pid = window.window.get_net_wm_pid()
+    ppid = psutil.Process(pid).ppid()
+    cpids = {c.window.get_net_wm_pid(): wid for wid, c in window.qtile.windows_map.items()}
+    for i in range(5):
+        if not ppid:
+            return
+        if ppid in cpids:
+            parent = window.qtile.windows_map.get(cpids[ppid])
+            parent.minimized = True
+            window.parent = parent
+            return
+        ppid = psutil.Process(ppid).ppid()
+
+@hook.subscribe.client_killed
+def unswallow(window):
+    """ Unminize the terminal window which opened the GUI app """
+    if hasattr(window, 'parent'):
+        window.parent.minimized = False
 
 keybinds = {
     # Change focus in stack
@@ -69,6 +105,7 @@ keybinds = {
     "M-C-n": lazy.spawn(f"{home}/bin/cycle_walls"),
     "M-C-p": lazy.spawn(f"{home}/bin/cycle_walls prev"),
     "M-S-z": lazy.spawn(f"{home}/bin/google-error"),
+    "M-C-y": lazy.spawn(f"{home}/bin/mpv_youtube"),
     # Reload Qtile and Powermenu
     "M-S-e": lazy.spawn(f"{config_home}/rofi/scripts/powermenu"),
     "M-S-r": lazy.restart(),
@@ -84,9 +121,9 @@ keybinds = {
     "M-f": lazy.window.toggle_fullscreen(),
     "M-m": lazy.window.toggle_minimize(),
     # Volume keys
-    "C-<Up>": lazy.spawn(f"{home}/bin/i3-volume -i 10 -lny -x 500"),
-    "C-<Down>": lazy.spawn(f"{home}/bin/i3-volume -d 10 -lny -x 500"),
-    "M-C-m": lazy.spawn(f"{home}/bin/i3-volume -m -lny"),
+    "C-<Up>": lazy.spawn(f"{home}/bin/msound -i"),
+    "C-<Down>": lazy.spawn(f"{home}/bin/msound -d"),
+    "M-C-m": lazy.spawn(f"{home}/bin/msound -m"),
 }
 
 fonts = ["Iosevka Nerd Font", "Inter Medium"]
@@ -94,12 +131,8 @@ fonts = ["Iosevka Nerd Font", "Inter Medium"]
 if enable_pywal:
     colors = colorschemes.current_scheme
     pywal.sequences.send(colorschemes.data)
-    color1 = colors["magenta_alt"]
-    color2 = colors["black"]
 else:
     colors = colorschemes.nord
-    color1 = colors["blue_alt"]
-    color2 = colors['black']
 
 widget_defaults = dict(
     font=fonts[1],
@@ -109,14 +142,6 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-
-def return_powerline(first=True):
-    if first:
-        return widget.TextBox(width = 20, text="⚈", background = color1,
-                              foreground = color2, padding = 0, font = fonts[0], fontsize=36)
-    else:
-        return widget.TextBox(width = 20, text = "⚈", background = color2, foreground = color1,
-                              padding = 0, font = fonts[0], fontsize = 36)
 
 screens = [
     Screen(
@@ -162,8 +187,8 @@ screens = [
                 ),
                 widget.Volume(
                     volume_app="pavucontrol",
-                    volume_up_command=f"{home}/bin/i3-volume -i 10 -lny -x 500",
-                    volume_down_command=f"{home}/bin/i3-volume -d 10 -lny -x 500",
+                    volume_up_command=f"{home}/bin/msound -i",
+                    volume_down_command=f"{home}/bin/msound -d",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
                 ),
                 widget.Sep(padding=15),
@@ -225,7 +250,7 @@ screens = [
 ]
 
 layout_theme = dict(
-    border_width=2,
+    border_width=3,
     margin=4,
     border_focus=colors["blue"],
     border_normal=colors["background"],
@@ -236,6 +261,7 @@ layout_theme = dict(
 layouts = [
     layout.MonadTall(**layout_theme),
     layout.Max(),
+    layout.MonadWide(**layout_theme),
     layout.Floating(
         border_normal=colors["background"],
         border_focus=colors["foreground"],
@@ -251,7 +277,8 @@ mouse = [
 
 
 group_names = [str(i) for i in range(1, 8)]
-group_labels = ["", "", "", "", "", "", ""]
+# group_labels = ["", "", "", "", "", "", ""]
+group_labels = ["", "", "", "", "", "", ""]
 group_matches = [
     "Brave-browser|firefox",
     "",
@@ -328,7 +355,7 @@ floating_layout = layout.Floating(
     ],
     border_focus=colors["blue"],
     border_normal=colors["background"],
-    border_width=2,
+    border_width=3,
 )
 focus_on_window_activation = "smart"
 auto_fullscreen = True

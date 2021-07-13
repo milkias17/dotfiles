@@ -1,7 +1,7 @@
 " Autoinstall vim-plug if doesn't exist
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \ 
+     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
@@ -11,14 +11,13 @@ call plug#begin('~/.nvim/plugged/')
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-"Plug 'preservim/nerdcommenter' " Commenter for vim
 Plug 'tpope/vim-commentary' " Commenter for vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion
 Plug 'voldikss/vim-floaterm' " Float Term
 Plug 'norcalli/nvim-colorizer.lua' "Color highlighting
 Plug 'tpope/vim-surround'
 Plug 'tweekmonster/startuptime.vim'
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch' "Commands for UNIX shell actions
 "Plug 'neovim/nvim-lspconfig'
 "Plug 'nvim-lua/completion-nvim'
 
@@ -30,7 +29,6 @@ Plug 'flazz/vim-colorschemes' " Collection of themes
 
 " ################################################# Visual Stuff ############################################################
 Plug 'sheerun/vim-polyglot' " Better syntax highlighting
-Plug 'frazrepo/vim-rainbow' " Different colors for mathcing braces
 Plug 'junegunn/rainbow_parentheses.vim' " Different color for parenthesis
 " Status Line
 Plug 'vim-airline/vim-airline'
@@ -40,6 +38,5 @@ Plug 'ryanoasis/vim-devicons' " Beautiful Icons for vim
 
 " ################################################ Cool Plugins ################################################################
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'} " Live preview 
-Plug 'shime/vim-livedown' " Live reload for markdown
-"Plug 'liuchengxu/vim-which-key' " See all vim keyboard shortcuts
+" Plug 'shime/vim-livedown' " Live reload for markdown
 call plug#end()

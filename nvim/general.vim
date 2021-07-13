@@ -31,8 +31,8 @@ set number
 " Show line numbers relative to current line
 set relativenumber
 
-" Blink cursor on error instead of beeping
-set visualbell
+" Disable annoying beep
+set noerrorbells
 
 " Shorten status line
 set laststatus=2
@@ -133,7 +133,7 @@ set wrap
 set whichwrap=b,s,<,>,[,]
 
 " Shell to fish
-set shell=/bin/fish
+set shell=/usr/bin/fish
 
 " Setup i3 config file detection for syntax highlighting
 aug i3config_ft_detection
@@ -184,6 +184,3 @@ augroup END
 augroup py
     autocmd FileType python setlocal wildignore=*.pyc,*/__pycache__/* nowrap
 augroup END
-
-" Auto Save
-"autocmd TextChanged,TextChangedI <buffer> silent write
