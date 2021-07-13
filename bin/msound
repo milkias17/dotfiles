@@ -1,0 +1,53 @@
+#!/bin/sh
+
+get_volume() {
+    volume=$(amixer sget Master | grep 'Right:' | sed 's/^\s*//g' | cut -d' ' -f 5 | sed 's/[][]//g' | sed 's/%//g')
+    echo $volume
+}
+
+increase_volume() {
+    pactl set-sink-volume 0 +10%
+    send_notifcation
+}
+
+decrease_volume() {
+    pactl set-sink-volume 0 -10%
+    send_notifcation
+}
+
+mute_volume() {
+    pactl set-sink-mute 0 toggle
+    send_notifcation mute
+}
+
+send_notifcation() {
+    done=$1
+    volume=$(get_volume)
+    if [ "$done" == "mute" ]; then
+        $icon=${icons[3]}
+    else
+        if [ "$volume" -lt 40 ]; then
+            icon=${icons[1]}
+        elif [ $volume -ge 70 ]; then
+            icon=${icons[0]}
+        elif [ $volume -ge 40 ] && [ $volume -lt 70 ]; then
+            icon=${icons[2]}
+        fi
+    fi
+    dunstify -h string:x-dunst-stack-tag:volume -i $icon "Volume: $volume%" -h int:value:$volume
+}
+
+icons=(
+    audio-volume-high
+    audio-volume-low
+    audio-volume-medium
+    audio-volume-muted
+    )
+
+if [ $1 == "-i" ]; then
+    increase_volume
+elif [ $1 == "-d" ]; then
+    decrease_volume
+elif [ $1 == "-m" ]; then
+    mute_volume 
+fi

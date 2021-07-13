@@ -1,0 +1,44 @@
+#!/bin/env python
+
+import pygame
+import sys
+
+pygame.init()
+
+speed_x = 5
+speed_y = 3
+logo = pygame.image.load("/home/mike/Dev/Projects/Python/bouncing_dvd/logo-green.png")
+rect = logo.get_rect()
+
+size = 600, 600
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption("DVD LOGO")
+
+clock = pygame.time.Clock()
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+
+    if rect.x + rect.width > screen.get_width():
+        speed_x = -speed_x
+        logo = pygame.image.load("/home/mike/Dev/Projects/Python/bouncing_dvd/logo-blue.png")
+
+    if rect.y + rect.height > screen.get_height():
+        speed_y = -speed_y
+        logo = pygame.image.load("/home/mike/Dev/Projects/Python/bouncing_dvd/logo-yellow.png")
+
+    if rect.x < 0:
+        speed_x = -speed_x
+        logo = pygame.image.load("/home/mike/Dev/Projects/Python/bouncing_dvd/logo-red.png")
+
+    if rect.y < 0:
+        speed_y = -speed_y
+        logo = pygame.image.load("/home/mike/Dev/Projects/Python/bouncing_dvd/logo-green.png")
+
+    rect.x += speed_x
+    rect.y += speed_y
+    screen.fill((0, 0,  0))
+    screen.blit(logo, rect)
+    pygame.display.update()
+    clock.tick(60)
