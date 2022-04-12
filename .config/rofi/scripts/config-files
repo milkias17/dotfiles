@@ -1,0 +1,37 @@
+#!/bin/sh
+
+options="Qtile\nPicom\ni3\nVim\nPolybar\nFish\nKitty\nDunst\nRofi"
+
+chosen=$(echo -e $options | rofi -dmenu -p 'Config File' -i)
+term="kitty"
+launch="$term -e nvim $HOME/.config"
+
+case $chosen in 
+    Qtile)
+        $launch/qtile/config.py
+    ;;
+    Picom)
+        $launch/picom.conf
+    ;;
+    i3)
+        $launch/i3/config
+    ;;
+    Vim)
+        $launch/nvim/init.vim
+    ;;
+    Polybar)
+        $launch/polybar/config
+    ;;
+    Kitty)
+        $launch/kitty/$term.conf
+    ;;
+    Dunst)
+        $launch/dunst/dunstrc
+    ;;
+    Rofi)
+        $launch/rofi/config.rasi
+    ;;
+    Fish)
+        $launch/fish/config.fish
+    ;;
+esac

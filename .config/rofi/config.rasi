@@ -1,0 +1,14 @@
+configuration {
+	font: "Sora Regular 12";
+	show-icons: true;
+	terminal: "kitty -1";
+    icon-theme: "Tela blue dark";
+    modi: "drun,window,combi";
+    window-thumbnail: true;
+	drun-use-desktop-cache: true;
+	display-drun: "";
+    display-window: "﩯 ";
+    display-combi: "  ";
+}
+
+@theme "themes/my_theme.rasi"

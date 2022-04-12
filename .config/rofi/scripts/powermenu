@@ -1,0 +1,44 @@
+#!/bin/bash
+
+uptime=$(uptime -p | sed 's/up\s//g')
+
+# Options
+logout="Logout\x00icon\x1fsystem-log-out"
+suspend="Suspend\x00icon\x1fsystem-suspend"
+reboot="Reboot\x00icon\x1fsystem-reboot"
+lock="Lock\x00icon\x1fsystem-lock-screen"
+shutdown="Shutdown\x00icon\x1fsystem-shutdown"
+# shutdown=""
+# reboot=""
+# lock=""
+# suspend=""
+# logout=""
+
+# Rofi Choices
+options="$lock\n$logout\n$suspend\n$shutdown\n$reboot"
+
+chosen=$(echo -e $options | rofi -sep '\n' -dmenu -p "$uptime" -theme powermenu -i)
+
+case $chosen in
+Logout)
+	if [ "$DESKTOP_SESSION" = "i3" ]; then
+		i3-msg exit
+	elif [ "$DESKTOP_SESSION" = "qtile" ]; then
+		qtile cmd-obj -o cmd -f shutdown
+	fi
+	;;
+Suspend)
+	systemctl suspend
+	;;
+Reboot)
+	save-session
+	reboot
+	;;
+Shutdown)
+	save-session
+	shutdown now
+	;;
+Lock)
+	betterlockscreen -l
+	;;
+esac

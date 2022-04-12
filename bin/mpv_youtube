@@ -1,0 +1,12 @@
+#!/bin/sh
+
+url=$(xclip -out -selection clipboard 2> /dev/null)
+if [ -z $url ]; then
+    dunstify -i script-error 'Please first copy the url to the clipboard'
+fi
+
+mpv $url
+
+if [ $? -eq 1 ]; then
+    dunstify -i script-error 'Please enter a valid url'
+fi

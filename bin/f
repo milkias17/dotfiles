@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+	file=$(fzf -m)
+	[ -z "$file" ] && exit
+	echo "$file" | xargs nvim
+else
+	if [ "$#" -gt 1 ]; then
+		nvim "$@"
+	else
+		if [ -e "$1" ]; then
+			nvim "$1"
+		else
+			output=$(find . -iname "*$1*" -type f | grep -vE ".*/env|.*/__pycache__|.*/.git|.*/node_modules")
+			if [ -z "$output" ]; then
+				nvim "$1"
+			elif [ "$(echo "$output" | wc -l)" -gt 1 ]; then
+				file=$(echo "$output" | fzf -m)
+				[ -z "$file" ] && exit
+				echo "$file" | xargs nvim
+			else
+				nvim "$output"
+			fi
+		fi
+	fi
+fi

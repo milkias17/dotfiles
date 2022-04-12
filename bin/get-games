@@ -1,0 +1,53 @@
+#!/bin/python
+import getopt
+import os
+import sys
+
+import lichess.api
+from lichess.format import SINGLE_PGN
+
+num_games = 10
+arg_list = sys.argv[1:]
+out_path = os.getcwd()
+user = "jaminux"
+to_stdout = False
+limit = True
+try:
+    opts, args = getopt.getopt(arg_list, "n:pu:", ["to-file=", "no-limit"])
+except getopt.GetoptError as e:
+    print("Arguments given have errors")
+    print(e)
+    sys.exit()
+
+for opt, arg in opts:
+    if opt in ["-n"]:
+        num_games = arg
+    if opt in ["--to-file"]:
+        out_path = os.path.abspath(arg)
+    if opt in ["-p"]:
+        to_stdout = True
+    if opt in ["-u"]:
+        user = arg
+    if opt in ["--no-limit"]:
+        limit = False
+
+if limit:
+    pgn = lichess.api.user_games(user, max=num_games, format=SINGLE_PGN)
+else:
+    pgn = lichess.api.user_games(user, format=SINGLE_PGN)
+
+if to_stdout:
+    print(pgn)
+elif os.path.dirname(out_path):
+    file = None
+    if os.path.isdir(out_path + '/'):
+        if limit:
+            file = open(f'{out_path}/{user}_last_{num_games}games.pgn', 'w')
+        else:
+            file = open(f'{out_path}/{user}_all_games.pgn', 'w')
+    else:
+        file = open(out_path, 'w')
+    with file as f:
+        f.write(pgn)
+else:
+    print('Given path has an error')

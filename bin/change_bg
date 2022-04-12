@@ -1,0 +1,5 @@
+#!/bin/sh
+
+bg=$(ls ~/Pictures/Walls/ | fzf)
+feh --bg-scale "$HOME/Pictures/Walls/$bg"
+echo "$bg"

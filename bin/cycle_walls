@@ -1,0 +1,53 @@
+#!/bin/env python
+
+import os
+import subprocess
+import sys
+
+
+def compare(wall):
+    return int(wall.split(".")[0])
+
+
+def setup_helper(prev=False):
+    with open(helper, "w") as f:
+        if not prev:
+            f.write(f"{current_index + 1}")
+        else:
+            f.write(f"{current_index - 1}")
+
+
+home = os.path.expanduser("~")
+path = f"{home}/Pictures/Walls"
+walls = sorted(os.listdir(path), key=compare)
+current_index = None
+helper = f"{home}/.cache/cycle_walls/helper"
+
+if not os.path.exists(helper):
+    try:
+        os.mkdir(f"{home}/.cache/cycle_walls")
+        with open(helper, "w") as f:
+            f.write("0")
+    except:
+        with open(helper, "w") as f:
+            f.write("0")
+
+with open(helper, "r") as f:
+    current_index = int(f.readline().strip())
+
+if len(sys.argv) > 1 and sys.argv[1] == "show":
+    current_wal = f"{path}/{walls[current_index]}"
+    os.system(f'notify-send -i {current_wal} {current_wal}')
+    sys.exit()
+
+if current_index < len(walls) - 2:
+    if len(sys.argv) > 1 and sys.argv[1] == "prev":
+        wall = f"{path}/{walls[current_index - 1]}"
+        setup_helper(True)
+    else:
+        wall = f"{path}/{walls[current_index + 1]}"
+        setup_helper()
+    subprocess.call(["feh", "--bg-scale", wall])
+else:
+    with open(helper, "w") as f:
+        f.write("-1")
