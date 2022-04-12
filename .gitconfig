@@ -1,0 +1,14 @@
+[user]
+    email = 66522725+milkias17@users.noreply.github.com
+	name = Milkias Yeheyis
+[core]
+    editor = nvim
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[pull]
+	ff = only
+[alias]
+	c = commit -m
+	ac = commit -am
