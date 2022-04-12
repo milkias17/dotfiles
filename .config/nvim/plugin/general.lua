@@ -27,7 +27,7 @@ local options = {
 	undofile = true,
 	lazyredraw = true,
 	ttyfast = true,
-	mouse = "a",
+	mouse = "n",
 	scrolloff = 8,
 	termguicolors = true,
 	wrap = false,
@@ -54,9 +54,7 @@ end
 -- Better Cursorline
 vim.cmd([[autocmd InsertLeave,WinEnter * set cursorline ]])
 vim.cmd([[autocmd InsertEnter,WinLeave * set nocursorline]])
-
--- Return to last edit position when opening files
--- vim.cmd([[au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
+vim.cmd([[autocmd FileType TelescopePrompt set nocursorline]])
 
 -- Automatically enter insert mode in terminals
 vim.cmd([[autocmd TermOpen * startinsert]])

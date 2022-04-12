@@ -30,8 +30,6 @@ end
 vim.g.mapleader = ","
 
 local modules = {
-	"general",
-	"keymaps",
 	"packer_init",
 	"plugins",
 	"lsp",
