@@ -29,7 +29,9 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.flake8.with({
 			extra_args = { "--max-line-length", "105", "--ignore", "E402,E501,E203" },
 		}),
+		null_ls.builtins.diagnostics.mypy,
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.diagnostics.vint,
+		null_ls.builtins.diagnostics.fish,
 	},
 })
