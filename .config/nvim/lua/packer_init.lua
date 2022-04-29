@@ -24,6 +24,11 @@ end
 
 -- Have packer use a popup window
 packer.init({
+	display = {
+		open_fn = function()
+			return require("packer.util").float({ border = "rounded" })
+		end,
+	},
 	git = {
 		clone_timeout = 120, -- Timeout, in seconds, for git clones
 	},

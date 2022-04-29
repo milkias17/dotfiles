@@ -36,7 +36,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap("n", "gd", vim.lsp.buf.definition, opts)
 	buf_set_keymap("n", "gr", vim.lsp.buf.references, opts)
 	buf_set_keymap("n", "<leader>f", vim.lsp.buf.formatting, opts)
-	buf_set_keymap("n", "<leader>rf", vim.lsp.buf.range_formatting, opts)
+	buf_set_keymap("v", "<leader>rf", vim.lsp.buf.range_formatting, opts)
 
 	buf_set_keymap("n", "<C-s>", vim.lsp.buf.signature_help, opts)
 	buf_set_keymap("i", "<C-s>", vim.lsp.buf.signature_help, opts)

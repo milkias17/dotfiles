@@ -71,14 +71,26 @@ cmp.setup({
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping.select_next_item(),
+		["<Tab>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback()
+			end
+		end,
 		["<S-Tab>"] = cmp.mapping.select_prev_item(),
 	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
-			-- Kind icons
+			-- Lsp icons
 			vim_item.kind = string.format("%s", lsp_icons[vim_item.kind])
+			-- vim_item.menu = ({
+			-- 	nvim_lsp = "[LSP]",
+			-- 	luasnip = "[Snippet]",
+			-- 	buffer = "[Buffer]",
+			-- 	path = "[Path]",
+			-- })[entry.source.name]
 			vim_item.menu = ({
 				nvim_lsp = "",
 				luasnip = "",
@@ -98,14 +110,6 @@ cmp.setup({
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
-	window = {
-		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		},
-	},
-	-- view = {
-	-- entries = "native",
-	-- },
 	experimental = {
 		ghost_text = true,
 	},

@@ -2,7 +2,7 @@
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER firefox
-set -U fish_user_paths $HOME/{'', '.local/'}bin/ /opt/appimages/
+set -U fish_user_paths $HOME/{'', '.local/', 'go/'}bin/ /opt/appimages/ /opt/android-sdk/cmdline-tools/latest/bin/
 
 # Fix resizing issues
 set --unexport {COLUMNS,LINES}
