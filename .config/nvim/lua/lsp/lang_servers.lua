@@ -5,7 +5,7 @@ local lspconfig = require("lspconfig")
 lspconfig.html.setup({
 	flags = { debounce_text_changes = 500 },
 	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end,
 	capabilities = capabilities,
 	filetypes = { "html", "htmldjango" },
@@ -28,7 +28,7 @@ lspconfig.emmet_ls.setup({
 
 lspconfig.tsserver.setup({
 	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 		on_attach(client, bufnr)
 	end,
 	flags = { debounce_text_changes = 500 },
@@ -65,7 +65,7 @@ lspconfig.sumneko_lua.setup({
 		},
 	},
 	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
 		on_attach(client, bufnr)
 	end,
 	capabilities = capabilities,
@@ -96,7 +96,7 @@ lspconfig.clangd.setup({
 	capabilities = capabilities,
 	on_attach = function()
 		on_attach()
-		-- if client.resolved_capabilities.document_formatting then
+		-- if client.server_capabilities.documentFormattingProvider then
 		-- 	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
 		-- 	on_attach()
 		-- end

@@ -60,11 +60,8 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local builtin = require("telescope.builtin")
 
-if vim.fn.isdirectory(".git") == 1 then
-	map("n", "<space>f", builtin.git_files, opts)
-else
-	map("n", "<space>f", builtin.find_files, opts)
-end
+map("n", "<space>f", builtin.find_files, opts)
+map("n", "<space>gf", builtin.git_files, opts)
 map("n", "<space>l", builtin.live_grep, opts)
 map("n", "<space>b", builtin.buffers, opts)
 map("n", "<space>tt", builtin.colorscheme, opts)
