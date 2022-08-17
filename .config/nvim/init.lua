@@ -1,4 +1,4 @@
-require("impatient")
+pcall(require, "impatient")
 
 vim.g.did_load_filetypes = 1
 
@@ -31,8 +31,8 @@ vim.g.mapleader = ","
 
 local modules = {
 	"packer_init",
-	"plugins",
-	"lsp",
+    "lsp",
+	"theme"
 }
 
 for i = 1, #modules do

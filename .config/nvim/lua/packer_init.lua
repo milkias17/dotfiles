@@ -1,9 +1,10 @@
-vim.cmd([[ packadd packer.nvim ]])
 local fn = vim.fn
+local present, packer = pcall(require, "packer")
 
--- Automatically install packer
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
+if not present then
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	print("Installing Packer")
+	fn.delete(install_path, "rf")
 	PACKER_BOOTSTRAP = fn.system({
 		"git",
 		"clone",
@@ -12,14 +13,13 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"https://github.com/wbthomason/packer.nvim",
 		install_path,
 	})
-	print("Installing packer close and reopen Neovim...")
 	vim.cmd([[packadd packer.nvim]])
-end
-
--- Use a protected call so we don't error out on first use
-local status, packer = pcall(require, "packer")
-if not status then
-	return
+	present, packer = pcall(require, "packer")
+	if present then
+		print("Packer installed successfully!")
+	else
+		error("Couldn't install packer!\nInstall path: " .. install_path)
+	end
 end
 
 -- Have packer use a popup window
@@ -33,6 +33,8 @@ packer.init({
 		clone_timeout = 120, -- Timeout, in seconds, for git clones
 	},
 })
+
+vim.cmd([[ packadd packer.nvim ]])
 
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
@@ -80,7 +82,9 @@ return packer.startup(function(use)
 	use({ "mattn/emmet-vim", ft = { "html", "javascript", "javascriptreact", "htmldjango" } })
 
 	-- Visual Stuff
-	use("ful1e5/onedark.nvim")
+	-- use("ful1e5/onedark.nvim")
+	-- use("ii14/onedark.nvim")
+	use("monsonjeremy/onedark.nvim")
 	use("projekt0n/github-nvim-theme")
 	-- use("joshdick/onedark.vim")
 	use("norcalli/nvim-colorizer.lua")

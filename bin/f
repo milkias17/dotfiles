@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-if [ $# -eq 0 ]; then
-	file=$(fzf -m)
+# if [ -z "$@" ]; then
+if [ "$#" -eq 0 ]; then
+	file=$(fzf -m --preview='cat {}')
 	[ -z "$file" ] && exit
 	echo "$file" | xargs nvim
 else
@@ -11,7 +12,7 @@ else
 		if [ -e "$1" ]; then
 			nvim "$1"
 		else
-			output=$(find . -iname "*$1*" -type f | grep -vE ".*/env|.*/__pycache__|.*/.git|.*/node_modules")
+			output=$(find . -iname "*$1*" -type f | grep -vE ".*/env|.*/__pycache__")
 			if [ -z "$output" ]; then
 				nvim "$1"
 			elif [ "$(echo "$output" | wc -l)" -gt 1 ]; then

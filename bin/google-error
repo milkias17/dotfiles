@@ -1,10 +1,9 @@
 #!/bin/bash
-selected_text=$(xclip -out -selection clipboard 2> /dev/null | sed 's/\s/+/g')
-if [  -z "$selected_text" ]; then
-    dunstify -i script-error 'No text found in clipboard'
+selected_text=$(xclip -out -selection clipboard 2>/dev/null | sed -e 's/^[[:space:]]*//' | sed 's/\s/+/g')
+if [ -z "$selected_text" ]; then
+	notify-send -i script-error 'No text found in clipboard'
 else
-    url="https://duckduckgo.com/?q="$selected_text
-    firefox --new-tab "$url"
-    [ "$DESKTOP_SESSION" = 'qtile' ] && qtile cmd-obj -o group 1 -f toscreen
+	url="https://duckduckgo.com/?q="$selected_text
+	echo "$url"
+	firefox --new-tab "$url"
 fi
-

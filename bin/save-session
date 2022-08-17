@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xlsclients | sed '/nm-applet\|lxsession\|lxpolkit\|lxclipboard\|variety/d' | cut -d ' ' -f 3 > $HOME/.saved-session

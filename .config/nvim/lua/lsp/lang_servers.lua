@@ -5,7 +5,8 @@ local lspconfig = require("lspconfig")
 lspconfig.html.setup({
 	flags = { debounce_text_changes = 500 },
 	on_attach = function(client, bufnr)
-		client.server_capabilities.documentFormattingProvider = false
+		-- client.server_capabilities.documentFormattingProvider = false
+		client.resolved_capabilities.document_formatting = false
 	end,
 	capabilities = capabilities,
 	filetypes = { "html", "htmldjango" },
@@ -28,7 +29,8 @@ lspconfig.emmet_ls.setup({
 
 lspconfig.tsserver.setup({
 	on_attach = function(client, bufnr)
-		client.server_capabilities.documentFormattingProvider = false
+		-- client.server_capabilities.documentFormattingProvider = false
+		client.resolved_capabilities.document_formatting = false
 		on_attach(client, bufnr)
 	end,
 	flags = { debounce_text_changes = 500 },
@@ -43,7 +45,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup({
-	cmd = { "lua-language-server" },
+	cmd = { "launch-lua-langserver" },
 	settings = {
 		Lua = {
 			runtime = {
@@ -65,7 +67,7 @@ lspconfig.sumneko_lua.setup({
 		},
 	},
 	on_attach = function(client, bufnr)
-        client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentFormattingProvider = false
 		on_attach(client, bufnr)
 	end,
 	capabilities = capabilities,

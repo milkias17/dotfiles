@@ -2,7 +2,8 @@
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER firefox
-set -U fish_user_paths $HOME/{'', '.local/', 'go/'}bin/ /opt/appimages/ /opt/android-sdk/cmdline-tools/latest/bin/
+set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin
+set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
 
 # Fix resizing issues
 set --unexport {COLUMNS,LINES}
@@ -26,27 +27,24 @@ else
 end
 
 alias v="nvim"
-alias vim="nvim"
-alias pai="sudo pacman -S"
-alias par="sudo pacman -Rns"
-alias pau="sudo pacman -Syu"
-alias pas="pacman -Ss"
-alias info="pacman -Si"
-alias yi="yay -S"
-alias yr="yay -Rns"
-alias yu="yay -Syu"
-alias ys="yay -Ss"
-alias window="xprop | grep -i 'class'"
-alias cleanup="sudo pacman -Rns (pacman -Qtdq)"
+# alias ai="sudo apt install"
+# alias ar="sudo apt purge"
+# alias au="sudo apt update && sudo apt upgrade"
+# alias as="apt search"
+# alias ac="sudo apt autoremove"
+alias ai="sudo nala install"
+alias ar="sudo nala purge"
+alias au="sudo nala update && sudo nala upgrade"
+alias as="nala search"
+alias ac="sudo nala autoremove"
+alias info="apt info"
+alias grep="grep --color=auto"
 alias gc="git clone"
 alias ..="cd .."
-alias grep="grep --color=auto"
-alias wget="wget -c"
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return
     find . -iname 'react-main*.js' -exec rm '{}' \;
     popd >/dev/null || exit
 end
-
-export FZF_DEFAULT_COMMAND='rg --files --follow --hidden -g "!{node_modules/*,.git/*,__pycache__/*,env/*}"'
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

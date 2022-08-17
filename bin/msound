@@ -1,62 +1,61 @@
 #!/bin/bash
 
 get_volume() {
-	amixer sget Master | grep 'Right:' | sed 's/^\s*//g' | cut -d' ' -f 5 | sed 's/[][]//g' | sed 's/%//g'
+    amixer sget Master | grep 'Right:' | sed 's/^\s*//g' | cut -d' ' -f 5 | sed 's/[][]//g' | sed 's/%//g'
 }
 
 increase_volume() {
-	pactl set-sink-volume 0 +10%
-	send_notifcation
+    pactl set-sink-volume 0 +10%
+    send_notifcation
 }
 
 decrease_volume() {
-	pactl set-sink-volume 0 -10%
-	send_notifcation
+    pactl set-sink-volume 0 -10%
+    send_notifcation
 }
 
 mute_volume() {
-	pactl set-sink-mute 0 toggle
-	send_notifcation mute
+    pactl set-sink-mute 0 toggle
+    send_notifcation mute
 }
 
 send_notifcation() {
-	done=$1
-	volume=$(get_volume)
-	if [ "$done" == "mute" ]; then
-		icon=${icons[3]}
-	else
-		if [ "$volume" -lt 40 ]; then
-			icon=${icons[1]}
-		elif [ "$volume" -ge 70 ]; then
-			icon=${icons[0]}
-		elif [ "$volume" -ge 40 ] && [ "$volume" -lt 70 ]; then
-			icon=${icons[2]}
-		fi
-	fi
-	notify-send -h string:x-dunst-stack-tag:volume -i "$icon" "Volume: $volume%" -h int:value:"$volume"
+    done=$1
+    volume=$(get_volume)
+    if [ "$done" == "mute" ]; then
+        icon=${icons[3]}
+    else
+        if [ "$volume" -lt 40 ]; then
+            icon=${icons[1]}
+        elif [ "$volume" -ge 70 ]; then
+            icon=${icons[0]}
+        elif [ "$volume" -ge 40 ] && [ "$volume" -lt 70 ]; then
+            icon=${icons[2]}
+        fi
+    fi
+    notify-send -h string:x-dunst-stack-tag:volume -i "$icon" "Volume: $volume%" -h int:value:"$volume"
 }
 
 icons=(
-	audio-volume-high
-	audio-volume-low
-	audio-volume-medium
-	audio-volume-muted
-)
+    audio-volume-high
+    audio-volume-low
+    audio-volume-medium
+    audio-volume-muted
+    )
 
-case "$1" in
--i)
-	increase_volume
-	;;
--d)
-	decrease_volume
-	;;
--m)
-	mute_volume
-	;;
-'')
-	get_volume
-	;;
-*)
-	echo "Invalid argument(s) provided"
-	;;
+case "$1" in 
+    -i)
+        increase_volume
+        ;;
+    -d)
+        decrease_volume
+        ;;
+    -m)
+        mute_volume
+        ;;
+    '')
+        get_volume
+        ;;
+    *)
+        echo "Invalid argument(s) provided" ;;
 esac

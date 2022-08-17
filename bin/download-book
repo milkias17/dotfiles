@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import wget
 from libgen_api import LibgenSearch
@@ -12,12 +12,8 @@ def bar_custom(current, total, width=80):
 
 if __name__ == "__main__":
     book_title = input("Search for book: ")
-    type = input("Enter a for author, t for title: ")
     s = LibgenSearch()
-    if type == "a":
-        results = s.search_author(book_title)
-    else:
-        results = s.search_title(book_title)
+    results = s.search_title(book_title)
     if not results:
         print("Couldn't find the book you were looking for:(")
     else:

@@ -1,5 +1,5 @@
 #!/bin/bash
 
 if [ "$DUNST_STACK_TAG" != "volume" ]; then
-	paplay "$HOME/.local/share/sounds/Waterdrop_Drop.ogg"
+    paplay $HOME/.local/share/sounds/Waterdrop_Drop.ogg
 fi
