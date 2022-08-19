@@ -31,8 +31,8 @@ vim.g.mapleader = ","
 
 local modules = {
 	"packer_init",
-    "lsp",
-	"theme"
+	"lsp",
+	"theme",
 }
 
 for i = 1, #modules do

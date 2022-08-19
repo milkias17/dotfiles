@@ -1,0 +1,11 @@
+new_tab code
+cd ~/Dev/projects/chess/
+launch fish -c 'nvim'
+
+new_tab backend_server
+cd ~/Dev/projects/chess/
+launch fish
+
+new_tab frontend_server
+cd ~/Dev/projects/chess/frontend/
+launch fish

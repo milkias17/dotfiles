@@ -82,15 +82,12 @@ return packer.startup(function(use)
 	use({ "mattn/emmet-vim", ft = { "html", "javascript", "javascriptreact", "htmldjango" } })
 
 	-- Visual Stuff
-	-- use("ful1e5/onedark.nvim")
-	-- use("ii14/onedark.nvim")
 	use("monsonjeremy/onedark.nvim")
+	use("Mofiqul/vscode.nvim")
 	use("projekt0n/github-nvim-theme")
-	-- use("joshdick/onedark.vim")
 	use("norcalli/nvim-colorizer.lua")
 	use("nvim-lualine/lualine.nvim")
 	use("romgrk/barbar.nvim")
-	-- use("akinsho/bufferline.nvim")
 	use("kyazdani42/nvim-web-devicons")
 	use("kyazdani42/nvim-tree.lua")
 	use({
@@ -100,12 +97,15 @@ return packer.startup(function(use)
 			require("fidget").setup({})
 		end,
 	})
-	-- use("lukas-reineke/indent-blankline.nvim")
+	use("lukas-reineke/indent-blankline.nvim")
 
 	-- Utils
 	use("TimUntersberger/neogit")
 	use("sindrets/diffview.nvim")
-	use("tpope/vim-surround")
+	use({
+		"kylechui/nvim-surround",
+		tag = "*",
+	})
 	use({ "tpope/vim-commentary", event = "VimEnter" })
 	use({
 		"nvim-telescope/telescope.nvim",

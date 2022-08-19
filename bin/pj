@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+tmp=$(find "$HOME/.config/kitty/sessions/" -type f)
+options=()
+for option in $tmp; do
+	options+=($(echo "$option" | cut -d'/' -f 7))
+done
+chosen=$(printf "%s\n" "${options[@]}" | fzf -i --ansi --preview="cat $HOME/.config/kitty/sessions/{}")
+session="$HOME/.config/kitty/sessions/"$chosen
+if [ -n "$chosen" ]; then
+	kitty --detach --session "$session"
+	kill $PPID
+else
+	echo "Please select a session" >>/dev/stderr
+	exit 1
+fi

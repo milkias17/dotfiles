@@ -2,7 +2,7 @@
 
 # if [ -z "$@" ]; then
 if [ "$#" -eq 0 ]; then
-	file=$(fzf -m --preview='cat {}')
+	file=$(fzf -m --ansi --preview='bat --color always {}')
 	[ -z "$file" ] && exit
 	echo "$file" | xargs nvim
 else
