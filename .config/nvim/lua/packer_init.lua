@@ -67,6 +67,7 @@ return packer.startup(function(use)
 		ft = { "java" },
 		after = { "nvim-lspconfig" },
 	})
+	use("napmn/react-extract.nvim")
 
 	-- Snippets
 	use({
@@ -102,6 +103,12 @@ return packer.startup(function(use)
 	-- Utils
 	use("TimUntersberger/neogit")
 	use("sindrets/diffview.nvim")
+	use({
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 	use({
 		"kylechui/nvim-surround",
 		tag = "*",
