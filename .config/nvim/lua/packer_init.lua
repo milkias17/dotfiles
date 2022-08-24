@@ -98,7 +98,6 @@ return packer.startup(function(use)
 			require("fidget").setup({})
 		end,
 	})
-	use("lukas-reineke/indent-blankline.nvim")
 
 	-- Utils
 	use("TimUntersberger/neogit")

@@ -34,6 +34,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.vint,
 		null_ls.builtins.diagnostics.fish,
 
-		null_ls.builtins.code_actions.gitsigns,
+		-- null_ls.builtins.code_actions.gitsigns,
 	},
 })
