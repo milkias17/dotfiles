@@ -75,11 +75,6 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
-P = function(stuff)
-	print(vim.inspect(stuff))
-	return stuff
-end
-
 local function last_place()
 	if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
 		if not vim.tbl_contains({ "gitcommit", "help", "packer", "qf" }, vim.bo.ft) then
@@ -91,4 +86,20 @@ end
 vim.api.nvim_create_autocmd({ "BufRead" }, {
 	pattern = "*",
 	callback = last_place,
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	pattern = os.getenv("HOME") .. "/.config/nvim/*",
+	callback = function()
+		local modules = {
+			"general",
+			"keymaps",
+			"packer_init",
+			"plugins",
+			"lsp",
+		}
+		for _, package in pairs(modules) do
+			R(package)
+		end
+	end,
 })

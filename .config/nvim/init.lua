@@ -30,9 +30,12 @@ end
 vim.g.mapleader = ","
 
 local modules = {
-	"packer_init",
-	"lsp",
+	"general",
+	"keymaps",
 	"theme",
+	"packer_init",
+	"plugins",
+	"lsp",
 }
 
 for i = 1, #modules do

@@ -1,12 +1,13 @@
+if not status is-interactive
+    return
+end
+
 # Env variables
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER firefox
 set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin
 set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
-
-# Fix resizing issues
-set --unexport {COLUMNS,LINES}
 
 # Aliases
 alias check="ping google.com"
@@ -47,4 +48,5 @@ function zeal-docs-fix
     find . -iname 'react-main*.js' -exec rm '{}' \;
     popd >/dev/null || exit
 end
+
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
