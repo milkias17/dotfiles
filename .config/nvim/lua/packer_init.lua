@@ -50,6 +50,13 @@ return packer.startup(function(use)
 	use("windwp/nvim-autopairs")
 	use({ "windwp/nvim-ts-autotag", opt = true, ft = { "html", "javascript", "htmldjango" } })
 	use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
+	use({
+		"nvim-treesitter/nvim-treesitter-context",
+		after = "nvim-treesitter",
+		config = function()
+			require("treesitter-context").setup()
+		end,
+	})
 
 	-- Lsp
 	use("neovim/nvim-lspconfig")
@@ -127,6 +134,13 @@ return packer.startup(function(use)
 			},
 		},
 	})
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require("notify")
+		end,
+	})
+
 	use({ "iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = { "markdown" } })
 	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
 	use({ "dstein64/vim-startuptime", cmd = { "StartupTime" } })

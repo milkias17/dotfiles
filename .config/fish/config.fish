@@ -6,7 +6,7 @@ end
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER firefox
-set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin
+set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin $HOME/.deta/bin
 set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
 
 # Aliases
@@ -35,7 +35,7 @@ alias v="nvim"
 # alias ac="sudo apt autoremove"
 alias ai="sudo nala install"
 alias ar="sudo nala purge"
-alias au="sudo nala update && sudo nala upgrade"
+alias au="sudo nala upgrade"
 alias as="nala search"
 alias ac="sudo nala autoremove"
 alias info="apt info"

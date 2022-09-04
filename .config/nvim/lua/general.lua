@@ -35,11 +35,10 @@ local options = {
 	shell = "/usr/bin/fish",
 	title = true,
 	updatetime = 50,
-	inccommand = "nosplit",
 	path = ".,**",
 	whichwrap = "b,s,<,>,[,]",
 	confirm = true,
-	-- timeoutlen = 300,
+	timeoutlen = 300,
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }
@@ -69,7 +68,6 @@ vim.cmd([[
     ]])
 
 vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
--- vim.cmd([[au BufWritePre *.c silent! <cmd>%s/\s\+$//e]])
 
 for k, v in pairs(options) do
 	vim.opt[k] = v

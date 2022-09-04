@@ -38,6 +38,6 @@ local modules = {
 	"lsp",
 }
 
-for i = 1, #modules do
-	pcall(require, modules[i])
+for _, mdl in ipairs(modules) do
+	pcall(require, mdl)
 end
