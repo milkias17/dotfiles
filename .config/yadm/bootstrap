@@ -5,10 +5,8 @@
 # Install dev tools
 sudo apt install python3-pip python3-venv golang sqlformat
 pip install pyright jedi-language-server djhtml
-curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
-sudo apt-get update && sudo apt-get install -y nodejs
 sudo npm i -g bash-language-server emmet-ls vscode-langservers-extracted typescript-language-server typescript prettier fixjson
 brew install shfmt
 
 # Install all other packages
-cat "$HOME/.config/yadm/packages.list" | xargs sudo apt install
+cat "$HOME/.config/yadm/packages.list" | xargs sudo apt install -y
