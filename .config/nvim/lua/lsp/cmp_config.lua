@@ -75,18 +75,18 @@ cmp.setup({
 		format = function(entry, vim_item)
 			-- Lsp icons
 			vim_item.kind = string.format("%s", lsp_icons[vim_item.kind])
-			-- vim_item.menu = ({
-			-- 	nvim_lsp = "[LSP]",
-			-- 	luasnip = "[Snippet]",
-			-- 	buffer = "[Buffer]",
-			-- 	path = "[Path]",
-			-- })[entry.source.name]
 			vim_item.menu = ({
-				nvim_lsp = "",
-				luasnip = "",
-				buffer = "ﮜ",
-				path = "",
+				nvim_lsp = "[LSP]",
+				luasnip = "[Snippet]",
+				buffer = "[Buffer]",
+				path = "[Path]",
 			})[entry.source.name]
+			-- vim_item.menu = ({
+			-- 	nvim_lsp = "",
+			-- 	luasnip = "",
+			-- 	buffer = "ﮜ",
+			-- 	path = "",
+			-- })[entry.source.name]
 			return vim_item
 		end,
 	},

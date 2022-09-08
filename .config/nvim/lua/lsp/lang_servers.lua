@@ -45,7 +45,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup({
-	cmd = { "launch-lua-langserver" },
+	-- cmd = { "launch-lua-langserver" },
 	settings = {
 		Lua = {
 			runtime = {
@@ -67,33 +67,34 @@ lspconfig.sumneko_lua.setup({
 		},
 	},
 	on_attach = function(client, bufnr)
-		client.server_capabilities.documentFormattingProvider = false
+		-- client.server_capabilities.documentFormattingProvider = false
+		client.resolved_capabilities.document_formatting = false
 		on_attach(client, bufnr)
 	end,
 	capabilities = capabilities,
 })
 
-lspconfig.jedi_language_server.setup({ on_attach = on_attach })
+-- lspconfig.jedi_language_server.setup({ on_attach = on_attach })
 
--- lspconfig.pyright.setup({
--- 	on_attach = on_attach,
--- 	root_dir = function()
--- 		return vim.loop.cwd()
--- 	end,
+lspconfig.pyright.setup({
+	on_attach = on_attach,
+	root_dir = function()
+		return vim.loop.cwd()
+	end,
 
--- 	settings = {
--- 		python = {
--- 			analysis = {
--- 				autoSearchPaths = true,
--- 				diagnosticMode = "workspace",
--- 				useLibraryCodeForTypes = false,
--- 				typeCheckingMode = "off",
--- 			},
--- 		},
--- 	},
--- 	capabilities = capabilities,
--- 	single_file_support = true,
--- })
+	settings = {
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "workspace",
+				useLibraryCodeForTypes = false,
+				typeCheckingMode = "off",
+			},
+		},
+	},
+	capabilities = capabilities,
+	single_file_support = true,
+})
 
 lspconfig.clangd.setup({
 	capabilities = capabilities,

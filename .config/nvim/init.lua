@@ -36,6 +36,7 @@ local modules = {
 	"packer_init",
 	"plugins",
 	"lsp",
+	-- "debugger",
 }
 
 for _, mdl in ipairs(modules) do

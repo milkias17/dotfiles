@@ -38,6 +38,12 @@ vim.cmd([[ packadd packer.nvim ]])
 
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
+	use({
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup()
+		end,
+	})
 
 	--Treesitter
 	use({
@@ -75,6 +81,11 @@ return packer.startup(function(use)
 		after = { "nvim-lspconfig" },
 	})
 	use("napmn/react-extract.nvim")
+
+	-- Debugging
+	-- use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	-- use({ "nvim-telescope/telescope-dap.nvim", requires = { "mfussenegger/nvim-dap" } })
+	-- use("mfussenegger/nvim-dap-python")
 
 	-- Snippets
 	use({
