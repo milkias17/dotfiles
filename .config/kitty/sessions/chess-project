@@ -1,10 +1,10 @@
 new_tab code
 cd ~/Dev/projects/chess/
-launch fish -c 'nvim'
+launch fish -c 'source backend/env/bin/activate.fish && nvim'
 
 new_tab backend_server
 cd ~/Dev/projects/chess/
-launch fish
+launch fish -c 'source backend/env/bin/activate.fish && uvicorn backend.main:app --reload'
 
 new_tab frontend_server
 cd ~/Dev/projects/chess/frontend/

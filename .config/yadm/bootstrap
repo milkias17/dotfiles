@@ -1,12 +1,3 @@
 #!/usr/bin/bash
-# Install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install dev tools
-sudo apt install python3-pip python3-venv golang sqlformat
-pip install pyright jedi-language-server djhtml
-sudo npm i -g bash-language-server emmet-ls vscode-langservers-extracted typescript-language-server typescript prettier fixjson
-brew install shfmt
-
 # Install all other packages
 cat "$HOME/.config/yadm/packages.list" | xargs sudo apt install -y

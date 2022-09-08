@@ -48,5 +48,3 @@ function zeal-docs-fix
     find . -iname 'react-main*.js' -exec rm '{}' \;
     popd >/dev/null || exit
 end
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
