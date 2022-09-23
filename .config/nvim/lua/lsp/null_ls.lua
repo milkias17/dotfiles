@@ -18,6 +18,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettierd,
 		-- null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.black,
+		-- null_ls.builtins.formatting.autopep8,
 		null_ls.builtins.formatting.djhtml.with({
 			extra_args = { "-t", "2" },
 		}),
@@ -29,7 +30,9 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.flake8.with({
 			extra_args = { "--max-line-length", "105", "--ignore", "E402,E501,E203" },
 		}),
+		-- null_ls.builtins.diagnostics.pycodestyle,
 		-- null_ls.builtins.diagnostics.mypy,
+		-- null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.diagnostics.vint,
 		null_ls.builtins.diagnostics.fish,

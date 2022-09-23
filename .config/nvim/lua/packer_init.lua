@@ -66,7 +66,7 @@ return packer.startup(function(use)
 
 	-- Lsp
 	use("neovim/nvim-lspconfig")
-	use({ "jose-elias-alvarez/null-ls.nvim", after = "nvim-lspconfig" })
+	use({ "jose-elias-alvarez/null-ls.nvim", after = "mason.nvim" })
 	use({
 		"hrsh7th/nvim-cmp",
 		after = "friendly-snippets",
@@ -75,6 +75,7 @@ return packer.startup(function(use)
 	use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
 	use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
 	use({ "saadparwaiz1/cmp_luasnip", after = "LuaSnip" })
+	use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
 	use({
 		"mfussenegger/nvim-jdtls",
 		ft = { "java" },
@@ -153,8 +154,7 @@ return packer.startup(function(use)
 	})
 
 	use({ "iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = { "markdown" } })
-	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
-	use({ "dstein64/vim-startuptime", cmd = { "StartupTime" } })
+	use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
 	use("lewis6991/impatient.nvim")
 	use("nathom/filetype.nvim")
 
