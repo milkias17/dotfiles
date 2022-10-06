@@ -12,8 +12,9 @@ out_path = os.getcwd()
 user = "jaminux"
 to_stdout = False
 limit = True
+type = "all"
 try:
-    opts, args = getopt.getopt(arg_list, "n:pu:", ["to-file=", "no-limit"])
+    opts, args = getopt.getopt(arg_list, "n:pu:t:", ["to-file=", "no-limit"])
 except getopt.GetoptError as e:
     print("Arguments given have errors")
     print(e)
@@ -28,26 +29,30 @@ for opt, arg in opts:
         to_stdout = True
     if opt in ["-u"]:
         user = arg
+    if opt in ["-t"]:
+        type = arg
     if opt in ["--no-limit"]:
         limit = False
 
 if limit:
-    pgn = lichess.api.user_games(user, max=num_games, format=SINGLE_PGN)
+    pgn = lichess.api.user_games(
+        user, max=num_games, format=SINGLE_PGN, perfType=type, clocks=True
+    )
 else:
-    pgn = lichess.api.user_games(user, format=SINGLE_PGN)
+    pgn = lichess.api.user_games(user, format=SINGLE_PGN, perfType=type, clocks=True)
 
 if to_stdout:
     print(pgn)
 elif os.path.dirname(out_path):
     file = None
-    if os.path.isdir(out_path + '/'):
+    if os.path.isdir(out_path + "/"):
         if limit:
-            file = open(f'{out_path}/{user}_last_{num_games}games.pgn', 'w')
+            file = open(f"{out_path}/{user}_last_{num_games}games.pgn", "w")
         else:
-            file = open(f'{out_path}/{user}_all_games.pgn', 'w')
+            file = open(f"{out_path}/{user}_all_games.pgn", "w")
     else:
-        file = open(out_path, 'w')
+        file = open(out_path, "w")
     with file as f:
         f.write(pgn)
 else:
-    print('Given path has an error')
+    print("Given path has an error")

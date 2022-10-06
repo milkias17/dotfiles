@@ -66,7 +66,7 @@ return packer.startup(function(use)
 
 	-- Lsp
 	use("neovim/nvim-lspconfig")
-	use({ "jose-elias-alvarez/null-ls.nvim", after = "mason.nvim" })
+	use("jose-elias-alvarez/null-ls.nvim")
 	use({
 		"hrsh7th/nvim-cmp",
 		after = "friendly-snippets",
@@ -84,7 +84,7 @@ return packer.startup(function(use)
 	use("napmn/react-extract.nvim")
 
 	-- Debugging
-	-- use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	-- use({ "nvim-telescope/telescope-dap.nvim", requires = { "mfussenegger/nvim-dap" } })
 	-- use("mfussenegger/nvim-dap-python")
 
@@ -103,8 +103,11 @@ return packer.startup(function(use)
 
 	-- Visual Stuff
 	use("monsonjeremy/onedark.nvim")
-	use("Mofiqul/vscode.nvim")
 	use("projekt0n/github-nvim-theme")
+	use("gruvbox-community/gruvbox")
+	use("folke/tokyonight.nvim")
+	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("marko-cerovac/material.nvim")
 	use("norcalli/nvim-colorizer.lua")
 	use("nvim-lualine/lualine.nvim")
 	use("romgrk/barbar.nvim")
@@ -119,8 +122,8 @@ return packer.startup(function(use)
 	})
 
 	-- Utils
-	use("TimUntersberger/neogit")
-	use("sindrets/diffview.nvim")
+	-- use("TimUntersberger/neogit")
+	-- use("sindrets/diffview.nvim")
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -154,9 +157,9 @@ return packer.startup(function(use)
 	})
 
 	use({ "iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = { "markdown" } })
-	use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
+	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
+	use("dstein64/vim-startuptime")
 	use("lewis6991/impatient.nvim")
-	use("nathom/filetype.nvim")
 
 	-- Install plugins on first load
 	if PACKER_BOOTSTRAP then

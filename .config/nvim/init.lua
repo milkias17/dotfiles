@@ -1,7 +1,5 @@
 pcall(require, "impatient")
 
-vim.g.did_load_filetypes = 1
-
 local disabled_built_ins = {
 	"2html_plugin",
 	"getscript",
@@ -38,7 +36,6 @@ local modules = {
 	"lsp",
 	-- "debugger",
 }
-
 for _, mdl in ipairs(modules) do
 	pcall(require, mdl)
 end

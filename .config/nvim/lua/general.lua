@@ -86,18 +86,18 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 	callback = last_place,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = os.getenv("HOME") .. "/.config/nvim/*",
-	callback = function()
-		local modules = {
-			"general",
-			"keymaps",
-			"packer_init",
-			"plugins",
-			"lsp",
-		}
-		for _, package in pairs(modules) do
-			R(package)
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+-- 	pattern = os.getenv("HOME") .. "/.config/nvim/*",
+-- 	callback = function()
+-- 		local modules = {
+-- 			"general",
+-- 			"keymaps",
+-- 			"packer_init",
+-- 			"plugins",
+-- 			"lsp",
+-- 		}
+-- 		for _, package in pairs(modules) do
+-- 			R(package)
+-- 		end
+-- 	end,
+-- })

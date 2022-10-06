@@ -5,8 +5,8 @@ local lspconfig = require("lspconfig")
 lspconfig.html.setup({
 	flags = { debounce_text_changes = 500 },
 	on_attach = function(client, bufnr)
-		-- client.server_capabilities.documentFormattingProvider = false
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
+		-- client.resolved_capabilities.document_formatting = false
 	end,
 	capabilities = capabilities,
 	filetypes = { "html", "htmldjango" },
@@ -29,8 +29,8 @@ lspconfig.emmet_ls.setup({
 
 lspconfig.tsserver.setup({
 	on_attach = function(client, bufnr)
-		-- client.server_capabilities.documentFormattingProvider = false
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
+		-- client.resolved_capabilities.document_formatting = false
 		on_attach(client, bufnr)
 	end,
 	flags = { debounce_text_changes = 500 },
@@ -40,19 +40,14 @@ lspconfig.tsserver.setup({
 	capabilities = capabilities,
 })
 
-local runtime_path = vim.split(package.path, ";")
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
 lspconfig.sumneko_lua.setup({
-	-- cmd = { "launch-lua-langserver" },
 	settings = {
 		Lua = {
 			runtime = {
 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 				version = "LuaJIT",
 				-- Setup your lua path
-				path = runtime_path,
+				-- path = runtime_path,
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
@@ -67,8 +62,8 @@ lspconfig.sumneko_lua.setup({
 		},
 	},
 	on_attach = function(client, bufnr)
-		-- client.server_capabilities.documentFormattingProvider = false
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
+		-- client.resolved_capabilities.document_formatting = false
 		on_attach(client, bufnr)
 	end,
 	capabilities = capabilities,
@@ -109,3 +104,5 @@ lspconfig.clangd.setup({
 		return vim.loop.cwd()
 	end,
 })
+
+lspconfig.dockerls.setup({})

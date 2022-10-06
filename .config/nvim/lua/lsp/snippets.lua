@@ -141,3 +141,6 @@ ls.add_snippets("lua", {
 		})
 	),
 })
+ls.add_snippets("javascript", {
+	ls.parser.parse_snippet("eaf", "export async function $1 ($2) {\n\t$0\n}"),
+})
