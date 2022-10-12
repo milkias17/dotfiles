@@ -10,6 +10,6 @@ if [ -n "$chosen" ]; then
 	kitty --detach --session "$session"
 	kill $PPID
 else
-	echo "Please select a session" >>/dev/stderr
+	printf "\033[31mPlease select a session!\033[m\n" >>/dev/stderr
 	exit 1
 fi
