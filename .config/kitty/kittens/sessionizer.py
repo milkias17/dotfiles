@@ -8,11 +8,14 @@ SHELL = "fish"
 
 
 def main(args: List[str]) -> str:
-    answer = None
-    while session_file_exists(answer := input("Enter session name: ")):
-        print("\033[31m" + "Session name already taken!" + "\033[m", file=sys.stderr)
-
-    return answer
+    while True:
+        answer = input("Enter session name: ")
+        if session_file_exists(answer):
+            action = input("Overwrite session file? (y or n): ")
+            if action == "y":
+                return answer
+        else:
+            return answer
 
 
 def session_file_exists(file_name: str) -> bool:
