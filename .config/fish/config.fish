@@ -1,13 +1,13 @@
-if not status is-interactive
-    return
-end
-
 # Env variables
 set -Ux TERMINAL kitty
 set -Ux EDITOR nvim
 set -Ux BROWSER firefox
 set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin $HOME/.deta/bin
 set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 # Aliases
 alias check="ping google.com"
@@ -28,23 +28,22 @@ else
 end
 
 alias v="nvim"
-# alias ai="sudo apt install"
-# alias ar="sudo apt purge"
-# alias au="sudo apt update && sudo apt upgrade"
-# alias as="apt search"
-# alias ac="sudo apt autoremove"
-alias ai="sudo nala install"
-alias ar="sudo nala purge"
-alias au="sudo nala upgrade"
-alias as="nala search"
-alias ac="sudo nala autoremove"
+alias ai="sudo apt install"
+alias ar="sudo apt purge"
+alias au="sudo apt update && sudo apt upgrade"
+alias as="apt search"
+alias ac="sudo apt autoremove"
 alias info="apt info"
 alias grep="grep --color=auto"
 alias gc="git clone"
 alias ..="cd .."
+alias kg="kitty +kitten hyperlinked_grep --smart-case"
+alias icat="kitty +kitten icat"
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return
     find . -iname 'react-main*.js' -exec rm '{}' \;
     popd >/dev/null || exit
 end
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

@@ -1,3 +1,37 @@
 #!/usr/bin/bash
+
+# kitty
+sudo apt install curl
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
+if [[ ! -d "$HOME/.local/bin" ]]; then
+	mkdir -p "$HOME/.local/bin"
+fi
+ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/
+
+if [[ ! -d "$HOME/.local/share/applications" ]]; then
+	mkdir -p "$HOME/.local/share/applications"
+fi
+cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+
+# setup fish
+echo 'deb http://download.opensuse.org/repositories/shells:/fish/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/shells:fish.list
+curl -fsSL https://download.opensuse.org/repositories/shells:fish/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish.gpg >/dev/null
+sudo apt update
+sudo apt install -y fish
+fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+fisher update
+
+# HomeBrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>"$HOME/.config/fish/config.fish"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# HomeBrew packages
+brew install neovim bat fd fzf
+
 # Install all other packages
 cat "$HOME/.config/yadm/packages.list" | xargs sudo apt install -y
