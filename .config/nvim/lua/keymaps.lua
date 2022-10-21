@@ -62,3 +62,5 @@ map("n", "<space>n", "<cmd>lnext<CR>")
 map("n", "<space>p", "<cmd>lprev<CR>")
 
 map("n", "<space>ot", "<cmd>terminal<CR>")
+
+map("n", "<leader><leader>r", require("reload-nvim").Reload)

@@ -13,7 +13,7 @@ set -Ux FZF_DEFAULT_OPTS "\
 alias check="ping google.com"
 alias c="clear"
 
-if test "$TERM" = xterm || test "$TERM" = linux
+if test "$TERM" = xterm || test "$TERM" = linux || not type -q lsd
     alias ll="ls -l"
     alias la="ls -a"
     alias l="ls -F"
@@ -35,10 +35,12 @@ alias as="apt search"
 alias ac="sudo apt autoremove"
 alias info="apt info"
 alias grep="grep --color=auto"
-alias gc="git clone"
 alias ..="cd .."
 alias kg="kitty +kitten hyperlinked_grep --smart-case"
 alias icat="kitty +kitten icat"
+alias ggc="git clone"
+alias ggs="git status"
+alias ggl="git log"
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return

@@ -1,9 +1,21 @@
-local capabilities = require("lsp/lsp_config").capabilities
-local on_attach = require("lsp/lsp_config").on_attach
+local lsp_config = require("lsp.lsp_config")
+local capabilities = lsp_config.capabilities
+local on_attach = lsp_config.on_attach
 local lspconfig = require("lspconfig")
 
+-- Use loop for calling servers requiring no configuration
+local servers = { "bashls", "cssls" }
+for _, lsp in ipairs(servers) do
+	lspconfig[lsp].setup({
+		on_attach = on_attach,
+		root_dir = function()
+			return vim.loop.cwd()
+		end,
+		capabilities = capabilities,
+	})
+end
+
 lspconfig.html.setup({
-	flags = { debounce_text_changes = 500 },
 	on_attach = function(client, bufnr)
 		client.server_capabilities.documentFormattingProvider = false
 		-- client.resolved_capabilities.document_formatting = false
@@ -23,7 +35,6 @@ if not lspconfig.emmet_ls then
 end
 lspconfig.emmet_ls.setup({
 	capabilities = capabilities,
-	flags = { debounce_text_changes = 500 },
 	filetypes = { "html", "css", "htmldjango" },
 })
 
@@ -33,7 +44,6 @@ lspconfig.tsserver.setup({
 		-- client.resolved_capabilities.document_formatting = false
 		on_attach(client, bufnr)
 	end,
-	flags = { debounce_text_changes = 500 },
 	root_dir = function()
 		return vim.loop.cwd()
 	end,

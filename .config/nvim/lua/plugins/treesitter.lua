@@ -11,6 +11,9 @@ require("nvim-treesitter.configs").setup({
 		-- additional_vim_regex_highlighting = { "html" },
 		additional_vim_regex_highlighting = false,
 	},
+	indent = {
+		enable = false,
+	},
 	playground = {
 		enable = true,
 	},
@@ -40,6 +43,7 @@ require("nvim-treesitter.configs").setup({
 	},
 	context_commentstring = {
 		enable = true,
+		enable_autocmd = false,
 	},
 	incremental_selection = {
 		enable = true,

@@ -70,33 +70,27 @@ end
 
 local lsp = {
 	function()
-		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+		local buf_ft = vim.bo.filetype
 		local clients = vim.lsp.get_active_clients()
 		local found_lsp = false
 		local msg_lsp = ""
+		local default_msg = "No Active Lsp"
 		if next(clients) == nil then
-			return "No Active Lsp"
+			return default_msg
 		end
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
-			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+			if client.name == "jdtls" then
+				filetypes = { "java" }
+			end
+			if filetypes ~= nil and vim.tbl_contains(filetypes, buf_ft) then
 				if client.name == "null-ls" then
 					goto continue
 				end
-				if not found_lsp then
+				if msg_lsp == "" then
 					msg_lsp = client.name
-					found_lsp = true
 				else
-					local found = false
-					for server in string.gmatch(msg_lsp, "([^,]+)") do
-						if client.name == server then
-							found = true
-							break
-						end
-					end
-					if not found then
-						msg_lsp = msg_lsp .. "," .. client.name
-					end
+					msg_lsp = msg_lsp .. "," .. client.name
 				end
 			end
 			::continue::
@@ -110,7 +104,12 @@ local lsp = {
 				msg_lsp = msg_lsp .. "," .. source.name
 			end
 		end
-		return msg_lsp
+
+		if msg_lsp == "" then
+			return default_msg
+		else
+			return msg_lsp
+		end
 	end,
 	-- icon = " LSP:",
 	icon = " ",

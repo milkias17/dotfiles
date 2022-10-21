@@ -1,1 +1,1 @@
-au BufNewFile,BufRead */templates/*.html set filetype=htmldjango
+au BufNewFile,BufRead **/templates/*.html set filetype=htmldjango

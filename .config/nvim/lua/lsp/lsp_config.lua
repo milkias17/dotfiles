@@ -1,5 +1,3 @@
-local nvim_lsp = require("lspconfig")
-
 local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.keymap.set(...)
@@ -50,26 +48,8 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
--- Use loop for calling servers requiring no configuration
-local servers = { "bashls", "cssls" }
-for _, lsp in ipairs(servers) do
-	nvim_lsp[lsp].setup({
-		on_attach = on_attach,
-		flags = {
-			debounce_text_changes = 150,
-		},
-		root_dir = function()
-			return vim.loop.cwd()
-		end,
-		capabilities = capabilities,
-	})
-end
-
 local M = {}
 M.on_attach = on_attach
-M.capabilities = capabilities
+M.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 return M

@@ -63,6 +63,7 @@ return packer.startup(function(use)
 			require("treesitter-context").setup()
 		end,
 	})
+	use("fladson/vim-kitty")
 
 	-- Lsp
 	use("neovim/nvim-lspconfig")
@@ -76,17 +77,13 @@ return packer.startup(function(use)
 	use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
 	use({ "saadparwaiz1/cmp_luasnip", after = "LuaSnip" })
 	use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
-	use({
-		"mfussenegger/nvim-jdtls",
-		ft = { "java" },
-		after = { "nvim-lspconfig" },
-	})
+	use("mfussenegger/nvim-jdtls")
 	use("napmn/react-extract.nvim")
 
 	-- Debugging
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	-- use({ "nvim-telescope/telescope-dap.nvim", requires = { "mfussenegger/nvim-dap" } })
-	-- use("mfussenegger/nvim-dap-python")
+	use("mfussenegger/nvim-dap-python")
 
 	-- Snippets
 	use({
@@ -108,7 +105,7 @@ return packer.startup(function(use)
 	use("folke/tokyonight.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("marko-cerovac/material.nvim")
-	use("norcalli/nvim-colorizer.lua")
+	use("NvChad/nvim-colorizer.lua")
 	use("nvim-lualine/lualine.nvim")
 	use("romgrk/barbar.nvim")
 	use("kyazdani42/nvim-web-devicons")
@@ -124,6 +121,7 @@ return packer.startup(function(use)
 	-- Utils
 	-- use("TimUntersberger/neogit")
 	-- use("sindrets/diffview.nvim")
+	use("tpope/vim-fugitive")
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -134,7 +132,8 @@ return packer.startup(function(use)
 		"kylechui/nvim-surround",
 		tag = "*",
 	})
-	use({ "tpope/vim-commentary", event = "VimEnter" })
+	-- use({ "tpope/vim-commentary", event = "VimEnter" })
+	use("numToStr/Comment.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = {
@@ -160,6 +159,11 @@ return packer.startup(function(use)
 	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
 	use("dstein64/vim-startuptime")
 	use("lewis6991/impatient.nvim")
+
+	-- my_dev
+    -- use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
+	use("rafcamlet/nvim-luapad")
+	use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 
 	-- Install plugins on first load
 	if PACKER_BOOTSTRAP then

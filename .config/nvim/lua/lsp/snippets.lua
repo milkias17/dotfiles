@@ -47,8 +47,6 @@ end)
 
 vim.keymap.set("i", "<M-u>", require("luasnip.extras.select_choice"))
 
-vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/lsp/snippets.lua<CR>")
-
 local same = function(index)
 	return f(function(arg)
 		return arg[1]
@@ -140,6 +138,7 @@ ls.add_snippets("lua", {
 			i(1),
 		})
 	),
+	ls.parser.parse_snippet("expand", "-- this is what was expanded"),
 })
 ls.add_snippets("javascript", {
 	ls.parser.parse_snippet("eaf", "export async function $1 ($2) {\n\t$0\n}"),
