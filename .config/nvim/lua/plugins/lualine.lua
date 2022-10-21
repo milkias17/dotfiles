@@ -40,6 +40,9 @@ local conditions = {
 		local clients = vim.lsp.get_active_clients()
 		return next(clients) ~= nil
 	end,
+    lsp_loading = function ()
+        return #vim.lsp.util.get_progress_messages() >= 1
+    end
 }
 
 local branch = {
@@ -67,6 +70,21 @@ local location = {
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
+
+local lsp_progress = {
+    function ()
+        local progress_msgs = vim.lsp.util.get_progress_messages()
+        local chosen_msg = progress_msgs[#progress_msgs]
+        local server_name = chosen_msg.name
+        local percentage = chosen_msg.percentage
+        local message = chosen_msg.message
+        local title = chosen_msg.title
+
+        return string.format("[%s] %s %s %s", server_name, title, percentage .. "%%", message)
+    end,
+    color = { fg = colors.green, gui = "bold"},
+	cond = conditions.lsp_active and conditions.hide_in_width and conditions.lsp_loading
+}
 
 local lsp = {
 	function()
@@ -212,6 +230,8 @@ ins_left({
 		color_info = { fg = colors.cyan },
 	},
 })
+
+ins_left(lsp_progress)
 
 ins_left({
 	function()

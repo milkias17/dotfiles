@@ -1,13 +1,14 @@
 from settings import enable_pywal, random_wal
 
 terminal = "kitty -1"
-browser = "firefox"
+browser = "brave"
 fm = "thunar"
 guake_term = "kitty"
 entertainment = "stremio"
 chat = "telegram-desktop"
 screenshot = "flameshot gui"
-calculator = "gnome-calculator"
+# calculator = "gnome-calculator"
+calculator = "qalculate-gtk"
 editor = "kitty -e nvim"
 task_manager = "xfce4-taskmanager"
 screen_locker = "betterlockscreen -l"
