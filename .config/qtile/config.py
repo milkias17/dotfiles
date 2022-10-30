@@ -13,7 +13,7 @@ from libqtile.config import Group, Match, ScratchPad, Screen
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 
-import colorschemes
+from colorschemes import get_colorscheme
 from apps import (browser, calculator, chat, editor, entertainment, fm,
                   guake_term, screen_locker, screenshot, startup_apps,
                   task_manager, terminal)
@@ -32,6 +32,7 @@ bin_dir = f"{home}/bin"
 def float_to_front(qtile):
     for window in qtile.current_group.windows:
         if window.floating:
+            logger.warning(f"Window: {window.cmd_inspect()}")
             window.cmd_bring_to_front()
 
 
@@ -133,9 +134,19 @@ def follow_window(client):
                 window.cmd_bring_to_front()
 
 
-# @hook.subscribe.client_focus
-# def fix_scratchpad(window):
-#     if window.floating and not window.fullscreen:
+# @hook.subscribe.focus_change
+# def fix_scratchpad():
+#     window = qtile.current_window
+#     scratchpad_group = next(
+#         (group for group in qtile.groups if group.name == "scratchpad"), None
+#     )
+#     if scratchpad_group is None:
+#         return
+#
+#     scratchpad_windows = [
+#         dropdown.window for dropdown in scratchpad_group.dropdowns.values()
+#     ]
+#     if window in scratchpad_windows:
 #         window.cmd_bring_to_front()
 
 
@@ -248,13 +259,13 @@ keybinds = {
     "C-<grave>": lazy.spawn("dunstctl history-pop"),
 }
 
-fonts = ["Iosevka Nerd Font", "Inter Medium", "Sora Regular"]
+fonts = ["Iosevka Nerd Font", "Inter Medium",
+         "Sora Regular", "Symbols Nerd Font"]
 
 if enable_pywal:
-    colors = colorschemes.current_scheme
-    pywal.sequences.send(colorschemes.data)
+    colors = get_colorscheme()
 else:
-    colors = colorschemes.onedark
+    colors = get_colorscheme("catppuccin-macchiato")
 
 widget_defaults = dict(
     font=fonts[2],
@@ -274,7 +285,6 @@ screens = [
                     active=colors["foreground"],
                     background=colors["background"],
                     block_highlight_text_color=colors["foreground"],
-                    # font=fonts[0],
                     fontsize=14,
                     foreground=colors["foreground"],
                     highlight_method="line",
@@ -298,8 +308,8 @@ screens = [
                     fontsize=14,
                     max_title_width=150,
                     title_width_method="uniform",
-                    border=colors["cyan_alt"],
-                    foreground="#ffffff",
+                    border=colors["blue"],
+                    foreground=colors["foreground"],
                     urgent_border=colors["blue_alt"],
                     spacing=3,
                     txt_floating="🗗",
@@ -317,7 +327,8 @@ screens = [
                     volume_app="pavucontrol",
                     volume_up_command=f"{bin_dir}/msound -i",
                     volume_down_command=f"{bin_dir}/msound -d",
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn("pavucontrol")},
                     get_volume=f"{bin_dir}/msound",
                 ),
                 widget.Spacer(length=8),
@@ -345,7 +356,8 @@ screens = [
                 ),
                 widget.CPU(
                     format="{load_percent}%",
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(task_manager)},
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(task_manager)},
                 ),
                 widget.Spacer(length=8),
                 widget.TextBox(
@@ -356,7 +368,8 @@ screens = [
                 ),
                 widget.Memory(
                     format="{MemUsed: .0f}M",
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(task_manager)},
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(task_manager)},
                 ),
                 widget.Spacer(length=8),
                 widget.TextBox(
@@ -367,7 +380,8 @@ screens = [
                 ),
                 widget.Clock(
                     format="%a, %b %d  %I:%M %p",
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("gsimplecal")},
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn("gsimplecal")},
                 ),
                 widget.Spacer(length=3),
                 widget.Systray(foreground=colors["foreground"]),
@@ -383,7 +397,7 @@ screens = [
 layout_theme = dict(
     border_width=2,
     margin=4,
-    border_focus=colors["blue_alt"],
+    border_focus=colors["magenta"],
     border_normal=colors["background"],
     single_margin=0,
     single_border_width=0,
@@ -401,7 +415,8 @@ layouts = [
 ]
 
 mouse = [
-    Drag("M-1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag("M-1", lazy.window.set_position_floating(),
+         start=lazy.window.get_position()),
     Drag("M-3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click("M-2", lazy.window.bring_to_front()),
 ]
@@ -410,6 +425,7 @@ mouse = [
 group_names = [str(i) for i in range(1, 8)]
 # group_labels = ["", "", "", "", "", "", ""]
 # group_labels = ["", "", "", "", "", "", ""]
+# group_labels = ["", "", "", "", "", "", "", "", ""]
 group_labels = [str(i) for i in range(1, 8)]
 group_matches = [
     "Brave-browser|firefox",
@@ -472,7 +488,7 @@ keys.extend(
 
 follow_mouse_focus = False
 bring_front_click = False
-cursor_warp = False
+cursor_warp = True
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
