@@ -17,7 +17,7 @@ from colorschemes import get_colorscheme
 from apps import (browser, calculator, chat, editor, entertainment, fm,
                   guake_term, screen_locker, screenshot, startup_apps,
                   task_manager, terminal)
-from settings import enable_pywal, load_session
+from settings import enable_pywal, load_session, colorscheme
 
 if enable_pywal:
     import pywal
@@ -32,7 +32,6 @@ bin_dir = f"{home}/bin"
 def float_to_front(qtile):
     for window in qtile.current_group.windows:
         if window.floating:
-            logger.warning(f"Window: {window.cmd_inspect()}")
             window.cmd_bring_to_front()
 
 
@@ -126,28 +125,28 @@ def follow_window(client):
             targetgroup.cmd_toscreen(toggle=False)
             break
 
-        cur_group = qtile.current_group
-        for window in cur_group.windows:
-            if check_match("wm_name", window.window.get_name()) or check_match(
-                "wm_pid", window.window.get_net_wm_pid()
-            ):
-                window.cmd_bring_to_front()
+    cur_group = qtile.current_group
+    for window in cur_group.windows:
+        if check_match("wm_name", window.window.get_name()) or check_match(
+            "wm_pid", window.window.get_net_wm_pid()
+        ):
+            window.cmd_bring_to_front()
 
 
-# @hook.subscribe.focus_change
-# def fix_scratchpad():
-#     window = qtile.current_window
-#     scratchpad_group = next(
-#         (group for group in qtile.groups if group.name == "scratchpad"), None
-#     )
-#     if scratchpad_group is None:
-#         return
-#
-#     scratchpad_windows = [
-#         dropdown.window for dropdown in scratchpad_group.dropdowns.values()
-#     ]
-#     if window in scratchpad_windows:
-#         window.cmd_bring_to_front()
+@hook.subscribe.focus_change
+async def fix_scratchpad():
+    window = qtile.current_window
+    scratchpad_group = next(
+        (group for group in qtile.groups if group.name == "scratchpad"), None
+    )
+    if scratchpad_group is None:
+        return
+
+    scratchpad_windows = [
+        dropdown.window for dropdown in scratchpad_group.dropdowns.values()
+    ]
+    if window in scratchpad_windows:
+        window.cmd_bring_to_front()
 
 
 @hook.subscribe.setgroup
@@ -265,7 +264,7 @@ fonts = ["Iosevka Nerd Font", "Inter Medium",
 if enable_pywal:
     colors = get_colorscheme()
 else:
-    colors = get_colorscheme("catppuccin-macchiato")
+    colors = get_colorscheme(colorscheme)
 
 widget_defaults = dict(
     font=fonts[2],
@@ -345,9 +344,6 @@ screens = [
                     no_update_string="N/A",
                 ),
                 widget.Spacer(length=8),
-                widget.CurrentLayoutIcon(),
-                widget.CurrentLayout(),
-                widget.Spacer(length=8),
                 widget.TextBox(
                     padding=2,
                     font=fonts[0],
@@ -384,6 +380,8 @@ screens = [
                         "Button1": lambda: qtile.cmd_spawn("gsimplecal")},
                 ),
                 widget.Spacer(length=3),
+                widget.CurrentLayoutIcon(),
+                widget.Spacer(length=3),
                 widget.Systray(foreground=colors["foreground"]),
             ],
             25,
@@ -397,7 +395,7 @@ screens = [
 layout_theme = dict(
     border_width=2,
     margin=4,
-    border_focus=colors["magenta"],
+    border_focus=colors["blue"],
     border_normal=colors["background"],
     single_margin=0,
     single_border_width=0,
@@ -443,9 +441,7 @@ for i in range(len(group_names)):
         group = Group(group_names[i], label=group_labels[i])
     else:
         match_names = group_matches[i].split("|")
-        matches = list()
-        for match in match_names:
-            matches.append(Match(wm_class=match))
+        matches = [Match(wm_class=match) for match in match_names]
         group = Group(group_names[i], label=group_labels[i], matches=matches)
 
     groups.append(group)
@@ -488,7 +484,7 @@ keys.extend(
 
 follow_mouse_focus = False
 bring_front_click = False
-cursor_warp = True
+cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
