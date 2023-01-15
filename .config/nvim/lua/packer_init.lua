@@ -55,7 +55,6 @@ return packer.startup(function(use)
 	use({ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" })
 	use("windwp/nvim-autopairs")
 	use({ "windwp/nvim-ts-autotag", opt = true, ft = { "html", "javascript", "htmldjango" } })
-	use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
 	use({
 		"nvim-treesitter/nvim-treesitter-context",
 		after = "nvim-treesitter",
@@ -101,8 +100,6 @@ return packer.startup(function(use)
 	-- Visual Stuff
 	use("monsonjeremy/onedark.nvim")
 	use("projekt0n/github-nvim-theme")
-	use("gruvbox-community/gruvbox")
-	use("folke/tokyonight.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("marko-cerovac/material.nvim")
 	use("NvChad/nvim-colorizer.lua")
@@ -112,9 +109,9 @@ return packer.startup(function(use)
 	use("kyazdani42/nvim-tree.lua")
 
 	-- Utils
-	-- use("TimUntersberger/neogit")
-	-- use("sindrets/diffview.nvim")
-	use("tpope/vim-fugitive")
+	use("TimUntersberger/neogit")
+	use("sindrets/diffview.nvim")
+	-- use("tpope/vim-fugitive")
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -125,7 +122,6 @@ return packer.startup(function(use)
 		"kylechui/nvim-surround",
 		tag = "*",
 	})
-	-- use({ "tpope/vim-commentary", event = "VimEnter" })
 	use("numToStr/Comment.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -154,9 +150,9 @@ return packer.startup(function(use)
 	use("lewis6991/impatient.nvim")
 
 	-- my_dev
-    -- use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
+	use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
 	use("rafcamlet/nvim-luapad")
-	use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+	-- use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 
 	-- Install plugins on first load
 	if PACKER_BOOTSTRAP then

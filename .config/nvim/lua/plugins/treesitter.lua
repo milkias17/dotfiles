@@ -17,27 +17,6 @@ require("nvim-treesitter.configs").setup({
 	playground = {
 		enable = true,
 	},
-	rainbow = {
-		enable = true,
-		extended_mode = true,
-		termcolors = {
-			"Yellow",
-			"Green",
-			"Red",
-			"Blue",
-			"Magenta",
-			"Cyan",
-			"White",
-		},
-		colors = {
-			"#e5c07b",
-			"#98c379",
-			"#e06c75",
-			"#61afef",
-			"#c678dd",
-			"#abb2bf",
-		},
-	},
 	autotag = {
 		enable = true,
 	},

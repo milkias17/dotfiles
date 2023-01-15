@@ -5,5 +5,5 @@ if [ -z "$selected_text" ]; then
 else
 	url="https://duckduckgo.com/?q="$selected_text
 	echo "$url"
-	firefox --new-tab "$url"
+	xdg-open "$url"
 fi

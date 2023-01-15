@@ -114,5 +114,10 @@ lspconfig.clangd.setup({
 		return vim.loop.cwd()
 	end,
 })
+lspconfig.svelte.setup({
+    capabilities = capabilities,
+    on_attach = on_attach
+})
 
 lspconfig.dockerls.setup({})
+
