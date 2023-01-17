@@ -67,6 +67,7 @@ return packer.startup(function(use)
 	-- Lsp
 	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
+    use("jose-elias-alvarez/typescript.nvim")
 	use({
 		"hrsh7th/nvim-cmp",
 		after = "friendly-snippets",
@@ -95,7 +96,7 @@ return packer.startup(function(use)
 		"dsznajder/vscode-es7-javascript-react-snippets",
 		run = "yarn install --frozen-lockfile && yarn compile",
 	})
-	use({ "mattn/emmet-vim", ft = { "html", "javascript", "javascriptreact", "htmldjango" } })
+	use({ "mattn/emmet-vim", ft = { "html", "javascript", "javascriptreact", "htmldjango", "svelte" } })
 
 	-- Visual Stuff
 	use("monsonjeremy/onedark.nvim")
@@ -141,6 +142,7 @@ return packer.startup(function(use)
 		"rcarriga/nvim-notify",
 		config = function()
 			vim.notify = require("notify")
+            vim.keymap.set({"n"}, "<leader>nc", require("notify").dismiss())
 		end,
 	})
 

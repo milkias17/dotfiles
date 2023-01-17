@@ -50,6 +50,19 @@ lspconfig.tsserver.setup({
 	capabilities = capabilities,
 })
 
+require("typescript").setup({
+	server = {
+		on_attach = function(client, bufnr)
+			client.server_capabilities.documentFormattingProvider = false
+			on_attach(client, bufnr)
+		end,
+		root_dir = function()
+			return vim.loop.cwd()
+		end,
+		capabilities = capabilities,
+	},
+})
+
 lspconfig.sumneko_lua.setup({
 	settings = {
 		Lua = {
@@ -115,9 +128,8 @@ lspconfig.clangd.setup({
 	end,
 })
 lspconfig.svelte.setup({
-    capabilities = capabilities,
-    on_attach = on_attach
+	capabilities = capabilities,
+	on_attach = on_attach,
 })
 
 lspconfig.dockerls.setup({})
-

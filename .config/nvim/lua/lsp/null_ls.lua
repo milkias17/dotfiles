@@ -9,11 +9,6 @@ local on_attach = require("lsp.lsp_config").on_attach
 local function get_sources()
 	local sources = {
 		null_ls.builtins.formatting.stylua,
-		-- null_ls.builtins.formatting.prettierd,
-		-- null_ls.builtins.formatting.prettier,
-		-- null_ls.builtins.formatting.eslint_d,
-		-- null_ls.builtins.formatting.black,
-		-- null_ls.builtins.formatting.autopep8,
 		null_ls.builtins.formatting.djhtml.with({
 			extra_args = { "-t", "2" },
 		}),
@@ -22,27 +17,38 @@ local function get_sources()
 		null_ls.builtins.formatting.isort,
 		null_ls.builtins.formatting.shfmt,
 
-		null_ls.builtins.diagnostics.flake8.with({
-			extra_args = { "--max-line-length", "105", "--ignore", "E402,E501,E203" },
-		}),
-		-- null_ls.builtins.diagnostics.djlint,
-		-- null_ls.builtins.diagnostics.pycodestyle,
+		null_ls.builtins.diagnostics.djlint,
 		null_ls.builtins.diagnostics.mypy,
-		-- null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.diagnostics.vint,
 		null_ls.builtins.diagnostics.fish,
-		-- null_ls.builtins.code_actions.gitsigns,
+		null_ls.builtins.code_actions.gitsigns,
+
+		require("typescript.extensions.null-ls.code-actions"),
 	}
 
-    if vim.fn.filereadable(".eslintrc.js") == 1 then
-        table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
-        table.insert(sources, null_ls.builtins.formatting.eslint_d)
-    else
-        table.insert(sources, null_ls.builtins.formatting.prettierd)
-    end
+	if vim.fn.filereadable(".eslintrc.js") == 1 then
+		table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+		table.insert(sources, null_ls.builtins.formatting.eslint_d)
+	else
+		table.insert(sources, null_ls.builtins.formatting.prettierd)
+	end
 
-    return sources
+	local current_dir = vim.fn.getcwd()
+	if string.find(current_dir, "ALX") == nil then
+		table.insert(sources, null_ls.builtins.formatting.black)
+		table.insert(
+			sources,
+			null_ls.builtins.diagnostics.flake8.with({
+				extra_args = { "--max-line-length", "105", "--ignore", "E402,E501,E203" },
+			})
+		)
+	else
+		table.insert(sources, null_ls.builtins.formatting.autopep8)
+		table.insert(sources, null_ls.builtins.diagnostics.pycodestyle)
+	end
+
+	return sources
 end
 
 null_ls.setup({

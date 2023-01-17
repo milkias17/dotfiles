@@ -63,7 +63,7 @@ vim.cmd([[autocmd TermOpen * startinsert]])
 vim.cmd([[
     augroup webdev
         autocmd!
-        autocmd FileType html,htmldjango,css,javascript,javascriptreact,typescript,typescriptreact setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+        autocmd FileType html,htmldjango,css,javascript,javascriptreact,typescript,typescriptreact,svelte setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
     augroup END 
     ]])
 
@@ -85,19 +85,3 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 	pattern = "*",
 	callback = last_place,
 })
-
--- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
--- 	pattern = os.getenv("HOME") .. "/.config/nvim/*",
--- 	callback = function()
--- 		local modules = {
--- 			"general",
--- 			"keymaps",
--- 			"packer_init",
--- 			"plugins",
--- 			"lsp",
--- 		}
--- 		for _, package in pairs(modules) do
--- 			R(package)
--- 		end
--- 	end,
--- })
