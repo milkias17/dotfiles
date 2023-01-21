@@ -27,11 +27,44 @@ local function get_sources()
 		require("typescript.extensions.null-ls.code-actions"),
 	}
 
-	if vim.fn.filereadable(".eslintrc.js") == 1 then
-		table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
-		table.insert(sources, null_ls.builtins.formatting.eslint_d)
+	if vim.fn.filereadable(".eslintrc.js") == 1 or vim.fn.filereadable(".eslintrc.cjs") then
+		table.insert(
+			sources,
+			null_ls.builtins.diagnostics.eslint_d.with({
+                extra_filetypes = {"svelte"}
+			})
+		)
+		table.insert(
+			sources,
+			null_ls.builtins.formatting.eslint_d.with({
+                extra_filetypes = {"svelte"}
+			})
+		)
+
+		table.insert(
+			sources,
+			null_ls.builtins.code_actions.eslint_d.with({
+                extra_filetypes = {"svelte"}
+			})
+		)
 	else
-		table.insert(sources, null_ls.builtins.formatting.prettierd)
+		table.insert(
+			sources,
+			null_ls.builtins.formatting.prettierd.with({
+                extra_filetypes = {"svelte"}
+			})
+		)
+	end
+
+	if
+		vim.fn.filereadable(".prettierrc") == 1 and not vim.tbl_contains(sources, null_ls.builtins.formatting.prettierd)
+	then
+		table.insert(
+			sources,
+			null_ls.builtins.formatting.prettierd.with({
+                extra_filetypes = {"svelte"},
+			})
+		)
 	end
 
 	local current_dir = vim.fn.getcwd()

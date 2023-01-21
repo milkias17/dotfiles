@@ -67,7 +67,7 @@ return packer.startup(function(use)
 	-- Lsp
 	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
-    use("jose-elias-alvarez/typescript.nvim")
+	use("jose-elias-alvarez/typescript.nvim")
 	use({
 		"hrsh7th/nvim-cmp",
 		after = "friendly-snippets",
@@ -138,13 +138,15 @@ return packer.startup(function(use)
 			},
 		},
 	})
-	use({
-		"rcarriga/nvim-notify",
-		config = function()
-			vim.notify = require("notify")
-            vim.keymap.set({"n"}, "<leader>nc", require("notify").dismiss())
-		end,
-	})
+	-- use({
+	-- 	"rcarriga/nvim-notify",
+	-- 	config = function()
+	-- 		vim.notify = require("notify")
+	-- 		vim.keymap.set("n", "<space>nd", function()
+	-- 			require("notify").dismiss()
+	-- 		end, { silent = true, noremap = true })
+	-- 	end,
+	-- })
 
 	use({ "iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = { "markdown" } })
 	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
@@ -152,9 +154,9 @@ return packer.startup(function(use)
 	use("lewis6991/impatient.nvim")
 
 	-- my_dev
-	use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
+	-- use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
 	use("rafcamlet/nvim-luapad")
-	-- use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+	use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 
 	-- Install plugins on first load
 	if PACKER_BOOTSTRAP then

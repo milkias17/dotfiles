@@ -107,7 +107,7 @@ local lsp = {
 				end
 				if msg_lsp == "" then
 					msg_lsp = client.name
-				else
+				elseif not string.match(msg_lsp, client.name) then
 					msg_lsp = msg_lsp .. "," .. client.name
 				end
 			end
@@ -118,7 +118,7 @@ local lsp = {
 		for _, source in ipairs(sources.get_available(buf_ft)) do
 			if msg_lsp == "" then
 				msg_lsp = source.name
-			else
+			elseif not string.match(msg_lsp, source.name) then
 				msg_lsp = msg_lsp .. "," .. source.name
 			end
 		end

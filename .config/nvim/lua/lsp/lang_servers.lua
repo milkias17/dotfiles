@@ -4,7 +4,7 @@ local on_attach = lsp_config.on_attach
 local lspconfig = require("lspconfig")
 
 -- Use loop for calling servers requiring no configuration
-local servers = { "bashls", "cssls" }
+local servers = { "bashls" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
@@ -24,6 +24,16 @@ lspconfig.html.setup({
 	filetypes = { "html", "htmldjango" },
 })
 
+if vim.fn.filereadable("tailwind.config.cjs") == 0 then
+    lspconfig.cssls.setup({
+        on_attach = on_attach,
+        root_dir = function ()
+            return vim.loop.cwd()
+        end,
+        capabilities = capabilities
+    })
+
+end
 if not lspconfig.emmet_ls then
 	require("lspconfig/configs").emmet_ls = {
 		default_config = {
@@ -61,6 +71,16 @@ require("typescript").setup({
 		end,
 		capabilities = capabilities,
 	},
+})
+
+lspconfig.svelte.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig.tailwindcss.setup({
+    capabilities = capabilities,
+    on_attach = on_attach
 })
 
 lspconfig.sumneko_lua.setup({
@@ -126,10 +146,6 @@ lspconfig.clangd.setup({
 	root_dir = function()
 		return vim.loop.cwd()
 	end,
-})
-lspconfig.svelte.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
 })
 
 lspconfig.dockerls.setup({})
