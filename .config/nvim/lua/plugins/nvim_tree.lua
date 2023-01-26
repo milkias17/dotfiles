@@ -7,7 +7,7 @@ nvim_tree.setup({
     hijack_cursor = true,
     sync_root_with_cwd = true,
     view = {
-        adaptive_size = true,
+        width = "25%",
         number = true,
         relativenumber = true
     },
@@ -23,6 +23,7 @@ nvim_tree.setup({
         enable = true
     }
 })
+
 
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap

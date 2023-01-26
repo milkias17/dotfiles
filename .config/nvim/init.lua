@@ -34,7 +34,7 @@ local modules = {
     "theme",
 	"plugins",
 	"lsp",
-	"debugger",
+	-- "debugger",
 }
 for _, mdl in ipairs(modules) do
 	pcall(require, mdl)

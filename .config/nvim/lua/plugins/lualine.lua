@@ -93,6 +93,7 @@ local lsp = {
 		local found_lsp = false
 		local msg_lsp = ""
 		local default_msg = "No Active Lsp"
+        local ignore_list = {"gitsigns"}
 		if next(clients) == nil then
 			return default_msg
 		end
@@ -102,7 +103,7 @@ local lsp = {
 				filetypes = { "java" }
 			end
 			if filetypes ~= nil and vim.tbl_contains(filetypes, buf_ft) then
-				if client.name == "null-ls" then
+				if client.name == "null-ls" or vim.tbl_contains(ignore_list, client.name) then
 					goto continue
 				end
 				if msg_lsp == "" then
@@ -116,11 +117,15 @@ local lsp = {
 
 		local sources = require("null-ls.sources")
 		for _, source in ipairs(sources.get_available(buf_ft)) do
+            if vim.tbl_contains(ignore_list, source.name) then
+                goto here
+            end
 			if msg_lsp == "" then
 				msg_lsp = source.name
 			elseif not string.match(msg_lsp, source.name) then
 				msg_lsp = msg_lsp .. "," .. source.name
 			end
+            ::here::
 		end
 
 		if msg_lsp == "" then

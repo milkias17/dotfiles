@@ -54,7 +54,7 @@ return packer.startup(function(use)
 	use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
 	use({ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" })
 	use("windwp/nvim-autopairs")
-	use({ "windwp/nvim-ts-autotag", opt = true, ft = { "html", "javascript", "htmldjango" } })
+	use("windwp/nvim-ts-autotag")
 	use({
 		"nvim-treesitter/nvim-treesitter-context",
 		after = "nvim-treesitter",
@@ -68,6 +68,7 @@ return packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jose-elias-alvarez/typescript.nvim")
+
 	use({
 		"hrsh7th/nvim-cmp",
 		after = "friendly-snippets",
@@ -110,9 +111,8 @@ return packer.startup(function(use)
 	use("kyazdani42/nvim-tree.lua")
 
 	-- Utils
-	use("TimUntersberger/neogit")
 	use("sindrets/diffview.nvim")
-	-- use("tpope/vim-fugitive")
+	use("tpope/vim-fugitive")
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -138,15 +138,15 @@ return packer.startup(function(use)
 			},
 		},
 	})
-	-- use({
-	-- 	"rcarriga/nvim-notify",
-	-- 	config = function()
-	-- 		vim.notify = require("notify")
-	-- 		vim.keymap.set("n", "<space>nd", function()
-	-- 			require("notify").dismiss()
-	-- 		end, { silent = true, noremap = true })
-	-- 	end,
-	-- })
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require("notify")
+			vim.keymap.set("n", "<space>nd", function()
+				require("notify").dismiss()
+			end, { silent = true, noremap = true })
+		end,
+	})
 
 	use({ "iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = { "markdown" } })
 	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })

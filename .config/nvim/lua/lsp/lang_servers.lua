@@ -66,9 +66,6 @@ require("typescript").setup({
 			client.server_capabilities.documentFormattingProvider = false
 			on_attach(client, bufnr)
 		end,
-		root_dir = function()
-			return vim.loop.cwd()
-		end,
 		capabilities = capabilities,
 	},
 })
@@ -79,8 +76,11 @@ lspconfig.svelte.setup({
 })
 
 lspconfig.tailwindcss.setup({
-    capabilities = capabilities,
-    on_attach = on_attach
+    capabilities = capabilities
+})
+
+lspconfig.prismals.setup({
+    capabilities = capabilities
 })
 
 lspconfig.sumneko_lua.setup({
@@ -140,7 +140,6 @@ lspconfig.clangd.setup({
 		on_attach()
 		-- if client.server_capabilities.documentFormattingProvider then
 		-- 	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-		-- 	on_attach()
 		-- end
 	end,
 	root_dir = function()
