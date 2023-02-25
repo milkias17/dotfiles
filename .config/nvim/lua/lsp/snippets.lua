@@ -52,6 +52,10 @@ local same = function(index)
 		return arg[1]
 	end, { index })
 end
+
+ls.add_snippets("cpp", {
+    ls.parser.parse_snippet("hel", "#include <iostream>\nusing namespace std;\n\nint main() {\n\t$0\n\treturn 0;\n}")
+})
 ls.add_snippets("c", {
 	ls.parser.parse_snippet("fd", "/**\n\t* $1 - $2\n\t* Description: $3\n\t* Return: $4\n*/\n$0"),
 	ls.parser.parse_snippet(

@@ -21,7 +21,7 @@ local function get_sources()
 		null_ls.builtins.formatting.isort,
 		null_ls.builtins.formatting.shfmt,
 
-		null_ls.builtins.diagnostics.djlint,
+		-- null_ls.builtins.diagnostics.djlint,
 		-- null_ls.builtins.diagnostics.mypy,
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.diagnostics.vint,
@@ -31,20 +31,21 @@ local function get_sources()
 		require("typescript.extensions.null-ls.code-actions"),
 	}
 
-	-- if vim.fn.filereadable(".eslintrc.js") == 1 or vim.fn.filereadable(".eslintrc.cjs") == 1 then
-	-- 	table.insert(
-	-- 		sources,
-	-- 		null_ls.builtins.diagnostics.eslint_d.with({
-	-- 			extra_filetypes = { "svelte" },
-	-- 		})
-	-- 	)
-	-- 	table.insert(
-	-- 		sources,
-	-- 		null_ls.builtins.code_actions.eslint_d.with({
-	-- 			extra_filetypes = { "svelte" },
-	-- 		})
-	-- 	)
- --    end
+	if vim.fn.filereadable(".eslintrc.js") == 1 or vim.fn.filereadable(".eslintrc.cjs") == 1 then
+		table.insert(sources, null_ls.builtins.formatting.eslint_d)
+		table.insert(
+			sources,
+			null_ls.builtins.diagnostics.eslint_d.with({
+				extra_filetypes = { "svelte" },
+			})
+		)
+		table.insert(
+			sources,
+			null_ls.builtins.code_actions.eslint_d.with({
+				extra_filetypes = { "svelte" },
+			})
+		)
+	end
 
 	if
 		vim.fn.filereadable(".prettierrc") == 1 and not vim.tbl_contains(sources, null_ls.builtins.formatting.prettierd)
@@ -63,7 +64,7 @@ local function get_sources()
 		table.insert(
 			sources,
 			null_ls.builtins.diagnostics.flake8.with({
-				extra_args = { "--max-line-length", "105", "--ignore", "E402,E501,E203" },
+				extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
 			})
 		)
 	else
