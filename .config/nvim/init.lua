@@ -31,8 +31,8 @@ local modules = {
 	"general",
 	"keymaps",
 	"packer_init",
+    "plugins",
     "theme",
-	"plugins",
 	"lsp",
 	-- "debugger",
 }

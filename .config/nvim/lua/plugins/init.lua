@@ -1,5 +1,6 @@
 require("plugins.treesitter")
 require("plugins.telescope")
+require("plugins.indent_guides")
 require("plugins.comments")
 require("plugins.bufferline")
 require("plugins.colorizer")

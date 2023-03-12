@@ -39,12 +39,14 @@ local options = {
 	whichwrap = "b,s,<,>,[,]",
 	confirm = true,
 	timeoutlen = 300,
+	list = true,
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }
 
 vim.opt.shortmess:append("c")
 vim.opt.iskeyword:append("-")
+-- vim.opt.listchars:append("eol:↴")
 
 if vim.fn.executable("rg") then
 	vim.opt.grepprg = "rg --vimgrep --no-heading"
@@ -64,7 +66,7 @@ vim.cmd([[
     augroup webdev
         autocmd!
         autocmd FileType html,htmldjango,css,javascript,javascriptreact,typescript,typescriptreact,svelte setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-    augroup END 
+    augroup END
     ]])
 
 vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
