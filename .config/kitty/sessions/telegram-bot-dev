@@ -1,0 +1,6 @@
+new_tab code
+cd /home/mike/Dev/projects/anony_counseling
+launch fish -c '/usr/bin/python3 /home/mike/.local/bin/pipenv shell && fish'
+new_tab bot
+cd /home/mike/Dev/projects/anony_counseling
+launch fish -c '/usr/bin/python3 /home/mike/.local/bin/pipenv shell && fish'
