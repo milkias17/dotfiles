@@ -1,6 +1,0 @@
-new_tab code
-cd /home/mike/Dev/ALX/alx-files_manager
-launch fish -c 'nvim routes/index.js && fish'
-new_tab server
-cd /home/mike/Dev/ALX/alx-files_manager
-launch fish -c 'fish && fish'

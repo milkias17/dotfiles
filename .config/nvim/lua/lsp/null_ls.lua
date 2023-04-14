@@ -63,6 +63,9 @@ local function get_sources()
 		table.insert(sources, null_ls.builtins.formatting.black)
 		table.insert(
 			sources,
+			-- null_ls.builtins.diagnostics.ruff.with({
+			-- 	extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
+			-- })
 			null_ls.builtins.diagnostics.flake8.with({
 				extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
 			})

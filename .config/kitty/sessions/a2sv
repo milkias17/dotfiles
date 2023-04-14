@@ -1,9 +1,0 @@
-new_tab kitty
-cd /home/mike/Dev/competitive-programming
-launch fish -c 'nvim MaxNonOverlapping.java && fish'
-new_tab ~/D/competitive-programming
-cd /home/mike/Dev/competitive-programming
-launch fish -c 'fish && fish'
-new_tab Test2.java + (/tmp/learning) - NVIM
-cd /tmp/learning
-launch fish -c 'nvim Test.java && fish'

@@ -131,8 +131,8 @@ return packer.startup(function(use)
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("marko-cerovac/material.nvim")
 	use("nyoom-engineering/oxocarbon.nvim")
-    use("navarasu/onedark.nvim")
-    use("RRethy/nvim-base16")
+	use("navarasu/onedark.nvim")
+	use("RRethy/nvim-base16")
 	use("NvChad/nvim-colorizer.lua")
 	use("nvim-lualine/lualine.nvim")
 	use("romgrk/barbar.nvim")
@@ -181,6 +181,13 @@ return packer.startup(function(use)
 	-- use({ "tweekmonster/startuptime.vim", opt = true, cmd = { "StartupTime" } })
 	use("dstein64/vim-startuptime")
 	use("lewis6991/impatient.nvim")
+
+	use({
+		"stevearc/overseer.nvim",
+		config = function()
+			require("overseer").setup()
+		end,
+	})
 
 	-- my_dev
 	-- use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")

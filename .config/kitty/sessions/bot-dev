@@ -1,9 +1,0 @@
-new_tab code
-cd /home/mike/Dev/projects/anony_counseling
-launch fish -c '/usr/bin/python3 /usr/bin/pipenv shell && fish'
-new_tab shell
-cd /home/mike/Dev/projects/anony_counseling
-launch fish -c '/usr/bin/python3 /usr/bin/pipenv shell && fish'
-new_tab crud.py (~/Dev/ALX/mchess/backend) - NVIM
-cd /home/mike/Dev/ALX/mchess
-launch fish -c 'nvim backend/crud.py && fish'
