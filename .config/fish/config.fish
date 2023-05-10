@@ -1,13 +1,13 @@
 # Env variables
 set -Ux TERMINAL kitty
-set -Ux EDITOR nvim
+set -g EDITOR nvim
 set -Ux BROWSER firefox
-set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin $HOME/.deta/bin
+set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/', '.bun/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin $HOME/.deta/bin
 set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
-set -Ux FZF_DEFAULT_OPTS "\
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+# set -Ux FZF_DEFAULT_OPTS "\
+# --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+# --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+# --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 # Aliases
 alias check="ping google.com"
@@ -28,12 +28,13 @@ else
 end
 
 alias v="nvim"
-alias ai="sudo apt install"
-alias ar="sudo apt purge"
+alias di="sudo dnf install"
+alias dr="sudo dnf remove"
 alias au="sudo apt update && sudo apt upgrade"
-alias as="apt search"
-alias ac="sudo apt autoremove"
-alias info="apt info"
+alias dnu="sudo dnf upgrade"
+alias ds="sudo dnf search"
+alias dc="sudo dnf autoremove"
+alias info="dnf info"
 alias grep="grep --color=auto"
 alias ..="cd .."
 alias kg="kitty +kitten hyperlinked_grep --smart-case"
@@ -47,5 +48,3 @@ function zeal-docs-fix
     find . -iname 'react-main*.js' -exec rm '{}' \;
     popd >/dev/null || exit
 end
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
