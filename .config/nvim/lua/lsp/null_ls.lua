@@ -20,9 +20,17 @@ local function get_sources()
 		null_ls.builtins.formatting.fixjson,
 		null_ls.builtins.formatting.isort,
 		null_ls.builtins.formatting.shfmt,
+		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.autoflake.with({
+			extra_args = { "--remove-all-unused-imports" },
+		}),
 
 		-- null_ls.builtins.diagnostics.djlint,
 		-- null_ls.builtins.diagnostics.mypy,
+		null_ls.builtins.diagnostics.flake8.with({
+			extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
+		}),
+
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.diagnostics.vint,
 		null_ls.builtins.diagnostics.fish,
@@ -56,23 +64,6 @@ local function get_sources()
 				extra_filetypes = { "svelte" },
 			})
 		)
-	end
-
-	local current_dir = vim.fn.getcwd()
-	if string.find(current_dir, "ALX") == nil then
-		table.insert(sources, null_ls.builtins.formatting.black)
-		table.insert(
-			sources,
-			-- null_ls.builtins.diagnostics.ruff.with({
-			-- 	extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
-			-- })
-			null_ls.builtins.diagnostics.flake8.with({
-				extra_args = { "--max-line-length", "88", "--ignore", "E203,E266,E501,W503" },
-			})
-		)
-	else
-		table.insert(sources, null_ls.builtins.formatting.autopep8)
-		table.insert(sources, null_ls.builtins.diagnostics.pycodestyle)
 	end
 
 	return sources

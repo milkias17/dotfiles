@@ -119,6 +119,8 @@ setup_server("pyright", {
     single_file_support = true,
 })
 
+-- setup_server("pylyzer", {}, true)
+
 setup_server("dockerls", {}, true)
 
 for _, lsp in ipairs(servers) do

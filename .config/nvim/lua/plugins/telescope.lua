@@ -64,7 +64,11 @@ map("n", "<space>f", builtin.find_files, opts)
 map("n", "<space>gf", builtin.git_files, opts)
 map("n", "<space>l", builtin.live_grep, opts)
 map("n", "<space>b", builtin.buffers, opts)
-map("n", "<space>tt", builtin.colorscheme, opts)
+map("n", "<space>tt", function ()
+    builtin.colorscheme({
+        enable_preview = true
+    })
+end, opts)
 map("n", "<space>tc", builtin.commands, opts)
 map("n", "<space>th", builtin.help_tags, opts)
 map("n", "<space>ts", builtin.grep_string, opts)

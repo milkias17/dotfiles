@@ -1,0 +1,27 @@
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+local ui = require("harpoon.ui")
+
+map("n", "]b", "<cmd>bnext<CR>", opts)
+map("n", "[b", "<cmd>bprev<CR>", opts)
+map("n", "<leader>bd", "<cmd>bd<CR>", opts)
+map("n", "<space>ha", require("harpoon.mark").add_file, opts)
+map("n", "<space>hs", ui.toggle_quick_menu, opts)
+map("n", "<space>hn", ui.nav_next, opts)
+map("n", "<space>hp", ui.nav_prev, opts)
+map("n", "<M-1>", function()
+	ui.nav_file(1)
+end, opts)
+map("n", "<M-2>", function()
+	ui.nav_file(2)
+end, opts)
+map("n", "<M-3>", function()
+	ui.nav_file(3)
+end, opts)
+map("n", "<M-4>", function()
+	ui.nav_file(4)
+end, opts)
+map("n", "<M-5>", function()
+	ui.nav_file(5)
+end, opts)

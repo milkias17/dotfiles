@@ -10,7 +10,7 @@ local cmp = require("cmp")
 -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 require("luasnip/loaders/from_vscode").lazy_load()
-require("luasnip/loaders/from_vscode").lazy_load({ paths = { "/home/mike/.config/nvim/my-snippets" }})
+require("luasnip/loaders/from_vscode").lazy_load({ paths = { "/home/mike/.config/nvim/my-snippets" } })
 local luasnip = require("luasnip")
 
 local lsp_icons = {
@@ -41,6 +41,19 @@ local lsp_icons = {
 	TypeParameter = "",
 }
 
+local function border(hl_name)
+	return {
+		{ "╭", hl_name },
+		{ "─", hl_name },
+		{ "╮", hl_name },
+		{ "│", hl_name },
+		{ "╯", hl_name },
+		{ "─", hl_name },
+		{ "╰", hl_name },
+		{ "│", hl_name },
+	}
+end
+
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -69,6 +82,17 @@ cmp.setup({
 		end,
 		["<S-Tab>"] = cmp.mapping.select_prev_item(),
 	},
+	-- window = {
+	-- 	completion = {
+	-- 		border = border("CmpBorder"),
+	-- 		winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
+	-- 		scrollbar = false,
+	-- 	},
+	-- 	documentation = {
+	-- 		border = border("CmpDocBorder"),
+	-- 		winhighlight = "Normal:CmpDoc",
+	-- 	},
+	-- },
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
@@ -90,7 +114,7 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp", max_item_count = 200},
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },

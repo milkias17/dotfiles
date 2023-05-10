@@ -21,7 +21,7 @@ require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "JoosepAlviste/nvim-ts-context-commentstring" },
 	"windwp/nvim-autopairs",
-	{ "windwp/nvim-ts-autotag", ft = { "html", "javascript", "htmldjango" } },
+	{ "windwp/nvim-ts-autotag" },
 	"p00f/nvim-ts-rainbow",
 	{
 		"nvim-treesitter/nvim-treesitter-context",
@@ -56,7 +56,6 @@ require("lazy").setup({
 	},
 	"mattn/emmet-vim",
 
-	{ "projekt0n/github-nvim-theme", priority = 100 },
 	{
 		"catppuccin/nvim",
 		as = "catppuccin",
@@ -64,13 +63,13 @@ require("lazy").setup({
 	},
 	{ "marko-cerovac/material.nvim", priority = 100 },
 	{ "nyoom-engineering/oxocarbon.nvim", priority = 100 },
-	{ "projekt0n/github-nvim-theme", priority = 100 },
 	{ "navarasu/onedark.nvim", priority = 100 },
 	{ "RRethy/nvim-base16", priority = 100 },
+    { "folke/tokyonight.nvim", priority = 100 },
 
 	"NvChad/nvim-colorizer.lua",
 	"nvim-lualine/lualine.nvim",
-	"romgrk/barbar.nvim",
+	-- "romgrk/barbar.nvim",
 	"kyazdani42/nvim-web-devicons",
 	"kyazdani42/nvim-tree.lua",
 
@@ -122,7 +121,8 @@ require("lazy").setup({
 	{ "iamcco/markdown-preview.nvim", build = ":call mkdp#util#install()", ft = { "markdown" } },
 	"dstein64/vim-startuptime",
 	"lewis6991/impatient.nvim",
-    {"CRAG666/code_runner.nvim", config = true },
+	{ "CRAG666/code_runner.nvim", config = true },
+    "ThePrimeagen/harpoon",
 
 	"milkias17/reloader.nvim",
 })
