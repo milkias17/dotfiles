@@ -1,13 +1,35 @@
 -- require("github-theme").setup()
 --
 -- vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
--- require("catppuccin").setup()
--- vim.cmd.colorscheme("catppuccin")
+require("catppuccin").setup({
+  flavour = "macchiato",
+  integrations = {
+    neogit = true,
+    gitsigns = true,
+    nvimtree = true,
+    telescope = true,
+    notify = true,
+    cmp = true,
+    native_lsp = {
+      enabled = true
+    },
+    treesitter = true,
+    treesitter_context = true,
+    indent_blankline = {
+      enabled = true,
+      colored_indent_levels = true,
+    },
+    harpoon = true,
+    semantic_tokens = true,
+    lsp_trouble = true
+  }
+})
+vim.cmd.colorscheme("catppuccin")
 
 -- require("onedark").load()
 
-vim.cmd.colorscheme("base16-onedark")
-vim.opt.fillchars = "eob: "
+-- vim.cmd.colorscheme("base16-onedark")
+-- vim.opt.fillchars = "eob: "
 
 
 -- vim.g.material_style = "deep ocean"

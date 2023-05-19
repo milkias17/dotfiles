@@ -82,17 +82,10 @@ cmp.setup({
 		end,
 		["<S-Tab>"] = cmp.mapping.select_prev_item(),
 	},
-	-- window = {
-	-- 	completion = {
-	-- 		border = border("CmpBorder"),
-	-- 		winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
-	-- 		scrollbar = false,
-	-- 	},
-	-- 	documentation = {
-	-- 		border = border("CmpDocBorder"),
-	-- 		winhighlight = "Normal:CmpDoc",
-	-- 	},
-	-- },
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
@@ -114,7 +107,7 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp", max_item_count = 200},
+		{ name = "nvim_lsp", max_item_count = 200 },
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },

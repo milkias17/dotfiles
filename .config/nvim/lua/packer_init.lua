@@ -107,6 +107,7 @@ return packer.startup(function(use)
 	use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
 	use("mfussenegger/nvim-jdtls")
 	use("napmn/react-extract.nvim")
+	use("folke/trouble.nvim")
 
 	-- Debugging
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
@@ -135,19 +136,13 @@ return packer.startup(function(use)
 	use("RRethy/nvim-base16")
 	use("NvChad/nvim-colorizer.lua")
 	use("nvim-lualine/lualine.nvim")
-	use("romgrk/barbar.nvim")
-	use("kyazdani42/nvim-web-devicons")
-	use("kyazdani42/nvim-tree.lua")
+	use("nvim-tree/nvim-web-devicons")
+	use("nvim-tree/nvim-tree.lua")
 
 	-- Utils
 	use("sindrets/diffview.nvim")
-	use("tpope/vim-fugitive")
-	use({
-		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
-	})
+	use(os.getenv("HOME") .. "/Dev/plugins/neogit")
+	use("lewis6991/gitsigns.nvim")
 	use({
 		"kylechui/nvim-surround",
 		tag = "*",
@@ -189,10 +184,14 @@ return packer.startup(function(use)
 		end,
 	})
 
+	use(os.getenv("HOME") .. "/Dev/plugins/harpoon")
+
 	-- my_dev
 	-- use(os.getenv("HOME") .. "/Dev/projects/neovim/reloader.nvim")
 	use("rafcamlet/nvim-luapad")
 	use({ "milkias17/reloader.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+
+	use("folke/neodev.nvim")
 
 	-- Install plugins on first load
 	if PACKER_BOOTSTRAP then

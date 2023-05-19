@@ -28,12 +28,12 @@ end
 vim.g.mapleader = ","
 
 local modules = {
-	"general",
-	"keymaps",
-	"plugin_manager",
-	-- "packer_init",
+	-- "general",
+	-- "keymaps",
+	-- "plugin_manager",
+	"packer_init",
+  "theme",
 	"plugins",
-	"theme",
 	"lsp",
 	-- "debugger",
 }
