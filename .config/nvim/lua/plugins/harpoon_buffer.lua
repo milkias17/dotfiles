@@ -1,34 +1,36 @@
-local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-vim.cmd("highlight! HarpoonInactive guibg=NONE guifg=#63698c")
-vim.cmd("highlight! HarpoonActive guibg=NONE guifg=white")
-vim.cmd("highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7")
-vim.cmd("highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7")
-vim.cmd("highlight! TabLineFill guibg=#1E2030 guifg=white")
-
-require("harpoon").setup({
+local config = {
 	global_settings = {
 		tabline = true,
 		tabline_prefix = "   ",
 		tabline_suffix = "   ",
 	},
-})
+}
 
-local ui = require("harpoon.ui")
-
-map("n", "]b", "<cmd>bnext<CR>", opts)
-map("n", "[b", "<cmd>bprev<CR>", opts)
-map("n", "<leader>bd", "<cmd>bd<CR>", opts)
-map("n", "<space>ha", require("harpoon.mark").add_file, opts)
-map("n", "<space>hc", require("harpoon.mark").clear_all, opts)
-map("n", "<space>hs", ui.toggle_quick_menu, opts)
-map("n", "]h", ui.nav_next, opts)
-map("n", "[h", ui.nav_prev, opts)
-for i = 1, 5 do
-	local mapping = string.format("<M-%i>", i)
-	map("n", mapping, function()
-		ui.nav_file(i)
-	end, opts)
-end
-
+return {
+	{
+		"ThePrimeagen/harpoon",
+		lazy = true,
+		keys = {
+			{ "<space>ha", function() require("harpoon.mark").add_file() end, opts },
+			{ "<space>hc", function() require("harpoon.mark").clear_all() end, opts },
+			{ "<space>hs", function() require("harpoon.ui").toggle_quick_menu() end, opts },
+			{ "]h", function() require("harpoon.ui").nav_next() end, opts },
+			{ "[h", function() require("harpoon.ui").nav_prev() end, opts },
+      { "<M-1>", function() require("harpoon.ui").nav_file(1) end, opts },
+      { "<M-2>", function() require("harpoon.ui").nav_file(2) end, opts },
+      { "<M-3>", function() require("harpoon.ui").nav_file(3) end, opts },
+      { "<M-4>", function() require("harpoon.ui").nav_file(4) end, opts },
+      { "<M-5>", function() require("harpoon.ui").nav_file(5) end, opts },
+		},
+		opts = config,
+		config = function()
+			vim.cmd("highlight! HarpoonInactive guibg=NONE guifg=#63698c")
+			vim.cmd("highlight! HarpoonActive guibg=NONE guifg=white")
+			vim.cmd("highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7")
+			vim.cmd("highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7")
+			vim.cmd("highlight! TabLineFill guibg=#1E2030 guifg=white")
+		end,
+	},
+}

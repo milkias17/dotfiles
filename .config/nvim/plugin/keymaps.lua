@@ -62,3 +62,8 @@ map("n", "<space>n", "<cmd>lnext<CR>")
 map("n", "<space>p", "<cmd>lprev<CR>")
 
 map("n", "<space>ot", "<cmd>terminal<CR>")
+
+
+map("n", "]b", "<cmd>bnext<CR>")
+map("n", "[b", "<cmd>bprev<CR>")
+map("n", "<leader>bd", "<cmd>bd<CR>")

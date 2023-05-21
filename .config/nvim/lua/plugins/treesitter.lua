@@ -1,4 +1,4 @@
-require("nvim-treesitter.configs").setup({
+local config = {
 	ensure_installed = { "javascript", "typescript", "python", "lua", "vim", "vimdoc" },
 	auto_install = true,
 	highlight = {
@@ -13,7 +13,7 @@ require("nvim-treesitter.configs").setup({
 	},
 	indent = {
 		enable = true,
-        disable = { "python" }
+		disable = { "python" },
 	},
 	playground = {
 		enable = true,
@@ -83,4 +83,31 @@ require("nvim-treesitter.configs").setup({
 			["[]"] = "@class.outer",
 		},
 	},
-})
+}
+
+return {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			require("nvim-treesitter.configs").setup(config)
+		end,
+		dependencies = {
+			{ "JoosepAlviste/nvim-ts-context-commentstring", priority = 100 },
+			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+			{
+				"nvim-treesitter/nvim-treesitter-context",
+				config = true,
+			},
+			{
+				"numToStr/Comment.nvim",
+				config = function()
+					require("Comment").setup({
+						pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+					})
+				end,
+			},
+		},
+	},
+	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
+}

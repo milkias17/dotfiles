@@ -1,9 +1,4 @@
-local status, nvim_autopairs = pcall(require, "nvim-autopairs")
-if not status then
-	return
-end
-
-nvim_autopairs.setup({
+local config = {
 	check_ts = true,
 	fast_wrap = {
 		map = "<M-e>",
@@ -16,4 +11,14 @@ nvim_autopairs.setup({
 		highlight = "Search",
 		highlight_grey = "Comment",
 	},
-})
+}
+
+return {
+	{ "windwp/nvim-autopairs", opts = config },
+	{ "windwp/nvim-ts-autotag" },
+	{
+		"kylechui/nvim-surround",
+		version = "*",
+		config = true,
+	},
+}

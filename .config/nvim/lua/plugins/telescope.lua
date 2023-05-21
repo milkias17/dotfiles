@@ -1,8 +1,4 @@
-local status, telescope = pcall(require, "telescope")
-if not status then
-	return
-end
-telescope.setup({
+local config = {
 	defaults = {
 		file_ignore_patterns = { "node_modules/", "__pycache__/", "env/" },
 		mappings = {
@@ -20,10 +16,7 @@ telescope.setup({
 			case_mode = "smart_case",
 		},
 	},
-})
-
-telescope.load_extension("fzf")
-telescope.load_extension("media_files")
+}
 
 local function search_dotfiles()
 	require("telescope.builtin").find_files({
@@ -55,24 +48,47 @@ local function change_wallpaper()
 	})
 end
 
-local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
-local builtin = require("telescope.builtin")
 
-map("n", "<space>f", builtin.find_files, opts)
-map("n", "<space>gf", builtin.git_files, opts)
-map("n", "<space>l", builtin.live_grep, opts)
-map("n", "<space>b", builtin.buffers, opts)
-map("n", "<space>tt", function ()
-    builtin.colorscheme({
-        enable_preview = true
-    })
-end, opts)
-map("n", "<space>tc", builtin.commands, opts)
-map("n", "<space>th", builtin.help_tags, opts)
-map("n", "<space>ts", builtin.grep_string, opts)
-map("n", "<space>ds", builtin.lsp_document_symbols, opts)
-map("n", "<space>tk", builtin.keymaps, opts)
-map("n", "<space>tm", telescope.extensions.media_files.media_files, opts)
-map("n", "<space>nc", search_dotfiles, opts)
-map("n", "<space>cw", change_wallpaper, opts)
+
+return {
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+			},
+			{
+				"nvim-telescope/telescope-media-files.nvim",
+			},
+		},
+    cmd = "Telescope",
+		keys = {
+			{ "<space>f", function() require("telescope.builtin").find_files() end, opts },
+			{ "<space>gf", function() require("telescope.builtin").git_files() end, opts },
+			{ "<space>l", function() require("telescope.builtin").live_grep() end, opts },
+			{ "<space>b", function() require("telescope.builtin").buffers() end, opts },
+			{
+				"<space>tt",
+				function()
+					require("telescope.builtin").colorscheme({ enable_preview = true })
+				end,
+				opts,
+			},
+			{ "<space>tc", function() require("telescope.builtin").commands() end, opts },
+			{ "<space>th", function() require("telescope.builtin").help_tags() end, opts },
+			{ "<space>ts", function() require("telescope.builtin").grep_string() end, opts },
+			{ "<space>ds", function() require("telescope.builtin").lsp_document_symbols() end, opts },
+			{ "<space>tk", function() require("telescope.builtin").keymaps() end, opts },
+			{ "<space>tm", "<cmd>Telescope media_files<cr>", opts },
+			{ "<space>nc", search_dotfiles, opts },
+			{ "<space>cw", change_wallpaper, opts },
+		},
+		config = function()
+      require("telescope").setup(config)
+			require("telescope").load_extension("fzf")
+			require("telescope").load_extension("media_files")
+		end,
+	},
+}

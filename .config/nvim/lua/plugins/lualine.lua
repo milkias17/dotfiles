@@ -1,8 +1,3 @@
-local status, lualine = pcall(require, "lualine")
-if not status then
-	return
-end
-
 local colors = {
 	foreground = "#abb2bf",
 	background = "#2c323d",
@@ -281,4 +276,7 @@ ins_right({
 	padding = { left = 1 },
 })
 
-lualine.setup(config)
+
+return {
+	{"nvim-lualine/lualine.nvim", opts = config}
+}
