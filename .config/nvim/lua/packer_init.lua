@@ -140,6 +140,7 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-tree.lua")
 
 	-- Utils
+  use("mbbill/undotree")
 	use("sindrets/diffview.nvim")
 	use(os.getenv("HOME") .. "/Dev/plugins/neogit")
 	use("lewis6991/gitsigns.nvim")

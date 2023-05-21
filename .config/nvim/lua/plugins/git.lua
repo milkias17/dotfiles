@@ -9,6 +9,7 @@ neogit.setup({
 	integrations = {
 		diffview = true,
 	},
+  disable_builtin_notifications = true
 })
 --
 local map = vim.keymap.set
