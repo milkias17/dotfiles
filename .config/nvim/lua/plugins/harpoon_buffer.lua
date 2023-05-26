@@ -11,13 +11,13 @@ local config = {
 return {
 	{
 		"ThePrimeagen/harpoon",
-		lazy = true,
+    event = "VeryLazy",
 		keys = {
 			{ "<space>ha", function() require("harpoon.mark").add_file() end, opts },
 			{ "<space>hc", function() require("harpoon.mark").clear_all() end, opts },
 			{ "<space>hs", function() require("harpoon.ui").toggle_quick_menu() end, opts },
-			{ "]h", function() require("harpoon.ui").nav_next() end, opts },
-			{ "[h", function() require("harpoon.ui").nav_prev() end, opts },
+			{ "]c", function() require("harpoon.ui").nav_next() end, opts },
+			{ "[c", function() require("harpoon.ui").nav_prev() end, opts },
       { "<M-1>", function() require("harpoon.ui").nav_file(1) end, opts },
       { "<M-2>", function() require("harpoon.ui").nav_file(2) end, opts },
       { "<M-3>", function() require("harpoon.ui").nav_file(3) end, opts },
@@ -31,6 +31,7 @@ return {
 			vim.cmd("highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! TabLineFill guibg=#1E2030 guifg=white")
+			require("harpoon.mark").on("changed", function() vim.cmd.redrawtabline() end)
 		end,
 	},
 }

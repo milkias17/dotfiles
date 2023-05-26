@@ -48,6 +48,7 @@ local options = {
 
 -- This is needed by completion plugins
 vim.opt.shortmess:append("c")
+vim.o.completeopt = "menuone,noselect"
 
 -- Treat - separated words as a single word
 vim.opt.iskeyword:append("-")

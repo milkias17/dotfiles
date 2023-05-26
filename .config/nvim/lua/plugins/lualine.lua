@@ -35,9 +35,9 @@ local conditions = {
 		local clients = vim.lsp.get_active_clients()
 		return next(clients) ~= nil
 	end,
-    lsp_loading = function ()
-        return #vim.lsp.util.get_progress_messages() >= 1
-    end
+	lsp_loading = function()
+		return #vim.lsp.util.get_progress_messages() >= 1
+	end,
 }
 
 local branch = {
@@ -67,18 +67,18 @@ local spaces = function()
 end
 
 local lsp_progress = {
-    function ()
-        local progress_msgs = vim.lsp.util.get_progress_messages()
-        local chosen_msg = progress_msgs[#progress_msgs]
-        local server_name = chosen_msg.name
-        local percentage = chosen_msg.percentage
-        local message = chosen_msg.message
-        local title = chosen_msg.title
+	function()
+		local progress_msgs = vim.lsp.util.get_progress_messages()
+		local chosen_msg = progress_msgs[#progress_msgs]
+		local server_name = chosen_msg.name
+		local percentage = chosen_msg.percentage
+		local message = chosen_msg.message
+		local title = chosen_msg.title
 
-        return string.format("[%s] %s %s %s", server_name, title, percentage .. "%%", message)
-    end,
-    color = { fg = colors.green, gui = "bold"},
-	cond = conditions.lsp_active and conditions.hide_in_width and conditions.lsp_loading
+		return string.format("[%s] %s %s %s", server_name, title, percentage .. "%%", message)
+	end,
+	color = { fg = colors.green, gui = "bold" },
+	cond = conditions.lsp_active and conditions.hide_in_width and conditions.lsp_loading,
 }
 
 local lsp = {
@@ -88,7 +88,7 @@ local lsp = {
 		local found_lsp = false
 		local msg_lsp = ""
 		local default_msg = "No Active Lsp"
-        local ignore_list = {"gitsigns"}
+		local ignore_list = { "gitsigns" }
 		if next(clients) == nil then
 			return default_msg
 		end
@@ -112,15 +112,15 @@ local lsp = {
 
 		local sources = require("null-ls.sources")
 		for _, source in ipairs(sources.get_available(buf_ft)) do
-            if vim.tbl_contains(ignore_list, source.name) then
-                goto here
-            end
+			if vim.tbl_contains(ignore_list, source.name) then
+				goto here
+			end
 			if msg_lsp == "" then
 				msg_lsp = source.name
 			elseif not string.match(msg_lsp, source.name) then
 				msg_lsp = msg_lsp .. "," .. source.name
 			end
-            ::here::
+			::here::
 		end
 
 		if msg_lsp == "" then
@@ -276,7 +276,6 @@ ins_right({
 	padding = { left = 1 },
 })
 
-
 return {
-	{"nvim-lualine/lualine.nvim", opts = config}
+	{ "nvim-lualine/lualine.nvim", opts = config, event = "VeryLazy" },
 }

@@ -1,44 +1,34 @@
-local on_attach = function(client, bufnr)
-	local function buf_set_keymap(...)
-		vim.keymap.set(...)
-	end
-
-	local function buf_set_option(...)
-		vim.api.nvim_buf_set_option(bufnr, ...)
-	end
-
+local on_attach = function(ev)
 	--Enable completion triggered by <c-x><c-o>
-	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+	vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	-- Mappings.
-	local opts = { noremap = true, silent = true, buffer = bufnr }
+	local opts = { noremap = true, silent = true, buffer = ev.buf }
 
-	buf_set_keymap("n", "K", vim.lsp.buf.hover, opts)
-	buf_set_keymap("n", "gi", vim.lsp.buf.implementation, opts)
-	buf_set_keymap("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-	buf_set_keymap("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-	buf_set_keymap("n", "<space>wl", function()
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+	vim.keymap.set("n", "<space>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, opts)
-	buf_set_keymap("n", "<space>D", vim.lsp.buf.type_definition, opts)
-	buf_set_keymap("n", "<space>rn", vim.lsp.buf.rename, opts)
-	buf_set_keymap("n", "<space>ca", vim.lsp.buf.code_action, opts)
-	buf_set_keymap("n", "<space>e", vim.diagnostic.open_float, opts)
-	buf_set_keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-	buf_set_keymap("n", "]d", vim.diagnostic.goto_next, opts)
+	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+	vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-	buf_set_keymap("n", "gD", vim.lsp.buf.declaration, opts)
-	buf_set_keymap("n", "gd", vim.lsp.buf.definition, opts)
-	buf_set_keymap("n", "gr", vim.lsp.buf.references, opts)
-	-- buf_set_keymap("n", "<leader>f", vim.lsp.buf.formatting, opts)
-	buf_set_keymap("n", "<leader>f", function()
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+	vim.keymap.set("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, opts)
 
-	buf_set_keymap("n", "<C-s>", vim.lsp.buf.signature_help, opts)
-	buf_set_keymap("i", "<C-s>", vim.lsp.buf.signature_help, opts)
-	buf_set_keymap("n", "<space>q", vim.diagnostic.setloclist, opts)
-	buf_set_keymap("n", "<space>ws", vim.lsp.buf.workspace_symbol, opts)
+	vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
+	vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+	vim.keymap.set("n", "<space>ws", vim.lsp.buf.workspace_symbol, opts)
 	-- buf_set_keymap("n", "<space>ds", vim.lsp.buf.document_symbol, opts)
 end
 

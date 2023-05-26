@@ -1,3 +1,5 @@
+vim.env.NEOGIT_LOG_FILE = true
+vim.env.NEOGIT_LOG_LEVEL = "debug"
 local neogit_opts = {
 	kind = "split_above",
 	disable_commit_confirmation = true,
@@ -72,7 +74,8 @@ local gitsigns_opts = {
 
 return {
 	{
-		"TimUntersberger/neogit",
+		-- "TimUntersberger/neogit",
+    dir = "~/Dev/plugins/neogit",
 		opts = neogit_opts,
 		keys = {
 			{ "<space>ng", function() require("neogit").open() end, opts },

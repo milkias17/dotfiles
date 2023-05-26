@@ -24,3 +24,7 @@ TC = function(list, x)
 	end
 	return false
 end
+
+LOADED = function(plugin)
+  return require("lazy.core.config").plugins[plugin] ~= nil
+end

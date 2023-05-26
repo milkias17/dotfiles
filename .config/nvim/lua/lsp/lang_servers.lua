@@ -1,5 +1,3 @@
-require("neodev").setup({})
-
 local lsp_config = require("lsp.lsp_config")
 local capabilities = lsp_config.capabilities
 local on_attach = lsp_config.on_attach
@@ -11,7 +9,6 @@ local function setup_server(config_name, opts, no_default)
 	end
 
 	local default_opts = {
-		on_attach = on_attach,
 		root_dir = function()
 			return vim.loop.cwd()
 		end,
@@ -62,7 +59,6 @@ require("typescript").setup({
 	server = {
 		on_attach = function(client, bufnr)
 			client.server_capabilities.documentFormattingProvider = false
-			on_attach(client, bufnr)
 		end,
 		capabilities = capabilities,
 	},
@@ -115,3 +111,8 @@ setup_server("dockerls", {}, true)
 for _, lsp in ipairs(servers) do
 	setup_server(lsp)
 end
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = on_attach
+})

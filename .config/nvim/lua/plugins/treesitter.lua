@@ -1,5 +1,5 @@
 local config = {
-	ensure_installed = { "javascript", "typescript", "python", "lua", "vim", "vimdoc" },
+	ensure_installed = { "javascript", "typescript", "tsx", "html", "css", "python", "lua", "vim", "vimdoc" },
 	auto_install = true,
 	highlight = {
 		enable = true,
@@ -98,14 +98,6 @@ return {
 			{
 				"nvim-treesitter/nvim-treesitter-context",
 				config = true,
-			},
-			{
-				"numToStr/Comment.nvim",
-				config = function()
-					require("Comment").setup({
-						pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-					})
-				end,
 			},
 		},
 	},

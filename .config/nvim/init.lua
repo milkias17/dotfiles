@@ -19,13 +19,20 @@ require("lazy").setup("plugins", {
 			-- disable some rtp plugins
 			disabled_plugins = {
 				"gzip",
-				-- "matchit",
-				-- "matchparen",
-				-- "netrwPlugin",
-				"tarPlugin",
+        "zip",
+        "zipPlugin",
+        "tar",
+        "tarPlugin",
+
+				"netrwPlugin",
+        "netrw",
+        "netrwSettings",
+
 				"tohtml",
-				"tutor",
-				"zipPlugin",
+        "2html_plugin",
+        "getscript",
+        "vimball",
+        "vimballPlugin",
 			},
 		},
 	},
@@ -36,5 +43,3 @@ require("lazy").setup("plugins", {
     colorscheme = { "catppuccin", "habamaz" }
   }
 })
-
-require("lsp")

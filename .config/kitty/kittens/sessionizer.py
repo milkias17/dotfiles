@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 from typing import Dict, List
@@ -5,17 +6,21 @@ from typing import Dict, List
 from kitty.boss import Boss
 
 SHELL = "fish"
+SESSIONS_LOCATION = "~/.config/kitty/sessions"
 
 
 def main(args: List[str]) -> str:
     while True:
-        answer = input("Enter session name: ")
-        if session_file_exists(answer):
-            action = input("Overwrite session file? (y or n): ")
-            if action == "y":
+        try:
+            answer = input("Enter session name: ")
+            if session_file_exists(answer):
+                action = input("Overwrite session file? (y or n): ")
+                if action == "y":
+                    return answer
+            else:
                 return answer
-        else:
-            return answer
+        except KeyboardInterrupt:
+            sys.exit(0)
 
 
 def session_file_exists(file_name: str) -> bool:
@@ -23,39 +28,41 @@ def session_file_exists(file_name: str) -> bool:
     return os.path.exists(f"{home}/.config/kitty/sessions/{file_name}")
 
 
-def get_cmdline(pid: int) -> str:
-    try:
-        with open(f"/proc/{pid}/cmdline", "r") as f:
-            cmdline = f.read()
-    except FileNotFoundError:
-        return None
-
-    cmdline = cmdline.replace("\x00", " ").strip()
-    return cmdline
-
-
-def get_session_file_string(results: Dict[str, List[Dict[str, str]]]) -> str:
+def get_session_file_string(session_info: List[Dict]) -> str:
     session_file_commands = []
-    for tab in results:
-        session_file_commands.append(f"new_tab {tab}")
-        for window in results[tab]:
-            session_file_commands.append(f"cd {window['cwd']}")
-            if window["cmd"]:
+    for os_window in session_info:
+        if os_window != session_info[0]:
+            session_file_commands.append("new_os_window")
+        if os_window.get("is_focused"):
+            session_file_commands.append("focus_os_window")
+
+        for tab in os_window["tabs"]:
+            tab_title = tab.get("title")
+            if tab_title and tab_title != "kitty":
+                session_file_commands.append(f"new_tab {tab.get('title') or ''}")
+
+            if tab.get("enabled_layouts"):
                 session_file_commands.append(
-                    "launch {} -c '{} && {}'".format(
-                        SHELL or os.getenv("SHELL"),
-                        window["cmd"],
-                        SHELL or os.getenv("SHELL"),
-                    )
+                    f"enabled_layouts {','.join(tab['enabled_layouts'])}"
                 )
-            else:
-                session_file_commands.append(f"launch {SHELL or os.getenv('SHELL')}")
+            if tab.get("layout"):
+                session_file_commands.append(f"layout {tab['layout']}")
+
+            for window in tab["windows"]:
+                # Pass if its the sessionizer script
+                if "kittens/sessionizer.py" in window["cmdline"]:
+                    continue
+                session_file_commands.append(f"cd {window['cwd']}")
+                command = " ".join(window["foreground_processes"][0]["cmdline"])
+                session_file_commands.append(
+                    "launch {} -C '{} -c \"{}\"'".format(SHELL, SHELL, command)
+                )
 
     return "\n".join(session_file_commands)
 
 
 def write_session_file(session_string: str, session_name: str):
-    session_path = os.path.expanduser("~/.config/kitty/sessions")
+    session_path = os.path.expanduser(SESSIONS_LOCATION or "~/.config/kitty/sessions")
     if not os.path.exists(session_path):
         os.mkdir(session_path)
 
@@ -64,18 +71,12 @@ def write_session_file(session_string: str, session_name: str):
 
 
 def handle_result(args: List[str], answer: str, target_window_id: int, boss: Boss):
-    results = {}
-    for tab in boss.all_tabs:
-        windows = []
-        for window in tab.windows.all_windows:
-            window_dict = {}
-            window_dict["cwd"] = window.cwd_of_child
-            cmdline = get_cmdline(window.child.pid_for_cwd)
-            if cmdline is None:
-                continue
-            window_dict["cmd"] = cmdline
-            windows.append(window_dict)
-        results[tab.name or tab.active_window.title] = windows
+    w = boss.window_id_map.get(target_window_id)
+    if w is None:
+        return
 
-    session_file_string = get_session_file_string(results)
+    result = boss.call_remote_control(w, ("ls",))
+
+    session_file_string = get_session_file_string(json.loads(result))
+
     write_session_file(session_file_string, answer)
