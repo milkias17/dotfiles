@@ -1,7 +1,7 @@
+local lspconfig = require("lspconfig")
 local lsp_config = require("lsp.lsp_config")
 local capabilities = lsp_config.capabilities
 local on_attach = lsp_config.on_attach
-local lspconfig = require("lspconfig")
 
 local function setup_server(config_name, opts, no_default)
 	if no_default then

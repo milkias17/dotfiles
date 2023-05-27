@@ -23,6 +23,10 @@ return {
       { "<M-3>", function() require("harpoon.ui").nav_file(3) end, opts },
       { "<M-4>", function() require("harpoon.ui").nav_file(4) end, opts },
       { "<M-5>", function() require("harpoon.ui").nav_file(5) end, opts },
+      { "<M-6>", function() require("harpoon.ui").nav_file(6) end, opts },
+      { "<M-7>", function() require("harpoon.ui").nav_file(7) end, opts },
+      { "<M-8>", function() require("harpoon.ui").nav_file(8) end, opts },
+      { "<M-9>", function() require("harpoon.ui").nav_file(9) end, opts },
 		},
 		opts = config,
 		config = function()

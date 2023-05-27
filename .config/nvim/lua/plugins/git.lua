@@ -1,7 +1,8 @@
 vim.env.NEOGIT_LOG_FILE = true
 vim.env.NEOGIT_LOG_LEVEL = "debug"
 local neogit_opts = {
-	kind = "split_above",
+	-- kind = "split_above",
+  kind = "split",
 	disable_commit_confirmation = true,
 	integrations = {
 		diffview = true,

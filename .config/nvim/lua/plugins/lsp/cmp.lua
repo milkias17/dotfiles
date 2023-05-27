@@ -82,13 +82,25 @@ local cmp_config = function()
 				return vim_item
 			end,
 		},
-		sources = {
+
+		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
-			{ name = "buffer" },
-			{ name = "path" },
 			{ name = "nvim_lsp_signature_help" },
-		},
+			{ name = "nvim_lua" },
+		}, {
+			{ name = "path" },
+			{ name = "buffer" },
+		}),
+
+		cmp.setup.filetype("gitcommit", {
+			sources = cmp.config.sources({
+				{ name = "cmp_git" },
+			}, {
+				{ name = "buffer" },
+			}),
+		}),
+
 		confirm_opts = {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = false,
@@ -108,8 +120,10 @@ return {
 			"hrsh7th/cmp-path",
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
+			{ "petertriho/cmp-git", dependencies = "nvim-lua/plenary.nvim" },
+			"hrsh7th/cmp-nvim-lua",
 		},
 		opts = cmp_config,
-    event = "InsertEnter"
+		event = "InsertEnter",
 	},
 }

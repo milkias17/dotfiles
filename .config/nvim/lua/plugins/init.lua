@@ -17,7 +17,12 @@ return {
 
 	{ "nvim-lua/plenary.nvim", lazy = true },
 	{ "nvim-lua/popup.nvim", lazy = true },
-	{ "iamcco/markdown-preview.nvim", build = ":call mkdp#util#install()", ft = { "markdown" } },
+	{
+		"iamcco/markdown-preview.nvim",
+		build = ":call mkdp#util#install()",
+		ft = { "markdown" },
+		cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
+	},
 	{ "dstein64/vim-startuptime", cmd = "StartupTime" },
 	{
 		"CRAG666/code_runner.nvim",
