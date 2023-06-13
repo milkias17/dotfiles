@@ -2,17 +2,22 @@ vim.env.NEOGIT_LOG_FILE = true
 vim.env.NEOGIT_LOG_LEVEL = "debug"
 local neogit_opts = {
 	-- kind = "split_above",
-  kind = "split",
+	kind = "split",
 	disable_commit_confirmation = true,
 	integrations = {
 		diffview = true,
 	},
 	disable_builtin_notifications = true,
+  disable_insert_no_commit = false,
+	ignored_settings = {
+		"NeogitPushPopup--force-with-lease",
+		"NeogitPushPopup--force",
+		"NeogitCommitPopup--allow-empty",
+	},
 }
 --
 local opts = { noremap = true, silent = true }
 --
-
 
 local gitsigns_opts = {
 	on_attach = function(bufnr)
@@ -75,18 +80,24 @@ local gitsigns_opts = {
 
 return {
 	{
-		-- "TimUntersberger/neogit",
-    dir = "~/Dev/plugins/neogit",
+		"TimUntersberger/neogit",
+		-- dir = "~/Dev/plugins/neogit",
 		opts = neogit_opts,
 		keys = {
-			{ "<space>ng", function() require("neogit").open() end, opts },
+			{
+				"<space>ng",
+				function()
+					require("neogit").open()
+				end,
+				opts,
+			},
 		},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
 		config = true,
-    event = { "BufReadPre", "BufNewFile" },
-    opts = gitsigns_opts
+		event = { "BufReadPre", "BufNewFile" },
+		opts = gitsigns_opts,
 	},
-  {"sindrets/diffview.nvim", lazy = true},
+	{ "sindrets/diffview.nvim", lazy = true },
 }

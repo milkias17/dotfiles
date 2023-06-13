@@ -97,3 +97,9 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 	pattern = "*",
 	callback = last_place,
 })
+
+vim.filetype.add({
+  extension = {
+    mdx = "mdx"
+  }
+})

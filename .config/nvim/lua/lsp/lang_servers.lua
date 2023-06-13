@@ -23,7 +23,7 @@ local function setup_server(config_name, opts, no_default)
 end
 
 -- Use loop for calling servers requiring no configuration
-local servers = { "bashls" }
+local servers = { "bashls", "gopls" }
 
 setup_server("html", {
 	filetypes = { "html", "htmldjango" },

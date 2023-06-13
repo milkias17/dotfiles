@@ -1,5 +1,6 @@
 local config = {
   hijack_cursor = true,
+  hijack_netrw = true,
   sync_root_with_cwd = true,
   view = {
     width = "25%",
@@ -35,5 +36,6 @@ return {
       { "<A-s>", "<cmd>NvimTreeToggle<cr>", opts },
     },
     opts = config,
+    lazy = false
   },
 }

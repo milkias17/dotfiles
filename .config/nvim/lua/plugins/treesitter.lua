@@ -91,6 +91,11 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup(config)
+			local filetypes = vim.treesitter.language.get_filetypes("markdown")
+			table.insert(filetypes, "mdx")
+			vim.treesitter.language.add("markdown", {
+				filetype = filetypes,
+			})
 		end,
 		dependencies = {
 			{ "JoosepAlviste/nvim-ts-context-commentstring", priority = 100 },

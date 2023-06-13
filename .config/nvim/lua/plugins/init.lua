@@ -1,5 +1,5 @@
 return {
-	{ "fladson/vim-kitty", event = "VeryLazy" },
+	{ "fladson/vim-kitty" },
 
 	-- Lsp
 	{
@@ -34,5 +34,9 @@ return {
 			noremap = true,
 			silent = true,
 		},
+	},
+	{
+		"mbbill/undotree",
+		cmd = "UndotreeToggle",
 	},
 }
