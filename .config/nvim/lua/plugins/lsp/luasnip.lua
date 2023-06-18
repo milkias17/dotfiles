@@ -17,7 +17,7 @@ return {
 			},
 		},
 		config = function()
-			require("lsp.snippets")
+      require("snippets")
 		end,
 		keys = {
 			{

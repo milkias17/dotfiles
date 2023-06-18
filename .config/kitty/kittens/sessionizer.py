@@ -24,8 +24,8 @@ def main(args: List[str]) -> str:
 
 
 def session_file_exists(file_name: str) -> bool:
-    home = os.path.expanduser("~")
-    return os.path.exists(f"{home}/.config/kitty/sessions/{file_name}")
+    path = os.path.expanduser(SESSIONS_LOCATION)
+    return os.path.exists(f"{path}/{file_name}")
 
 
 def get_session_file_string(session_info: List[Dict]) -> str:
