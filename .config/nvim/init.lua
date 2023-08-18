@@ -43,6 +43,10 @@ require("lazy").setup("plugins", {
     colorscheme = { "catppuccin", "habamaz" }
   },
   checker = {
-    enabled = true
+    enabled = false
+  },
+  change_detection = {
+    enabled = false,
+    notify = false
   }
 })

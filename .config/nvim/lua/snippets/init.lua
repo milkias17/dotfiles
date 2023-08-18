@@ -53,7 +53,7 @@ local same = function(index)
 	end, { index })
 end
 
-local langs = { "python", "javascript", "htmldjango", "css", "cpp", "c" }
+local langs = { "python", "javascript", "htmldjango", "css", "cpp", "c", "svelte" }
 for _, lang in ipairs(langs) do
   local modname = "snippets." .. lang
   require(modname)

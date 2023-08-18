@@ -18,18 +18,10 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
-local snippets = {
-	ls.parser.parse_snippet("eaf", "export async function $1 ($2) {\n\t$0\n}"),
-  ls.parser.parse_snippet("ef", "export function $1 ($2) {\n\t$0\n}"),
-  ls.parser.parse_snippet("af", "async function $1 ($2) {\n\t$0\n}"),
-  ls.parser.parse_snippet("f", "function $1 ($2) {\n\t$0\n}"),
-  ls.parser.parse_snippet("cl", "console.log($0);"),
+local ts_snippets = {
+  ls.parser.parse_snippet(
+    "kitauth",
+    'const session = await locals.auth.validate();\nif (!session) throw redirect(302, "/signin");\n\nif (!session.user.roles.includes("IT_DEPARTMENT")) {\n\tthrow redirect(302, "/");\n}'
+  ),
 }
-
-local languages = {"javascript", "typescript", "typescriptreact", "javascriptreact"}
-
-for _, lang in ipairs(languages) do
-  ls.add_snippets(lang, snippets)
-end
-
-ls.add_snippets("javascript", snippets)
+ls.add_snippets("typescript", ts_snippets)

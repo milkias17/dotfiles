@@ -13,13 +13,14 @@ local config = {
 	},
 	indent = {
 		enable = true,
-		disable = { "python" },
+		disable = { "python", "svelte" },
 	},
 	playground = {
 		enable = true,
 	},
 	autotag = {
 		enable = true,
+    enable_close_on_slash = false
 	},
 	context_commentstring = {
 		enable = true,
@@ -82,7 +83,22 @@ local config = {
 			["[M"] = "@function.outer",
 			["[]"] = "@class.outer",
 		},
+		goto_next = {
+			["]o"] = "@loop.*",
+			["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+			["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+			["]d"] = "@conditional.outer",
+		},
+		goto_previous = {
+			["[o"] = "@loop.*",
+			["[s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+			["[z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+			["[d"] = "@conditional.outer",
+		},
 	},
+  matchup = {
+    enable = true,
+  }
 }
 
 return {
@@ -91,11 +107,6 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup(config)
-			local filetypes = vim.treesitter.language.get_filetypes("markdown")
-			table.insert(filetypes, "mdx")
-			vim.treesitter.language.add("markdown", {
-				filetype = filetypes,
-			})
 		end,
 		dependencies = {
 			{ "JoosepAlviste/nvim-ts-context-commentstring", priority = 100 },

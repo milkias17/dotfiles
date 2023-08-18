@@ -29,7 +29,7 @@ local function get_sources(null_ls)
 		null_ls.builtins.diagnostics.fish,
 		null_ls.builtins.code_actions.gitsigns,
 
-		require("typescript.extensions.null-ls.code-actions"),
+		-- require("typescript.extensions.null-ls.code-actions"),
 	}
 
 	if vim.fn.filereadable(".eslintrc.js") == 1 or vim.fn.filereadable(".eslintrc.cjs") == 1 then

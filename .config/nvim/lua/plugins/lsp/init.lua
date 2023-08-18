@@ -5,15 +5,20 @@ local plugins = {
 		dependencies = {
 			{
 				"hrsh7th/cmp-nvim-lsp",
-				cond = function()
-					return require("lazy.core.config").plugins["nvim-cmp"] ~= nil
-				end,
+				-- enabled = function()
+				-- 	return require("lazy.core.config").plugins["nvim-cmp"] ~= nil
+				-- end,
 			},
 			{ "folke/neodev.nvim", config = true },
-			{
-				"jose-elias-alvarez/typescript.nvim",
+			-- {
+			-- 	"jose-elias-alvarez/typescript.nvim",
+			-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
+			-- },
+      {
+        "pmizio/typescript-tools.nvim",
 				ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
-			},
+        config = true
+      },
 			"williamboman/mason.nvim",
 		},
 		config = function()
@@ -55,6 +60,15 @@ local plugins = {
 			})
 		end,
 	},
+  {
+    "folke/trouble.nvim",
+    cmd = {"TroubleToggle", "Trouble"},
+    keys = {
+      {"<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>"},
+      {"<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>"},
+      {"<leader>tt", "<cmd>TroubleToggle<cr>"},
+    }
+  }
 }
 
 local luasnip = require("plugins.lsp.luasnip")

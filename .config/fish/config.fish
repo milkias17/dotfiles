@@ -27,6 +27,7 @@ else
     alias lla="lsd -la"
 end
 
+alias nvim="nvim --listen $HOME/.cache/nvim/server.pipe"
 alias v="nvim"
 alias di="sudo dnf install"
 alias dr="sudo dnf remove"
@@ -42,6 +43,7 @@ alias icat="kitty +kitten icat"
 alias ggc="git clone"
 alias ggs="git status"
 alias ggl="git log"
+alias pc="protonvpn-cli c -f"
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return

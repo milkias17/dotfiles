@@ -4,7 +4,6 @@ local options = {
 	splitbelow = true,
 	splitright = true,
 	laststatus = 3,
-	clipboard = "unnamedplus",
 	cursorline = true,
 	hlsearch = false,
 	showcmd = false,
@@ -31,7 +30,7 @@ local options = {
 	mouse = "n",
 	scrolloff = 999,
 	termguicolors = true,
-	wrap = false,
+	wrap = true,
 	shell = "/usr/bin/fish",
 	title = true,
 	updatetime = 50,
@@ -103,3 +102,4 @@ vim.filetype.add({
     mdx = "mdx"
   }
 })
+

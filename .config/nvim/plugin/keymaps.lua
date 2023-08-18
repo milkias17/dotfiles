@@ -6,10 +6,14 @@ local function map(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, options)
 end
 
-map("i", "jj", "<ESC>")
 map("n", "0", "^")
 map("n", "^", "0")
-map("x", "<leader>p", '"_dP')
+map("x", "<space>p", '"_dP')
+map({"n", "v"}, "<leader>y", '"+y')
+map({"n", "v"}, "<leader>d", '"+d')
+map({"n", "v"}, "<leader>p", '"+p')
+map({"n", "v"}, "<leader>P", '"+P')
+
 
 -- File Operations
 map("n", "<leader>w", "<cmd>w!<CR>")

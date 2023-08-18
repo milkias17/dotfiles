@@ -87,8 +87,11 @@ return {
         integrations = {
           neogit = true,
           gitsigns = true,
-          nvimtree = true,
-          telescope = true,
+          neotree = true,
+          mason = true,
+          telescope = {
+            enabled = true,
+          },
           notify = true,
           cmp = true,
           native_lsp = {
