@@ -1,5 +1,6 @@
-vim.env.NEOGIT_LOG_FILE = true
-vim.env.NEOGIT_LOG_LEVEL = "debug"
+-- vim.env.NEOGIT_LOG_FILE = true
+-- vim.env.NEOGIT_LOG_LEVEL = "debug"
+
 local neogit_opts = {
   -- kind = "split_above",
   kind = "split",
@@ -93,11 +94,11 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    lazy = false,
     opts = {
       keymaps = {
         disable_defaults = true,
       },
     },
+    cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewLog"},
   },
 }

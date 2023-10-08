@@ -1,5 +1,6 @@
 [user]
-    email = 66522725+milkias17@users.noreply.github.com
+    ; email = 66522725+milkias17@users.noreply.github.com
+    email = milkias.yeheyis@yahoo.com
 	name = Milkias Yeheyis
 [core]
     editor = nvim

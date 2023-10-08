@@ -119,6 +119,11 @@ local servers = {
     override_default = true,
   },
   {
+    name = "docker_compose_language_service",
+    opts = {},
+    override_default = true,
+  },
+  {
     name = "efm",
     opts = {
       cmd = { "efm-langserver", "-c", os.getenv("HOME") .. "/.config/nvim/lua/lsp/efm-config.yml" },

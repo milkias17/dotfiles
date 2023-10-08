@@ -5,6 +5,11 @@ local config = {
 			i = {
 				["<C-h>"] = "which_key",
 				["<esc>"] = "close",
+        ["<C-t>"] = function(prompt_bufnr)
+          local entry = require("telescope.actions.state").get_selected_entry()
+          require("harpoon.mark").add_file(entry[1])
+          require("telescope.actions").close(prompt_bufnr)
+        end,
 			},
 		},
 	},
