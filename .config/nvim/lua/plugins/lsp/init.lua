@@ -16,6 +16,7 @@ local plugins = {
       -- },
       {
         "pmizio/typescript-tools.nvim",
+        dependencies = { "williamboman/mason.nvim" },
         ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
         config = function()
           require("typescript-tools").setup({})
@@ -92,9 +93,7 @@ local plugins = {
 
 local luasnip = require("plugins.lsp.luasnip")
 local cmp = require("plugins.lsp.cmp")
-local null_ls = require("plugins.lsp.null_ls")
 table.insert(plugins, 1, cmp)
 table.insert(plugins, luasnip)
-table.insert(plugins, null_ls)
 
 return plugins

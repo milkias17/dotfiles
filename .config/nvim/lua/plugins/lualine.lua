@@ -85,7 +85,6 @@ local lsp = {
 	function()
 		local buf_ft = vim.bo.filetype
 		local clients = vim.lsp.get_active_clients()
-		local found_lsp = false
 		local msg_lsp = ""
 		local default_msg = "No Active Lsp"
 		local ignore_list = { "gitsigns" }
@@ -98,31 +97,45 @@ local lsp = {
 				filetypes = { "java" }
 			end
 			if filetypes ~= nil and vim.tbl_contains(filetypes, buf_ft) then
-				if client.name == "null-ls" or vim.tbl_contains(ignore_list, client.name) then
-					goto continue
-				end
 				if msg_lsp == "" then
 					msg_lsp = client.name
 				elseif not string.match(msg_lsp, client.name) then
 					msg_lsp = msg_lsp .. "," .. client.name
 				end
 			end
-			::continue::
 		end
 
-		local sources = require("null-ls.sources")
-		for _, source in ipairs(sources.get_available(buf_ft)) do
-			if vim.tbl_contains(ignore_list, source.name) then
-				goto here
+		local ok, conform = pcall(require, "conform")
+		if ok then
+			local bufnr = vim.api.nvim_get_current_buf()
+			local formatters = conform.list_formatters(bufnr)
+			for _, formatter in ipairs(formatters) do
+				if msg_lsp == "" then
+					msg_lsp = formatter.name
+				elseif not string.match(msg_lsp, formatter.name) then
+					msg_lsp = msg_lsp .. "," .. formatter.name
+				end
 			end
-			if msg_lsp == "" then
-				msg_lsp = source.name
-			elseif not string.match(msg_lsp, source.name) then
-				msg_lsp = msg_lsp .. "," .. source.name
-			end
-			::here::
 		end
 
+		local ok, nvim_lint = pcall(require, "lint")
+		if ok then
+			local bufnr = vim.api.nvim_get_current_buf()
+			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+			local linters = nvim_lint.linters_by_ft[filetype]
+			if linters == nil then
+				goto continue
+			end
+			for _, linter in ipairs(linters) do
+				if msg_lsp == "" then
+					msg_lsp = linter
+				elseif not string.match(msg_lsp, linter) then
+					msg_lsp = msg_lsp .. "," .. linter
+				end
+			end
+		end
+
+    ::continue::
 		if msg_lsp == "" then
 			return default_msg
 		else
