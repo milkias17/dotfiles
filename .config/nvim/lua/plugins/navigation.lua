@@ -38,7 +38,9 @@ local function neo_config()
     filesystem = {
       use_libuv_file_watcher = true,
       hijack_netrw_behavior = "disabled",
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true
+      },
     },
   }
 

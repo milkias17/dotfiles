@@ -31,7 +31,7 @@ local options = {
 	scrolloff = 999,
 	termguicolors = true,
 	wrap = true,
-	shell = "/usr/bin/fish",
+	shell = "fish",
 	title = true,
 	updatetime = 50,
 	path = ".,**",
@@ -41,6 +41,7 @@ local options = {
 	timeoutlen = 300,
 	list = true, -- show tabs and other messy stuff in buffer
 	breakindent = true,
+  showtabline = 2
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }
