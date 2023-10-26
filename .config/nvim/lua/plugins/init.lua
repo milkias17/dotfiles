@@ -47,4 +47,7 @@ return {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
   },
+  {
+    "wakatime/vim-wakatime"
+  }
 }

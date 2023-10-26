@@ -24,7 +24,7 @@ local conditions = {
 		return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
 	end,
 	hide_in_width = function()
-		return vim.fn.winwidth(0) > 110
+    return vim.api.nvim_get_option("columns") > 110
 	end,
 	check_git_workspace = function()
 		local filepath = vim.fn.expand("%:p:h")

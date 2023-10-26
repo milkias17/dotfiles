@@ -36,16 +36,22 @@ return {
 	{
 		"mfussenegger/nvim-lint",
 		event = "VeryLazy",
-		opts = {
-			events = { "BufReadPre", "BufNewFile" },
-			linters_by_ft = {
+		config = function()
+			local lint = require("lint")
+			local flake8 = require("lint").linters.flake8
+			flake8.args = {
+				"--format=%(path)s:%(row)d:%(col)d:%(code)s:%(text)s",
+				"--no-show-source",
+        "--max-line-length=120",
+        -- "--ignore=E203,E266,E501,W503",
+				"-",
+			}
+			local linters_by_ft = {
 				fish = { "fish" },
 				python = { "flake8" },
-			},
-		},
-		config = function(_, opts)
-			local lint = require("lint")
-			lint.linters_by_ft = opts.linters_by_ft
+			}
+
+			lint.linters_by_ft = linters_by_ft
 
 			vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave", "TextChanged" }, {
 				callback = function()
