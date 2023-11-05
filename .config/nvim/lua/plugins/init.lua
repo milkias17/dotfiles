@@ -2,18 +2,6 @@ return {
   { "fladson/vim-kitty" },
 
   -- Lsp
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = { "pyright", "tsserver", "html", "cssls" },
-      automatic_installation = true,
-    },
-    build = ":MasonUpdate",
-    cmd = "Mason",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-    },
-  },
   { "mfussenegger/nvim-jdtls", ft = "java" },
 
   -- Debugging

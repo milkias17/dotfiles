@@ -75,6 +75,16 @@ local servers = {
           "postcss.config.cjs"
         )(fname)
       end,
+      settings = {
+        tailwindCSS = {
+      experimental = {
+        classRegex = {
+          { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+          { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+        },
+      },
+    },
+      }
     },
     override_default = true,
   },

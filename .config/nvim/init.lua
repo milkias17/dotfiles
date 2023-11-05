@@ -1,3 +1,7 @@
+if vim.loader then
+  vim.loader.enable()
+end
+
 vim.g.mapleader = ","
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

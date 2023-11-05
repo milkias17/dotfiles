@@ -93,7 +93,7 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    lazy = false,
+    lazy = true,
     opts = {
       keymaps = {
         disable_defaults = true,
