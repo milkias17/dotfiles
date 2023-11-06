@@ -1,4 +1,4 @@
-vim.env.NEOGIT_LOG_FILE = true
+vim.env.NEOGIT_LOG_FILE = false
 vim.env.NEOGIT_LOG_LEVEL = "debug"
 local neogit_opts = {
   -- kind = "split_above",
@@ -94,10 +94,5 @@ return {
   {
     "sindrets/diffview.nvim",
     lazy = true,
-    opts = {
-      keymaps = {
-        disable_defaults = true,
-      },
-    },
   },
 }
