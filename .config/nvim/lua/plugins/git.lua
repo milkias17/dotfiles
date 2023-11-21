@@ -1,11 +1,17 @@
-vim.env.NEOGIT_LOG_FILE = false
-vim.env.NEOGIT_LOG_LEVEL = "debug"
+-- vim.env.NEOGIT_LOG_FILE = false
+-- vim.env.NEOGIT_LOG_LEVEL = "debug"
 local neogit_opts = {
   -- kind = "split_above",
   kind = "split",
   disable_commit_confirmation = true,
   disable_builtin_notifications = true,
   disable_insert_on_commit = "auto",
+  commit_view = {
+    kind = "replace"
+  },
+  commit_editor = {
+    kind = "replace"
+  }
 }
 --
 local opts = { noremap = true, silent = true }

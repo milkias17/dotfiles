@@ -75,6 +75,10 @@ local lsp_progress = {
 		local message = chosen_msg.message
 		local title = chosen_msg.title
 
+    if server_name == "jdtls" then
+      return nil
+    end
+
 		return string.format("[%s] %s %s %s", server_name, title, percentage .. "%%", message)
 	end,
 	color = { fg = colors.green, gui = "bold" },

@@ -15,10 +15,16 @@ local config = {
 }
 
 return {
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	main = "ibl",
+	-- 	opts = config,
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- },
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = config,
+		"echasnovski/mini.indentscope",
+		version = "*",
 		event = { "BufReadPre", "BufNewFile" },
+    config = true
 	},
 }

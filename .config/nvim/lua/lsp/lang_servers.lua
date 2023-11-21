@@ -167,6 +167,10 @@ local servers = {
       filetypes = { "html", "css", "htmldjango" },
     }
   },
+  {
+    name = "tsserver",
+    disable = true
+  }
 }
 
 for _, lsp in ipairs(servers) do
