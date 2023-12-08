@@ -1,7 +1,8 @@
 local formatters = {
 	lua = { "stylua" },
 	htmldjango = { "djlint" },
-	["svelte,typescript,javascript,javascriptreact,typescriptreact"] = { "prettierd" },
+	["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
+	["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
 	python = { "isort", "black", "autoflake" },
 	fish = { "fish_indent" },
 	json = { "fixjson" },
@@ -42,8 +43,8 @@ return {
 			flake8.args = {
 				"--format=%(path)s:%(row)d:%(col)d:%(code)s:%(text)s",
 				"--no-show-source",
-        "--max-line-length=120",
-        -- "--ignore=E203,E266,E501,W503",
+				"--max-line-length=120",
+				-- "--ignore=E203,E266,E501,W503",
 				"-",
 			}
 			local linters_by_ft = {

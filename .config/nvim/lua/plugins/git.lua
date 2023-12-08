@@ -6,11 +6,8 @@ local neogit_opts = {
   disable_commit_confirmation = true,
   disable_builtin_notifications = true,
   disable_insert_on_commit = "auto",
-  commit_view = {
-    kind = "replace"
-  },
   commit_editor = {
-    kind = "replace"
+    kind = "split"
   }
 }
 --

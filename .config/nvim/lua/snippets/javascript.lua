@@ -26,6 +26,10 @@ local snippets = {
   ls.parser.parse_snippet("cl", "console.log($0);"),
 }
 
+local reactSnippets = {
+  ls.parser.parse_snippet("rfc", "const $1: React.FC<$2> = ($3) => {\n\t$0\n}\n\nexport default $1;")
+}
+
 local languages = {"javascript", "typescript", "typescriptreact", "javascriptreact"}
 
 for _, lang in ipairs(languages) do
@@ -33,3 +37,5 @@ for _, lang in ipairs(languages) do
 end
 
 ls.add_snippets("javascript", snippets)
+ls.add_snippets("typescriptreact", reactSnippets)
+ls.add_snippets("javascriptreact", reactSnippets)

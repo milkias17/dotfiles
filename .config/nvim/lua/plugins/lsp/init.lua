@@ -41,6 +41,7 @@ local plugins = {
 			},
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+      "b0o/SchemaStore.nvim"
 		},
 	},
 	{

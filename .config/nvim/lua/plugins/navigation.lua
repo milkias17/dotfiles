@@ -73,11 +73,14 @@ return {
     keys = {
       { "<A-s>", "<cmd>Neotree toggle<cr>", opts },
     },
-    lazy = false,
   },
   {
     "stevearc/oil.nvim",
     opts = {},
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      {"-", "<cmd>Oil<cr>", opts},
+    },
+    lazy = false
   },
 }
