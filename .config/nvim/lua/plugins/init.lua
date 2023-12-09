@@ -20,7 +20,11 @@ return {
   { "dstein64/vim-startuptime", cmd = "StartupTime" },
   {
     "CRAG666/code_runner.nvim",
-    config = true,
+    opts = {
+      filetype = {
+        go = "go run",
+      }
+    },
     cmd = { "RunCode", "RunFile", "RunProject" },
     keys = {
       {

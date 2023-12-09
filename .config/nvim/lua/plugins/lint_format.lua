@@ -50,6 +50,7 @@ return {
 			local linters_by_ft = {
 				fish = { "fish" },
 				python = { "flake8" },
+				htmldjango = { "djlint" },
 			}
 
 			lint.linters_by_ft = linters_by_ft
