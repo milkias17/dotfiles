@@ -194,7 +194,7 @@ local servers = {
 		opts = {
 			settings = {
 				yaml = {
-          validate = true
+					validate = true,
 				},
 			},
 		},

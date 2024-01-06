@@ -3,7 +3,7 @@ local config = {
 	auto_install = true,
 	highlight = {
 		enable = true,
-		disable = { "" },
+		disable = { "htmldjango" },
 		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 		-- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -13,14 +13,10 @@ local config = {
 	},
 	indent = {
 		enable = true,
-		disable = { "python", "svelte" },
+		disable = { "python", "svelte", "html", "htmldjango" },
 	},
 	playground = {
 		enable = true,
-	},
-	autotag = {
-		enable = true,
-		enable_close_on_slash = false,
 	},
 	incremental_selection = {
 		enable = true,

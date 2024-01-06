@@ -47,6 +47,7 @@ return {
 				-- "--ignore=E203,E266,E501,W503",
 				"-",
 			}
+
 			local linters_by_ft = {
 				fish = { "fish" },
 				python = { "flake8" },
@@ -66,9 +67,14 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
-		opts = {
-			formatters_by_ft = get_formatters(formatters),
-		},
+		config = function()
+			require("conform").formatters.autoflake = {
+				prepend_args = { "--remove-all-unused-imports" },
+			}
+			require("conform").setup({
+				formatters_by_ft = get_formatters(formatters),
+			})
+		end,
 		keys = {
 			{
 				"<leader>f",

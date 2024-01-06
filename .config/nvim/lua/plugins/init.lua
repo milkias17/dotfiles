@@ -1,45 +1,46 @@
 return {
-  { "fladson/vim-kitty" },
+	{ "fladson/vim-kitty", event = "VeryLazy" },
 
-  -- Lsp
-  { "mfussenegger/nvim-jdtls", ft = "java" },
+	-- Lsp
+	{ "mfussenegger/nvim-jdtls", ft = "java" },
 
-  -- Debugging
-  -- { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
-  -- { "nvim-telescope/telescope-dap.nvim", dependencies = { "mfussenegger/nvim-dap" } },
-  -- "mfussenegger/nvim-dap-python",
+	-- Debugging
+	-- { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
+	-- { "nvim-telescope/telescope-dap.nvim", dependencies = { "mfussenegger/nvim-dap" } },
+	-- "mfussenegger/nvim-dap-python",
 
-  { "nvim-lua/plenary.nvim",   lazy = true },
-  { "nvim-lua/popup.nvim",     lazy = true },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = ":call mkdp#util#install()",
-    ft = { "markdown" },
-    cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
-  },
-  { "dstein64/vim-startuptime", cmd = "StartupTime" },
-  {
-    "CRAG666/code_runner.nvim",
-    opts = {
-      filetype = {
-        go = "go run",
-      }
-    },
-    cmd = { "RunCode", "RunFile", "RunProject" },
-    keys = {
-      {
-        "<leader>r",
-        "<cmd>RunCode<CR>",
-        noremap = true,
-        silent = true,
-      },
-    },
-  },
-  {
-    "mbbill/undotree",
-    cmd = "UndotreeToggle",
-  },
-  {
-    "wakatime/vim-wakatime"
-  }
+	{ "nvim-lua/plenary.nvim", lazy = true },
+	{ "nvim-lua/popup.nvim", lazy = true },
+	{
+		"iamcco/markdown-preview.nvim",
+		build = ":call mkdp#util#install()",
+		ft = { "markdown" },
+		cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
+	},
+	{ "dstein64/vim-startuptime", cmd = "StartupTime" },
+	{
+		"CRAG666/code_runner.nvim",
+		opts = {
+			filetype = {
+				go = "go run",
+			},
+		},
+		cmd = { "RunCode", "RunFile", "RunProject" },
+		keys = {
+			{
+				"<leader>r",
+				"<cmd>RunCode<CR>",
+				noremap = true,
+				silent = true,
+			},
+		},
+	},
+	{
+		"mbbill/undotree",
+		cmd = "UndotreeToggle",
+	},
+	{
+		"wakatime/vim-wakatime",
+    event = "VeryLazy"
+	},
 }
