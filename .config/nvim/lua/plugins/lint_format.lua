@@ -3,7 +3,8 @@ local formatters = {
 	htmldjango = { "djlint" },
 	["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
 	["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
-	python = { "isort", "black", "autoflake" },
+	-- python = { "isort", "black", "autoflake" },
+	-- python = { "ruff_format" },
 	fish = { "fish_indent" },
 	json = { "fixjson" },
 	sh = { "shfmt" },
@@ -50,7 +51,7 @@ return {
 
 			local linters_by_ft = {
 				fish = { "fish" },
-				python = { "flake8" },
+				-- python = { "flake8" },
 				htmldjango = { "djlint" },
 			}
 

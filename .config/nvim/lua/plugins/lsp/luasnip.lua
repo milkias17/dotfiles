@@ -10,6 +10,10 @@ return {
         "rafamadriz/friendly-snippets",
         config = function()
           require("luasnip/loaders/from_vscode").lazy_load()
+          require("luasnip").filetype_extend("python", {"django"})
+          require("luasnip.loaders.from_vscode").load({
+            exclude = {"typescriptreact", "javascriptreact", "svelte", "html", "css"},
+          })
         end,
       },
       {
@@ -20,6 +24,7 @@ return {
       },
     },
     config = function()
+      require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/lua/snippets"})
       require("snippets")
     end,
     keys = {

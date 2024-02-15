@@ -123,6 +123,9 @@ local servers = {
 			single_file_support = true,
 		},
 	},
+  {
+    name = "ruff_lsp",
+  },
 	{
 		name = "dockerls",
 		opts = {},
@@ -164,7 +167,7 @@ local servers = {
 	{
 		name = "emmet_ls",
 		opts = {
-			filetypes = { "html", "css", "htmldjango" },
+			filetypes = { "html", "css" },
 		},
 	},
 	{
