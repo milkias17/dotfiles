@@ -41,6 +41,17 @@ return {
 	},
 	{
 		"wakatime/vim-wakatime",
-    event = "VeryLazy"
+		event = "VeryLazy",
+	},
+	{
+		"mistricky/codesnap.nvim",
+		build = "make",
+		cmd = { "CodeSnap", "CodeSnapSave" },
+		opts = {
+			has_breadcrumbs = true,
+			save_path = "~/Pictures/Code_Snap",
+			watermark = "",
+			bg_color = "#535c68",
+		},
 	},
 }

@@ -14,35 +14,40 @@ local plugins = {
 			-- 	"jose-elias-alvarez/typescript.nvim",
 			-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
 			-- },
-			{
-				"pmizio/typescript-tools.nvim",
-				dependencies = { "williamboman/mason.nvim" },
-				ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-				config = function()
-					require("typescript-tools").setup({})
-					local actions = {
-						["Organize Imports"] = "TSToolsOrganizeImports",
-						["Sort Imports"] = "TSToolsSortImports",
-						["Remove Unused Imports"] = "TSToolsRemoveUnused",
-						["Go to Source Definition"] = "TSToolsGoToSourceDefinition",
-						["Add Missing Imports"] = "TSToolsAddMissingImports",
-						["Fix All"] = "TSToolsFixAll",
-					}
-					local function code_action()
-						vim.ui.select(vim.tbl_keys(actions), {
-							prompt = "Select Action",
-						}, function(selection)
-							vim.cmd(actions[selection])
-						end)
-					end
-
-					vim.keymap.set("n", "<leader>ca", code_action, { silent = true, noremap = true })
-				end,
-			},
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-      "b0o/SchemaStore.nvim"
+			"b0o/SchemaStore.nvim",
+			{
+				"j-hui/fidget.nvim",
+				tag = "v1.0.0",
+				config = true,
+			},
 		},
+	},
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+		config = function()
+			require("typescript-tools").setup({})
+			local actions = {
+				["Organize Imports"] = "TSToolsOrganizeImports",
+				["Sort Imports"] = "TSToolsSortImports",
+				["Remove Unused Imports"] = "TSToolsRemoveUnused",
+				["Go to Source Definition"] = "TSToolsGoToSourceDefinition",
+				["Add Missing Imports"] = "TSToolsAddMissingImports",
+				["Fix All"] = "TSToolsFixAll",
+			}
+			local function code_action()
+				vim.ui.select(vim.tbl_keys(actions), {
+					prompt = "Select Action",
+				}, function(selection)
+					vim.cmd(actions[selection])
+				end)
+			end
+
+			vim.keymap.set("n", "<leader>ca", code_action, { silent = true, noremap = true })
+		end,
 	},
 	{
 		"williamboman/mason.nvim",

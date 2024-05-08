@@ -54,73 +54,74 @@
 -- }
 --
 return {
-  { "nvim-tree/nvim-web-devicons", lazy = true },
-  {
-    "NvChad/nvim-colorizer.lua",
-    opts = {
-      user_default_options = {
-        tailwind = true, -- Enable tailwind colors
-      },
-    },
-    event = { "BufReadPre", "BufNewFile" },
-  },
+	{ "nvim-tree/nvim-web-devicons", lazy = true },
+	{
+		"NvChad/nvim-colorizer.lua",
+		opts = {
+			user_default_options = {
+				tailwind = true, -- Enable tailwind colors
+			},
+		},
+		event = { "BufReadPre", "BufNewFile" },
+	},
 
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      vim.notify = require("notify")
-      vim.keymap.set("n", "<space>nd", function()
-        require("notify").dismiss()
-      end, { silent = true, noremap = true })
-    end,
-    event = "VeryLazy",
-  },
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require("notify")
+			vim.keymap.set("n", "<space>nd", function()
+				require("notify").dismiss()
+			end, { silent = true, noremap = true })
+		end,
+		event = "VeryLazy",
+	},
 
-  -- themes
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    config = function()
-      require("catppuccin").setup({
-        flavour = "macchiato",
-        integrations = {
-          neogit = true,
-          gitsigns = true,
-          neotree = true,
-          mason = true,
-          telescope = {
-            enabled = true,
-          },
-          notify = true,
-          cmp = true,
-          native_lsp = {
-            enabled = true,
-          },
-          treesitter = true,
-          treesitter_context = true,
-          indent_blankline = {
-            enabled = true,
-            colored_indent_levels = true,
-          },
-          harpoon = true,
-          semantic_tokens = true,
-          lsp_trouble = true,
-        },
-      })
-      vim.cmd.colorscheme("catppuccin")
-    end,
-  },
-  { "RRethy/nvim-base16",          priority = 1000, event = "VeryLazy" },
-  { "marko-cerovac/material.nvim", priority = 1000, lazy = true },
-  {
-    "nyoom-engineering/oxocarbon.nvim",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme("oxocarbon")
-    end,
-    lazy = true
-  },
-  { "navarasu/onedark.nvim", priority = 1000, lazy = true },
-  { "folke/tokyonight.nvim", priority = 1000, lazy = true },
+	-- themes
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "macchiato",
+				integrations = {
+					neogit = true,
+					gitsigns = true,
+					neotree = true,
+					mason = true,
+					telescope = {
+						enabled = true,
+					},
+					notify = true,
+					cmp = true,
+					native_lsp = {
+						enabled = true,
+					},
+					treesitter = true,
+					treesitter_context = true,
+					indent_blankline = {
+						enabled = true,
+						colored_indent_levels = true,
+					},
+					harpoon = true,
+					semantic_tokens = true,
+					lsp_trouble = true,
+				},
+			})
+			vim.cmd.colorscheme("catppuccin")
+		end,
+	},
+	{ "RRethy/nvim-base16", priority = 1000, event = "VeryLazy" },
+	{ "marko-cerovac/material.nvim", priority = 1000, lazy = true },
+	{ "EdenEast/nightfox.nvim", priority = 1000, lazy = true },
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("oxocarbon")
+		end,
+		lazy = true,
+	},
+	{ "navarasu/onedark.nvim", priority = 1000, lazy = true },
+	{ "folke/tokyonight.nvim", priority = 1000, lazy = true },
 }

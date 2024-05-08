@@ -8,6 +8,7 @@ local formatters = {
 	fish = { "fish_indent" },
 	json = { "fixjson" },
 	sh = { "shfmt" },
+	markdown = { "mdformat" },
 }
 
 local function add_formatter(ft, formatter, formatter_table)
@@ -51,13 +52,13 @@ return {
 
 			local linters_by_ft = {
 				fish = { "fish" },
-				-- python = { "flake8" },
+				-- python = { "ruff", "flake8" },
 				htmldjango = { "djlint" },
 			}
 
 			lint.linters_by_ft = linters_by_ft
 
-			vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave", "TextChanged" }, {
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
 				callback = function()
 					require("lint").try_lint()
 				end,

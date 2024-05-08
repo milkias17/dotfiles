@@ -115,7 +115,7 @@ local servers = {
 					analysis = {
 						autoSearchPaths = true,
 						diagnosticMode = "workspace",
-						useLibraryCodeForTypes = false,
+						useLibraryCodeForTypes = true,
 						typeCheckingMode = "off",
 					},
 				},
@@ -123,9 +123,50 @@ local servers = {
 			single_file_support = true,
 		},
 	},
-  {
-    name = "ruff_lsp",
-  },
+	{
+		name = "basedpyright",
+		disable = true,
+		opts = {
+			settings = {
+				python = {
+					analysis = {
+						autoSearchPaths = true,
+						diagnosticMode = "workspace",
+						useLibraryCodeForTypes = true,
+						typeCheckingMode = "off",
+					},
+				},
+			},
+			single_file_support = true,
+		},
+	},
+	{
+		name = "pylsp",
+		disable = true,
+		opts = {
+			settings = {
+				pylsp = {
+					plugins = {
+						pycodestyle = {
+							enabled = false,
+						},
+						autopep8 = {
+							enabled = false,
+						},
+						flake8 = {
+							enabled = false,
+						},
+						pylint = {
+							enabled = false,
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		name = "ruff_lsp",
+	},
 	{
 		name = "dockerls",
 		opts = {},
@@ -174,6 +215,10 @@ local servers = {
 		name = "tsserver",
 		disable = true,
 	},
+	{
+		name = "phpactor",
+	},
+	"phpactor",
 	{
 		name = "jsonls",
 		opts = {

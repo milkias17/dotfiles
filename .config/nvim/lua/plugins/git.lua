@@ -9,7 +9,7 @@ local neogit_opts = {
 	commit_editor = {
 		kind = "split",
 	},
-  graph_style = "unicode"
+	graph_style = "unicode",
 }
 --
 local opts = { noremap = true, silent = true }

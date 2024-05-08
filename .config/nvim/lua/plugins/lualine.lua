@@ -248,7 +248,7 @@ ins_left({
 	},
 })
 
-ins_left(lsp_progress)
+-- ins_left(lsp_progress)
 
 ins_left({
 	function()
