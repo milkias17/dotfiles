@@ -39,10 +39,10 @@ return {
 		"mbbill/undotree",
 		cmd = "UndotreeToggle",
 	},
-	{
-		"wakatime/vim-wakatime",
-		event = "VeryLazy",
-	},
+	-- {
+	-- 	"wakatime/vim-wakatime",
+	-- 	event = "VeryLazy",
+	-- },
 	{
 		"mistricky/codesnap.nvim",
 		build = "make",

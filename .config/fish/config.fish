@@ -9,6 +9,8 @@ set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --f
 # --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 # --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
+set -x MANPAGER "nvim +Man!"
+
 # Aliases
 alias check="ping google.com"
 alias c="clear"
@@ -42,7 +44,7 @@ alias icat="kitty +kitten icat"
 alias ggc="git clone"
 alias ggs="git status"
 alias ggl="git log"
-alias pc="protonvpn-cli c -f"
+alias pc="protonvpn c -f"
 
 function zeal-docs-fix
     pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return

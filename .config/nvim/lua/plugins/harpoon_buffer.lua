@@ -184,9 +184,7 @@ return {
 			vim.cmd("highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! TabLineFill guibg=#1E2030 guifg=white")
-			require("harpoon.mark").on("changed", function()
-				vim.cmd.redrawtabline()
-			end)
+      require("harpoon").setup(config)
 		end,
 	},
 }

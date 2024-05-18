@@ -113,14 +113,14 @@ local servers = {
 			settings = {
 				python = {
 					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "workspace",
-						useLibraryCodeForTypes = true,
+						-- autoSearchPaths = true,
+						-- diagnosticMode = "workspace",
+						-- useLibraryCodeForTypes = true,
 						typeCheckingMode = "off",
 					},
 				},
 			},
-			single_file_support = true,
+			-- single_file_support = true,
 		},
 	},
 	{

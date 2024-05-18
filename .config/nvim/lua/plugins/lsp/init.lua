@@ -9,7 +9,7 @@ local plugins = {
 				-- 	return require("lazy.core.config").plugins["nvim-cmp"] ~= nil
 				-- end,
 			},
-			{ "folke/neodev.nvim", config = true },
+			{ "folke/neodev.nvim", config = true, ft = "lua"},
 			-- {
 			-- 	"jose-elias-alvarez/typescript.nvim",
 			-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },

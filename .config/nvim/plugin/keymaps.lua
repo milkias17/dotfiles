@@ -49,10 +49,10 @@ map("i", "<M-m>", "<C-o>o")
 -- map("n", "<C-j>", "<C-w>j")
 -- map("n", "<C-k>", "<C-w>k")
 -- map("n", "<C-l>", "<C-w>l")
-map("n", "<C-Left>", "<cmd>vertical resize -3<CR>")
-map("n", "<C-Right>", "<cmd>vertical resize +3<CR>")
+map("n", "<C-Left>", "<cmd>vertical resize +3<CR>")
+map("n", "<C-Right>", "<cmd>vertical resize -3<CR>")
 map("n", "<C-Up>", "<cmd>resize +3<CR>")
-map("n", "<C-Down>", "<cmd>vertical resize -3<CR>")
+map("n", "<C-Down>", "<cmd>resize -3<CR>")
 map("n", "<M-w>", "<C-w>")
 
 -- Quickfix and Locallist Binds
