@@ -210,7 +210,11 @@ local servers = {
 		opts = {
 			filetypes = { "html", "css" },
 		},
+    disable = true
 	},
+  {
+    name = "emmet_language_server",
+  },
 	{
 		name = "tsserver",
 		disable = true,

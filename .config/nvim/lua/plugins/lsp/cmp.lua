@@ -65,6 +65,8 @@ local cmp_config = function()
 			end,
 		},
 		mapping = {
+			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -114,11 +116,32 @@ local cmp_config = function()
 		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
-			{ name = "nvim_lsp_signature_help" },
 			{ name = "nvim_lua" },
+			-- {
+			-- 	name = "buffer",
+			-- 	option = {
+			-- 		get_bufnrs = function()
+			-- 			local buf = vim.api.nvim_get_current_buf()
+			-- 			local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+			-- 			if byte_size > 1024 * 1024 then -- 1 Megabyte max
+			-- 				return {}
+			-- 			end
+			-- 			return { buf }
+			-- 		end,
+			-- 	},
+			-- },
 		}, {
 			{ name = "path" },
-			{ name = "buffer" },
+			{
+				name = "rg",
+				option = {
+					get_bufnrs = function()
+						local max_filesize = 1024 * 1024
+						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
+						return ok and stats and stats.size < max_filesize
+					end,
+				},
+			},
 		}),
 
 		cmp.setup.filetype("gitcommit", {
@@ -142,6 +165,7 @@ end
 return {
 	{
 		"hrsh7th/nvim-cmp",
+		version = false,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
@@ -149,6 +173,7 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			-- "hrsh7th/cmp-nvim-lsp-signature-help",
 			{ "petertriho/cmp-git", dependencies = "nvim-lua/plenary.nvim" },
+			"lukas-reineke/cmp-rg",
 			"hrsh7th/cmp-nvim-lua",
 		},
 		opts = cmp_config,

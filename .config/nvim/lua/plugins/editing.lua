@@ -22,10 +22,16 @@ return {
 		end,
 		ft = { "svelte", "htmldjango" },
 	},
-	{ "windwp/nvim-ts-autotag", opts = {
-		enable = true,
-		enable_close_on_slash = false,
-	} },
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {
+			opts = {
+				enable = true,
+				enable_rename = true,
+				enable_close_on_slash = false,
+			},
+		},
+	},
 	{
 		"kylechui/nvim-surround",
 		version = "*",

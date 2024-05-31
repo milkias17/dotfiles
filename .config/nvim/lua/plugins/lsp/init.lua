@@ -9,7 +9,7 @@ local plugins = {
 				-- 	return require("lazy.core.config").plugins["nvim-cmp"] ~= nil
 				-- end,
 			},
-			{ "folke/neodev.nvim", config = true, ft = "lua"},
+			{ "folke/neodev.nvim", config = true, ft = "lua" },
 			-- {
 			-- 	"jose-elias-alvarez/typescript.nvim",
 			-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
@@ -75,41 +75,41 @@ local plugins = {
 			require("lsp.lang_servers")
 		end,
 	},
-	-- {
-	-- 	"Exafunction/codeium.vim",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		vim.g.codeium_disable_bindings = 1
-	-- 		vim.keymap.set("i", "<C-g>", function()
-	-- 			return vim.fn["codeium#Accept"]()
-	-- 		end, { expr = true, silent = true })
-	-- 		vim.keymap.set("i", "<c-;>", function()
-	-- 			return vim.fn["codeium#CycleCompletions"](1)
-	-- 		end, { expr = true, silent = true })
-	-- 		vim.keymap.set("i", "<c-,>", function()
-	-- 			return vim.fn["codeium#CycleCompletions"](-1)
-	-- 		end, { expr = true, silent = true })
-	-- 		vim.keymap.set("i", "<c-x>", function()
-	-- 			return vim.fn["codeium#Clear"]()
-	-- 		end, { expr = true, silent = true })
-	-- 	end,
-	-- },
 	{
-		"zbirenbaum/copilot.lua",
+		"Exafunction/codeium.vim",
 		event = "InsertEnter",
-		cmd = "Copilot",
 		config = function()
-			require("copilot").setup({
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					keymap = {
-						accept = "<C-g>",
-					},
-				},
-			})
+			vim.g.codeium_disable_bindings = 1
+			vim.keymap.set("i", "<C-g>", function()
+				return vim.fn["codeium#Accept"]()
+			end, { expr = true, silent = true })
+			vim.keymap.set("i", "<c-;>", function()
+				return vim.fn["codeium#CycleCompletions"](1)
+			end, { expr = true, silent = true })
+			vim.keymap.set("i", "<c-,>", function()
+				return vim.fn["codeium#CycleCompletions"](-1)
+			end, { expr = true, silent = true })
+			vim.keymap.set("i", "<c-x>", function()
+				return vim.fn["codeium#Clear"]()
+			end, { expr = true, silent = true })
 		end,
 	},
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	event = "InsertEnter",
+	-- 	cmd = "Copilot",
+	-- 	config = function()
+	-- 		require("copilot").setup({
+	-- 			suggestion = {
+	-- 				enabled = true,
+	-- 				auto_trigger = true,
+	-- 				keymap = {
+	-- 					accept = "<C-g>",
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"folke/trouble.nvim",
 		cmd = { "TroubleToggle", "Trouble" },
@@ -125,5 +125,6 @@ local luasnip = require("plugins.lsp.luasnip")
 local cmp = require("plugins.lsp.cmp")
 table.insert(plugins, 1, cmp)
 table.insert(plugins, luasnip)
+
 
 return plugins

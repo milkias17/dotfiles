@@ -24,7 +24,7 @@ local conditions = {
 		return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
 	end,
 	hide_in_width = function()
-    return vim.api.nvim_get_option("columns") > 110
+		return vim.api.nvim_get_option("columns") > 110
 	end,
 	check_git_workspace = function()
 		local filepath = vim.fn.expand("%:p:h")
@@ -62,8 +62,25 @@ local location = {
 	cond = conditions.hide_in_width,
 }
 
+--- @param trunc_width number trunctates component when screen width is less then trunc_width
+--- @param trunc_len number truncates component to trunc_len number of chars
+--- @param hide_width number hides component when window width is smaller then hide_width
+--- @param no_ellipsis boolean whether to disable adding '...' at end after truncation
+--- return function that can format the component accordingly
+local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+	return function(str)
+		local win_width = vim.fn.winwidth(0)
+		if hide_width and win_width < hide_width then
+			return ""
+		elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+			return str:sub(1, trunc_len) .. (no_ellipsis and "" or "...")
+		end
+		return str
+	end
+end
+
 local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+	return "spaces: " .. vim.api.nvim_get_option_value("shiftwidth", {})
 end
 
 local lsp_progress = {
@@ -75,9 +92,9 @@ local lsp_progress = {
 		local message = chosen_msg.message
 		local title = chosen_msg.title
 
-    if server_name == "jdtls" then
-      return nil
-    end
+		if server_name == "jdtls" then
+			return nil
+		end
 
 		return string.format("[%s] %s %s %s", server_name, title, percentage .. "%%", message)
 	end,
@@ -88,7 +105,7 @@ local lsp_progress = {
 local lsp = {
 	function()
 		local buf_ft = vim.bo.filetype
-		local clients = vim.lsp.get_active_clients()
+		local clients = vim.lsp.get_clients()
 		local msg_lsp = ""
 		local default_msg = "No Active Lsp"
 		local ignore_list = { "gitsigns" }
@@ -124,8 +141,7 @@ local lsp = {
 
 		local ok, nvim_lint = pcall(require, "lint")
 		if ok then
-			local bufnr = vim.api.nvim_get_current_buf()
-			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+			local filetype = vim.api.nvim_get_option_value("filetype", {})
 			local linters = nvim_lint.linters_by_ft[filetype]
 			if linters == nil then
 				goto continue
@@ -139,7 +155,7 @@ local lsp = {
 			end
 		end
 
-    ::continue::
+		::continue::
 		if msg_lsp == "" then
 			return default_msg
 		else
@@ -250,11 +266,7 @@ ins_left({
 
 -- ins_left(lsp_progress)
 
-ins_left({
-	function()
-		return "%="
-	end,
-})
+ins_left("%=")
 
 ins_left({
 	"filetype",
@@ -265,7 +277,6 @@ ins_left({
 ins_left(filename)
 
 ins_right(lsp)
-ins_right(location)
 
 ins_right({
 	spaces,
