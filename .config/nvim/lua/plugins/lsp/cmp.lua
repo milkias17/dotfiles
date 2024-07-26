@@ -54,17 +54,31 @@ local codicons = {
 	TypeParameter = "",
 }
 
+local function border(hl_name)
+	return {
+		{ "╭", hl_name },
+		{ "─", hl_name },
+		{ "╮", hl_name },
+		{ "│", hl_name },
+		{ "╯", hl_name },
+		{ "─", hl_name },
+		{ "╰", hl_name },
+		{ "│", hl_name },
+	}
+end
+
 local cmp_config = function()
 	local cmp = require("cmp")
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 	return {
+    preselect = cmp.PreselectMode.None,
 		snippet = {
 			expand = function(args)
 				require("luasnip").lsp_expand(args.body)
 			end,
 		},
-		mapping = {
+		mapping =  {
 			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
@@ -102,6 +116,7 @@ local cmp_config = function()
 					luasnip = "[Snippet]",
 					buffer = "[Buffer]",
 					path = "[Path]",
+					rg = "[Project]",
 				})[entry.source.name]
 				-- vim_item.menu = ({
 				-- 	nvim_lsp = "",
@@ -112,43 +127,45 @@ local cmp_config = function()
 				return vim_item
 			end,
 		},
-
+    
 		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
 			{ name = "nvim_lua" },
-			-- {
-			-- 	name = "buffer",
-			-- 	option = {
-			-- 		get_bufnrs = function()
-			-- 			local buf = vim.api.nvim_get_current_buf()
-			-- 			local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-			-- 			if byte_size > 1024 * 1024 then -- 1 Megabyte max
-			-- 				return {}
-			-- 			end
-			-- 			return { buf }
-			-- 		end,
-			-- 	},
-			-- },
-		}, {
-			{ name = "path" },
 			{
-				name = "rg",
+				name = "buffer",
 				option = {
 					get_bufnrs = function()
-						local max_filesize = 1024 * 1024
-						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
-						return ok and stats and stats.size < max_filesize
+						local buf = vim.api.nvim_get_current_buf()
+						local line_size = vim.api.nvim_buf_line_count(buf)
+						if line_size > 350 then
+							return {}
+						end
+						-- local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+						-- if byte_size > 1024 * 1024 then -- 1 Megabyte max
+						-- 	return {}
+						-- end
+						return { buf }
 					end,
 				},
 			},
+		}, {
+			{ name = "path" },
+			-- {
+			-- 	name = "rg",
+			-- 	option = {
+			-- 		get_bufnrs = function()
+			-- 			local max_filesize = 1024 * 1024
+			-- 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
+			-- 			return ok and stats and stats.size < max_filesize
+			-- 		end,
+			-- 	},
+			-- },
 		}),
 
 		cmp.setup.filetype("gitcommit", {
 			sources = cmp.config.sources({
 				{ name = "cmp_git" },
-			}, {
-				{ name = "buffer" },
 			}),
 		}),
 

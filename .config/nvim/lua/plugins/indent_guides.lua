@@ -13,13 +13,13 @@ local config = {
 }
 
 return {
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		-- opts = config,
-		opts = {},
-		event = { "BufReadPre", "BufNewFile" },
-	},
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	main = "ibl",
+	-- 	-- opts = config,
+	-- 	opts = {},
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- },
 	-- {
 	-- 	"echasnovski/mini.indentscope",
 	-- 	version = "*",

@@ -13,11 +13,11 @@ local config = {
 		-- Using this option may slow down your editor, and you may see some duplicate highlights.
 		-- Instead of true it can also be a list of languages
 		-- additional_vim_regex_highlighting = { "html" },
-		additional_vim_regex_highlighting = { "svelte" },
+		additional_vim_regex_highlighting = { "svelte", "python" },
 	},
 	indent = {
 		enable = true,
-		disable = { "svelte", "html", "htmldjango" },
+		disable = { "python", "svelte", "html", "htmldjango" },
 	},
 	playground = {
 		enable = true,
@@ -102,7 +102,9 @@ return {
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		priority = 100,
 		config = function()
-			require("ts_context_commentstring").setup({})
+			require("ts_context_commentstring").setup({
+				enable_autocmd = false,
+			})
 			vim.g.skip_ts_context_commentstring_module = 1
 		end,
 	},

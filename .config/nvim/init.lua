@@ -1,5 +1,5 @@
 if vim.loader then
-  vim.loader.enable()
+	vim.loader.enable()
 end
 
 vim.g.mapleader = ","
@@ -23,34 +23,41 @@ require("lazy").setup("plugins", {
 			-- disable some rtp plugins
 			disabled_plugins = {
 				"gzip",
-        "zip",
-        "zipPlugin",
-        "tar",
-        "tarPlugin",
+				"zip",
+				"zipPlugin",
+				"tar",
+				"tarPlugin",
 
 				"netrwPlugin",
-        "netrw",
-        "netrwSettings",
+				"netrw",
+				"netrwSettings",
 
 				"tohtml",
-        "2html_plugin",
-        "getscript",
-        "vimball",
-        "vimballPlugin",
+				"2html_plugin",
+				"getscript",
+				"vimball",
+				"vimballPlugin",
 			},
 		},
 	},
-  dev = {
-    path = "~/Dev/plugins/"
-  },
-  install = {
-    colorscheme = { "catppuccin", "habamaz" }
-  },
-  checker = {
-    enabled = false
-  },
-  change_detection = {
-    enabled = false,
-    notify = false
-  },
+	dev = {
+		path = "~/Dev/plugins/",
+	},
+	install = {
+		colorscheme = { "catppuccin", "habamaz" },
+	},
+	checker = {
+		enabled = false,
+	},
+	change_detection = {
+		enabled = false,
+		notify = false,
+	},
+	profiling = {
+		-- Enables extra stats on the debug tab related to the loader cache.
+		-- Additionally gathers stats about all package.loaders
+		loader = true,
+		-- Track each new require in the Lazy profiling tab
+		require = true,
+	},
 })

@@ -16,6 +16,11 @@ local config = {
 			},
 		},
 	},
+	pickers = {
+		find_files = {
+			theme = "ivy",
+		},
+	},
 	extensions = {
 		fzf = {
 			fuzzy = true,
@@ -89,14 +94,14 @@ return {
 			{
 				"<space>l",
 				function()
-					require("telescope.builtin").live_grep()
+					require("telescope.builtin").live_grep(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
 			{
 				"<space>b",
 				function()
-					require("telescope.builtin").buffers()
+					require("telescope.builtin").buffers(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
@@ -110,35 +115,35 @@ return {
 			{
 				"<space>tc",
 				function()
-					require("telescope.builtin").commands()
+					require("telescope.builtin").commands(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
 			{
 				"<space>th",
 				function()
-					require("telescope.builtin").help_tags()
+					require("telescope.builtin").help_tags(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
 			{
 				"<space>ts",
 				function()
-					require("telescope.builtin").grep_string()
+					require("telescope.builtin").grep_string(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
 			{
 				"<space>ds",
 				function()
-					require("telescope.builtin").lsp_document_symbols()
+					require("telescope.builtin").lsp_document_symbols(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},
 			{
 				"<space>tk",
 				function()
-					require("telescope.builtin").keymaps()
+					require("telescope.builtin").keymaps(require("telescope.themes").get_ivy({}))
 				end,
 				opts,
 			},

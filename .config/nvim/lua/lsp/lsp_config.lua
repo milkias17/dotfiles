@@ -26,10 +26,14 @@ local on_attach = function(ev)
 	-- 	vim.lsp.buf.format({ async = true })
 	-- end, opts)
 
-	vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
+	vim.keymap.set({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 	vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 	vim.keymap.set("n", "<space>ws", vim.lsp.buf.workspace_symbol, opts)
+	vim.keymap.set("n", "<space>ht", function()
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end, opts)
 	-- buf_set_keymap("n", "<space>ds", vim.lsp.buf.document_symbol, opts)
+
 end
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }

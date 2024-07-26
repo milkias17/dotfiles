@@ -38,6 +38,7 @@ require("catppuccin").setup({
 		semantic_tokens = true,
 		lsp_trouble = true,
 		mason = true,
+    flash = true
 	},
 })
 vim.cmd.colorscheme("catppuccin")

@@ -109,6 +109,7 @@ local servers = {
 	},
 	{
 		name = "pyright",
+		disable = false,
 		opts = {
 			settings = {
 				python = {
@@ -130,9 +131,9 @@ local servers = {
 			settings = {
 				python = {
 					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "workspace",
-						useLibraryCodeForTypes = true,
+						-- autoSearchPaths = true,
+						-- diagnosticMode = "workspace",
+						-- useLibraryCodeForTypes = false,
 						typeCheckingMode = "off",
 					},
 				},
@@ -210,18 +211,38 @@ local servers = {
 		opts = {
 			filetypes = { "html", "css" },
 		},
-    disable = true
+		disable = true,
 	},
-  {
-    name = "emmet_language_server",
-  },
+	{
+		name = "emmet_language_server",
+	},
 	{
 		name = "tsserver",
 		disable = true,
 	},
 	{
-		name = "phpactor",
+		name = "vtsls",
+		opts = {
+			settings = {
+				typescript = {
+					inlayHints = {
+						parameterNames = { enabled = "literals" },
+						parameterTypes = { enabled = true },
+						variableTypes = { enabled = true },
+						propertyDeclarationTypes = { enabled = true },
+						functionLikeReturnTypes = { enabled = true },
+						enumMemberValues = { enabled = true },
+					},
+				},
+			},
+		},
 	},
+	-- {
+	-- 	name = "biome",
+	-- 	opts = {
+	-- 		cmd = { "biome", "lsp-proxy", "--config-path=" .. os.getenv("HOME") .. "/.config/nvim/lua/lsp/biome.json" },
+	-- 	},
+	-- },
 	"phpactor",
 	{
 		name = "jsonls",
@@ -282,16 +303,23 @@ end
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(args)
-		local buffer = args.buf
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		vim.api.nvim_create_autocmd("BufWritePost", {
-			pattern = { "*.js", "*.ts" },
-			callback = function(ctx)
-				if client.name == "svelte" then
-					client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-				end
-			end,
-		})
+		-- local buffer = args.buf
+		-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- This is svelte specifc configuration, probably fixed by 0.10, TODO: check
+		-- vim.api.nvim_create_autocmd("BufWritePost", {
+		-- 	pattern = { "*.js", "*.ts" },
+		-- 	callback = function(ctx)
+		-- 		if client.name == "svelte" then
+		-- 			client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+		-- 		end
+		-- 	end,
+		-- })
 		on_attach(args)
+		for _, client in pairs((vim.lsp.get_clients({}))) do
+			if client.name == "tailwindcss" then
+				client.server_capabilities.completionProvider.triggerCharacters =
+					{ '"', "'", "`", ".", "(", "[", "!", "/", ":" }
+			end
+		end
 	end,
 })

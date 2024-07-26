@@ -2,6 +2,8 @@ local formatters = {
 	lua = { "stylua" },
 	htmldjango = { "djlint" },
 	["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
+	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "biome" },
+	-- ["svelte,html,css"] = { "prettierd" },
 	["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
 	-- python = { "isort", "black", "autoflake" },
 	-- python = { "ruff_format" },
@@ -9,6 +11,7 @@ local formatters = {
 	json = { "fixjson" },
 	sh = { "shfmt" },
 	markdown = { "mdformat" },
+	sql = { "sql_formatter" },
 }
 
 local function add_formatter(ft, formatter, formatter_table)

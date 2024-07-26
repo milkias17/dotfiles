@@ -84,6 +84,11 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				flavour = "macchiato",
+				custom_highlights = function(colors)
+					return {
+						MiniJump = { bg = colors.red },
+					}
+				end,
 				integrations = {
 					neogit = true,
 					gitsigns = true,
@@ -100,12 +105,16 @@ return {
 					treesitter = true,
 					treesitter_context = true,
 					indent_blankline = {
-						enabled = true,
+						enabled = false,
 						colored_indent_levels = true,
 					},
 					harpoon = true,
 					semantic_tokens = true,
 					lsp_trouble = true,
+					mini = {
+						enabled = true,
+					},
+					flash = false,
 				},
 			})
 			vim.cmd.colorscheme("catppuccin")

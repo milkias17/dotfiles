@@ -109,9 +109,6 @@ local lsp = {
 		local msg_lsp = ""
 		local default_msg = "No Active Lsp"
 		local ignore_list = { "gitsigns" }
-		if next(clients) == nil then
-			return default_msg
-		end
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
 			if client.name == "jdtls" then
@@ -165,7 +162,7 @@ local lsp = {
 	-- icon = " LSP:",
 	icon = " ",
 	color = { fg = colors.white_alt, gui = "bold" },
-	cond = conditions.lsp_active and conditions.hide_in_width,
+	cond = conditions.hide_in_width,
 }
 
 local config = {
