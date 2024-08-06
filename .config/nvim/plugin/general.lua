@@ -31,7 +31,7 @@ local options = {
 	scrolloff = 999,
 	termguicolors = true,
 	wrap = true,
-	shell = "fish",
+	shell = "/usr/bin/fish",
 	title = true,
 	updatetime = 50,
 	path = ".,**",
@@ -41,8 +41,8 @@ local options = {
 	timeoutlen = 300,
 	list = true, -- show tabs and other messy stuff in buffer
 	breakindent = true,
-  showtabline = 2,
-  inccommand = "split"
+	showtabline = 2,
+	inccommand = "split",
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }
@@ -73,6 +73,24 @@ vim.cmd([[
     augroup END
     ]])
 
+local aug = vim.api.nvim_create_augroup("buf_large", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+	callback = function()
+		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
+		if ok and stats and (stats.size > 1000000) then
+			vim.b.large_buf = true
+			vim.cmd("syntax off")
+			vim.opt_local.foldmethod = "manual"
+			vim.opt_local.spell = false
+		else
+			vim.b.large_buf = false
+		end
+	end,
+	group = aug,
+	pattern = "*",
+})
+
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
@@ -100,8 +118,7 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 })
 
 vim.filetype.add({
-  extension = {
-    mdx = "mdx"
-  }
+	extension = {
+		mdx = "mdx",
+	},
 })
-

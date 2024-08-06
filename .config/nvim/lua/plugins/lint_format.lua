@@ -1,10 +1,10 @@
 local formatters = {
 	lua = { "stylua" },
 	htmldjango = { "djlint" },
-	["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
+	-- ["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
 	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "biome" },
 	-- ["svelte,html,css"] = { "prettierd" },
-	["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
+	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
 	-- python = { "isort", "black", "autoflake" },
 	-- python = { "ruff_format" },
 	fish = { "fish_indent" },
@@ -12,6 +12,7 @@ local formatters = {
 	sh = { "shfmt" },
 	markdown = { "mdformat" },
 	sql = { "sql_formatter" },
+	-- go = { "injected" },
 }
 
 local function add_formatter(ft, formatter, formatter_table)
@@ -79,6 +80,25 @@ return {
 			require("conform").setup({
 				formatters_by_ft = get_formatters(formatters),
 			})
+			require("conform").formatters.injected = {
+				options = {
+					lang_to_ext = {
+						bash = "sh",
+						c_sharp = "cs",
+						elixir = "exs",
+						javascript = "js",
+						julia = "jl",
+						latex = "tex",
+						markdown = "md",
+						python = "py",
+						ruby = "rb",
+						rust = "rs",
+						teal = "tl",
+						typescript = "ts",
+						sql = "sql",
+					},
+				},
+			}
 		end,
 		keys = {
 			{

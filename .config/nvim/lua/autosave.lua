@@ -9,7 +9,7 @@ local attach_to_buffer = function(output_bufnr, pattern, command)
 				end
 			end
 
-			vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, { "output of: main.py" })
+			vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, { "output of: " .. pattern })
 			vim.fn.jobstart(command, {
 				stdout_buffered = true,
 				on_stdout = append_data,
@@ -24,6 +24,9 @@ vim.api.nvim_create_user_command("AutoRun", function()
 	local bufnr = vim.fn.input("Bufnr: ")
 	local pattern = vim.fn.input("Pattern: ")
 	local command = vim.split(vim.fn.input("Comand: "), " ")
+  local filename = vim.fn.input("Filename: ")
+
+  table.insert(command, filename)
 	P(command)
 	attach_to_buffer(tonumber(bufnr), pattern, command)
 end, {})

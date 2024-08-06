@@ -100,8 +100,20 @@ local servers = {
 		opts = {
 			settings = {
 				Lua = {
+					runtime = {
+						version = "LuaJIT",
+					},
 					completion = {
 						callSnippet = "Replace",
+					},
+					workspace = {
+						checkThirdParty = false,
+						library = {
+							vim.env.VIMRUNTIME,
+							-- Depending on the usage, you might want to add additional paths here.
+							-- "${3rd}/luv/library"
+							-- "${3rd}/busted/library",
+						},
 					},
 				},
 			},
@@ -237,12 +249,9 @@ local servers = {
 			},
 		},
 	},
-	-- {
-	-- 	name = "biome",
-	-- 	opts = {
-	-- 		cmd = { "biome", "lsp-proxy", "--config-path=" .. os.getenv("HOME") .. "/.config/nvim/lua/lsp/biome.json" },
-	-- 	},
-	-- },
+	{
+		name = "biome",
+	},
 	"phpactor",
 	{
 		name = "jsonls",

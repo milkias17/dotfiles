@@ -76,6 +76,11 @@ local gitsigns_opts = {
 
 return {
 	{
+		"wintermute-cell/gitignore.nvim",
+    config = true,
+		cmd = { "Gitignore" },
+	},
+	{
 		"NeogitOrg/neogit",
 		-- dir = "~/Dev/projects/neovim/neogit",
 		opts = neogit_opts,

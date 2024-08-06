@@ -127,7 +127,6 @@ local cmp_config = function()
 				return vim_item
 			end,
 		},
-    
 		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },

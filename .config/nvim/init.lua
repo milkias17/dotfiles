@@ -61,3 +61,5 @@ require("lazy").setup("plugins", {
 		require = true,
 	},
 })
+
+require("autosave")

@@ -52,6 +52,16 @@ return {
 			save_path = "~/Pictures/Code_Snap",
 			watermark = "",
 			bg_color = "#535c68",
+      has_line_number = true,
 		},
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+	   opts = {
+	     open_mapping = [[<c-\>]],
+	     insert_mappings = true,
+	     shell = "fish"
+	   }
 	},
 }

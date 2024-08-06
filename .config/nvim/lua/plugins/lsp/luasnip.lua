@@ -2,14 +2,14 @@ return {
   {
     "L3MON4D3/LuaSnip",
     dependencies = {
-      {
-        "dsznajder/vscode-es7-javascript-react-snippets",
-        build = "yarn install --frozen-lockfile && yarn compile",
-      },
+      -- {
+      --   "dsznajder/vscode-es7-javascript-react-snippets",
+      --   build = "yarn install --frozen-lockfile && yarn compile",
+      -- },
       {
         "rafamadriz/friendly-snippets",
         config = function()
-          require("luasnip/loaders/from_vscode").lazy_load()
+          require("luasnip.loaders.from_vscode").lazy_load()
           -- require("luasnip.loaders.from_vscode").load({
           --   exclude = {"typescriptreact", "javascriptreact", "svelte", "html", "css"},
           -- })
