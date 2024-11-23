@@ -1,8 +1,14 @@
 local config = {
 	defaults = {
 		file_ignore_patterns = { "node_modules/", "__pycache__/", "env/" },
+		history = {
+			path = vim.fs.joinpath(vim.fn.stdpath("data"), "telescope_history.sqlite3"),
+			limit = 100,
+		},
 		mappings = {
 			i = {
+				["<C-Down>"] = require("telescope.actions").cycle_history_next,
+				["<C-Up>"] = require("telescope.actions").cycle_history_prev,
 				["<C-h>"] = "which_key",
 				["<esc>"] = "close",
 				["<C-t>"] = function(prompt_bufnr)
@@ -15,6 +21,9 @@ local config = {
 				end,
 			},
 		},
+	},
+	["ui-select"] = {
+		require("telescope.themes").get_dropdown({}),
 	},
 	pickers = {
 		find_files = {
@@ -74,6 +83,8 @@ return {
 			{
 				"nvim-telescope/telescope-media-files.nvim",
 			},
+			{ "nvim-telescope/telescope-smart-history.nvim", dependencies = { "kkharji/sqlite.lua" } },
+			"telescope-ui-select.nvim",
 		},
 		cmd = "Telescope",
 		keys = {
@@ -154,6 +165,8 @@ return {
 		config = function()
 			require("telescope").setup(config)
 			require("telescope").load_extension("fzf")
+			require("telescope").load_extension("smart_history")
+			require("telescope").load_extension("ui-select")
 			require("telescope").load_extension("media_files")
 			require("telescope").load_extension("notify")
 		end,

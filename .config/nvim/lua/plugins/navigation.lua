@@ -28,6 +28,7 @@ local function neo_config()
 
 	local opts = {
 		window = {
+			position = "right",
 			mappings = {
 				["<tab>"] = function(state)
 					state.commands["open"](state)
@@ -64,6 +65,7 @@ return {
 	-- },
 	{
 		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",

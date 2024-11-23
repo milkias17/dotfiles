@@ -126,9 +126,9 @@ local servers = {
 			settings = {
 				python = {
 					analysis = {
-						-- autoSearchPaths = true,
-						-- diagnosticMode = "workspace",
-						-- useLibraryCodeForTypes = true,
+						-- autoSearchPaths = false,
+						-- diagnosticMode = "openFilesOnly",
+						-- useLibraryCodeForTypes = false,
 						typeCheckingMode = "off",
 					},
 				},
@@ -177,9 +177,9 @@ local servers = {
 			},
 		},
 	},
-	{
-		name = "ruff_lsp",
-	},
+	-- {
+	-- 	name = "ruff_lsp",
+	-- },
 	{
 		name = "dockerls",
 		opts = {},
@@ -234,6 +234,7 @@ local servers = {
 	},
 	{
 		name = "vtsls",
+		disable = true,
 		opts = {
 			settings = {
 				typescript = {
@@ -281,6 +282,9 @@ local servers = {
 			},
 		},
 	},
+	{ name = "taplo", override_default = true, opts = {
+		cmd = { "taplo", "lsp", "stdio" },
+	} },
 }
 
 for _, lsp in ipairs(servers) do

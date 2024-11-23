@@ -1,0 +1,24 @@
+focus_os_window
+new_tab mobile code
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/Work/m-pos
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=8 --env PWD=/home/mike/Dev/Work/m-pos --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold nvim
+new_tab backend code
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/Work/dash-api
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=5 --env PWD=/home/mike/Dev/Work/dash-api --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold nvim
+focus
+new_tab mobile server
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/Work/m-pos
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=1 --env PWD=/home/mike --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold bun start
+focus
+new_tab backend server
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/Work/dash-api
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=2 --env PWD=/home/mike/Dev/Work/m-pos --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold bun dev
+focus

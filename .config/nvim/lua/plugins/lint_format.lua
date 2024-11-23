@@ -6,13 +6,13 @@ local formatters = {
 	-- ["svelte,html,css"] = { "prettierd" },
 	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
 	-- python = { "isort", "black", "autoflake" },
-	-- python = { "ruff_format" },
+	python = { "ruff_format" },
 	fish = { "fish_indent" },
 	json = { "fixjson" },
 	sh = { "shfmt" },
 	markdown = { "mdformat" },
 	sql = { "sql_formatter" },
-	-- go = { "injected" },
+	go = { "golines" },
 }
 
 local function add_formatter(ft, formatter, formatter_table)
@@ -56,7 +56,7 @@ return {
 
 			local linters_by_ft = {
 				fish = { "fish" },
-				-- python = { "ruff", "flake8" },
+				python = { "ruff" },
 				htmldjango = { "djlint" },
 			}
 

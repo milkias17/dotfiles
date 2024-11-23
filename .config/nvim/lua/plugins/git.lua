@@ -9,7 +9,7 @@ local neogit_opts = {
 	commit_editor = {
 		kind = "split",
 	},
-	graph_style = "unicode",
+	graph_style = "kitty",
 }
 --
 local opts = { noremap = true, silent = true }
@@ -77,7 +77,6 @@ local gitsigns_opts = {
 return {
 	{
 		"wintermute-cell/gitignore.nvim",
-    config = true,
 		cmd = { "Gitignore" },
 	},
 	{

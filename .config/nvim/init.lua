@@ -18,6 +18,9 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("plugins", {
+  defaults = {
+    cond = vim.g.vscode
+  },
 	performance = {
 		rtp = {
 			-- disable some rtp plugins
@@ -32,7 +35,7 @@ require("lazy").setup("plugins", {
 				"netrw",
 				"netrwSettings",
 
-				"tohtml",
+				-- "tohtml",
 				"2html_plugin",
 				"getscript",
 				"vimball",

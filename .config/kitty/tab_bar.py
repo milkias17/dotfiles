@@ -26,27 +26,27 @@ REFRESH_TIME = 1
 ICON = "  "
 UNPLUGGED_ICONS = {
     10: "󰁺",
-    20: "󰁾",
-    30: "󰁾",
-    40: "󰁾",
+    20: "󰁻",
+    30: "󰁼",
+    40: "󰁽",
     50: "󰁾",
-    60: "󰂀",
+    60: "󰁿",
     70: "󰂀",
-    80: "󱊣",
+    80: "󰂁",
     90: "󰂂",
     100: "󱊣",
 }
 PLUGGED_ICONS = {
     10: "󰢜",
-    20: "󰢜",
+    20: "󰂆",
     30: "󰂇",
     40: "󰂈",
-    50: "󰂈",
+    50: "󰢝",
     60: "󰂉",
     70: "󰢞",
     80: "󰂊",
     90: "󰂋",
-    100: "󱊦",
+    100: "󰂅",
 }
 UNPLUGGED_COLORS = {
     15: as_rgb(color_as_int(opts.color1)),
@@ -139,9 +139,9 @@ def _redraw_tab_bar(_):
 
 def get_battery_cells() -> list:
     try:
-        with open("/sys/class/power_supply/BAT1/status", "r") as f:
+        with open("/sys/class/power_supply/BAT0/status", "r") as f:
             status = f.read()
-        with open("/sys/class/power_supply/BAT1/capacity", "r") as f:
+        with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
             percent = int(f.read())
         if status == "Discharging\n":
             # TODO: declare the lambda once and don't repeat the code

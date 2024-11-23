@@ -16,7 +16,7 @@ local config = {
 		additional_vim_regex_highlighting = { "svelte", "python" },
 	},
 	indent = {
-		enable = true,
+		enable = false,
 		disable = { "python", "svelte", "html", "htmldjango" },
 	},
 	playground = {
@@ -121,6 +121,8 @@ return {
 				"nvim-treesitter/nvim-treesitter-context",
 				config = true,
 			},
+
+			-- { "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
 		},
 	},
 	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },

@@ -1,0 +1,24 @@
+focus_os_window
+new_tab reference
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/projects/anony_counseling
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=1 --env PWD=/home/mike --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold fish
+focus
+new_tab code
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/projects/anony_counseling_bot
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=3 --env PWD=/home/mike/Dev/projects/anony_counseling --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold fish
+focus
+new_tab server
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/projects/anony_counseling_bot
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=5 --env PWD=/home/mike/Dev/projects/anony_counseling_bot --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold node /usr/local/bin/nodemon --exec python main.py
+focus
+new_tab shell
+enabled_layouts tall
+layout tall
+cd /home/mike/Dev/projects/anony_counseling_bot
+launch --env KITTY_FISH_XDG_DATA_DIR=/usr/lib64/kitty/shell-integration --env KITTY_SHELL_INTEGRATION=enabled --env KITTY_WINDOW_ID=7 --env PWD=/home/mike/Dev/projects/anony_counseling_bot --env XDG_DATA_DIRS=/usr/lib64/kitty/shell-integration:/home/mike/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share --hold /home/mike/.local/share/pypoetry/venv/bin/python /home/mike/.local/bin/poetry shell

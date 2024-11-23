@@ -25,7 +25,7 @@ local options = {
 	writebackup = false,
 	undodir = os.getenv("HOME") .. "/.nvim/undodir",
 	undofile = true,
-	lazyredraw = true,
+	lazyredraw = false,
 	ttyfast = true,
 	mouse = "n",
 	scrolloff = 999,
@@ -43,6 +43,8 @@ local options = {
 	breakindent = true,
 	showtabline = 2,
 	inccommand = "split",
+	-- spelllang = "en_us",
+	-- spell = true,
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }

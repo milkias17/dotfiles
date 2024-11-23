@@ -24,18 +24,18 @@ local plugins = {
 		},
 	},
 	{ "folke/neodev.nvim", config = true, ft = "lua" },
-	-- {
-	-- 	"pmizio/typescript-tools.nvim",
-	-- 	dependencies = { "williamboman/mason.nvim" },
-	-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-	-- 	config = function()
-	-- 		require("typescript-tools").setup({
-	-- 			settings = {
-	-- 				expose_as_code_action = "all",
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "williamboman/mason.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+		config = function()
+			require("typescript-tools").setup({
+				settings = {
+					expose_as_code_action = "all",
+				},
+			})
+		end,
+	},
 	{
 		"williamboman/mason.nvim",
 		opts = {

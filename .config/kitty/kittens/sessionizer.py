@@ -28,6 +28,26 @@ def session_file_exists(file_name: str) -> bool:
     return os.path.exists(f"{path}/{file_name}")
 
 
+def env_to_str(env: dict):
+    return " ".join(f"--env {k}={v}" for k, v in env.items())
+
+
+def cmdline_to_string(cmdline: list):
+    return " ".join(cmdline)
+
+
+def fg_process_to_string(fg_processes: list):
+    fg = fg_processes[0]
+    result = ""
+
+    result += cmdline_to_string(fg["cmdline"])
+
+    if result == "kitty @ ls":
+        return SHELL
+
+    return result
+
+
 def get_session_file_string(session_info: List[Dict]) -> str:
     session_file_commands = []
     for os_window in session_info:
@@ -53,10 +73,16 @@ def get_session_file_string(session_info: List[Dict]) -> str:
                 if "kittens/sessionizer.py" in window["cmdline"]:
                     continue
                 session_file_commands.append(f"cd {window['cwd']}")
-                command = " ".join(window["foreground_processes"][0]["cmdline"])
                 session_file_commands.append(
-                    "launch {} -C '{} -c \"{}\"'".format(SHELL, SHELL, command)
+                    f"launch {env_to_str(window['env'])} --hold {fg_process_to_string(window['foreground_processes'])}"
                 )
+                if window["is_focused"]:
+                    session_file_commands.append("focus")
+
+                # command = " ".join(window["foreground_processes"][0]["cmdline"])
+                # session_file_commands.append(
+                #     "launch {} -C '{} -c \"{}\"'".format(SHELL, SHELL, command)
+                # )
 
     return "\n".join(session_file_commands)
 
