@@ -5,7 +5,7 @@ from typing import Dict, List
 
 from kitty.boss import Boss
 
-SHELL = "fish"
+SHELL = "nu"
 SESSIONS_LOCATION = "~/.config/kitty/sessions"
 
 
@@ -48,6 +48,40 @@ def fg_process_to_string(fg_processes: list):
     return result
 
 
+def is_python_project(directory: str) -> bool:
+    common_files = ["setup.py", "pyproject.toml", "requirements.txt", "Pipfile"]
+    for file in common_files:
+        if os.path.isfile(os.path.join(directory, file)):
+            return True
+
+    for file in os.listdir(directory):
+        if file.endswith(".py"):
+            return True
+
+
+def get_venv_command(directory: str) -> str:
+    venv_dirs = [".venv", ".env", "env", ".virtualenv"]
+
+    for venv_dir in venv_dirs:
+        venv_path = os.path.join(directory, venv_dir)
+        if os.path.isdir(venv_path):
+            activate_bin = "activate"
+            if SHELL == "nu":
+                activate_bin = "activate.nu"
+            elif SHELL == "fish":
+                activate_bin = "activate.fish"
+
+            if os.name == "nt":
+                activate_script = os.path.join(venv_path, "Scripts", activate_bin)
+            else:
+                activate_script = os.path.join(venv_path, "bin", activate_bin)
+
+            if SHELL == "nu":
+                return f"overlay use {activate_script}"
+
+            return f"source {activate_script}"
+
+
 def get_session_file_string(session_info: List[Dict]) -> str:
     session_file_commands = []
     for os_window in session_info:
@@ -72,12 +106,22 @@ def get_session_file_string(session_info: List[Dict]) -> str:
                 # Pass if its the sessionizer script
                 if "kittens/sessionizer.py" in window["cmdline"]:
                     continue
-                session_file_commands.append(f"cd {window['cwd']}")
-                session_file_commands.append(
-                    f"launch {env_to_str(window['env'])} --hold {fg_process_to_string(window['foreground_processes'])}"
-                )
-                if window["is_focused"]:
-                    session_file_commands.append("focus")
+                directory = window["cwd"]
+                session_file_commands.append(f"cd {directory}")
+                command_str = fg_process_to_string(window["foreground_processes"])
+                if is_python_project(directory):
+                    venv_command = get_venv_command(directory)
+                    if SHELL == "nu":
+                        command_str = f"nu -e '{venv_command}; {command_str}'"
+                    elif SHELL == "fish":
+                        command_str = f"fish -C '{venv_command}; {command_str}'"
+                    else:
+                        command_str = (
+                            f"${os.getenv('SHELL')} -C '{venv_command}; {command_str}'"
+                        )
+
+                launch_command_str = f"launch {env_to_str(window['env'])} --hold {'--keep-focus' if window['is_focused'] else ''} {command_str}"
+                session_file_commands.append(launch_command_str)
 
                 # command = " ".join(window["foreground_processes"][0]["cmdline"])
                 # session_file_commands.append(

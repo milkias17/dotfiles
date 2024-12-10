@@ -1,5 +1,0 @@
-focus_os_window
-enabled_layouts tall
-layout tall
-cd /home/mike/Dev/school/udemy
-launch --hold /home/mike/.local/share/pypoetry/venv/bin/python /home/mike/.local/bin/poetry shell
