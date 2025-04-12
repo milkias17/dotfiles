@@ -3,6 +3,20 @@ local lsp_config = require("lsp.lsp_config")
 local capabilities = lsp_config.capabilities
 local on_attach = lsp_config.on_attach
 
+local function is_theme_directory_present()
+	local function directory_exists(dir)
+		local ok, _, code = os.rename(dir, dir)
+		if not ok then
+			if code == 13 then
+				-- Permission denied, but it exists
+				return true
+			end
+		end
+		return ok
+	end
+	return directory_exists("theme")
+end
+
 local function setup_server(config_name, opts, override_default)
 	if override_default then
 		lspconfig[config_name].setup(opts)
@@ -73,7 +87,7 @@ local servers = {
 					"postcss.config.js",
 					"postcss.config.ts",
 					"postcss.config.cjs"
-				)(fname)
+				)(fname) or require("lspconfig.util").root_pattern("theme")(fname)
 			end,
 			settings = {
 				tailwindCSS = {
@@ -109,7 +123,8 @@ local servers = {
 					workspace = {
 						checkThirdParty = false,
 						library = {
-							vim.env.VIMRUNTIME,
+							-- vim.env.VIMRUNTIME,
+							-- "$XDG_DATA_HOME/nvim/lazy",
 							-- Depending on the usage, you might want to add additional paths here.
 							-- "${3rd}/luv/library"
 							-- "${3rd}/busted/library",
@@ -177,9 +192,7 @@ local servers = {
 			},
 		},
 	},
-	-- {
-	-- 	name = "ruff_lsp",
-	-- },
+  -- "ruff",
 	{
 		name = "dockerls",
 		opts = {},
@@ -220,6 +233,7 @@ local servers = {
 	},
 	{
 		name = "emmet_ls",
+		disable = true,
 		opts = {
 			filetypes = { "html", "css" },
 		},
@@ -227,6 +241,7 @@ local servers = {
 	},
 	{
 		name = "emmet_language_server",
+		disable = true,
 	},
 	{
 		name = "tsserver",
@@ -234,7 +249,7 @@ local servers = {
 	},
 	{
 		name = "vtsls",
-		disable = true,
+		disable = false,
 		opts = {
 			settings = {
 				typescript = {
@@ -285,6 +300,7 @@ local servers = {
 	{ name = "taplo", override_default = true, opts = {
 		cmd = { "taplo", "lsp", "stdio" },
 	} },
+	"asm_lsp",
 }
 
 for _, lsp in ipairs(servers) do

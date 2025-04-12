@@ -56,14 +56,14 @@ local function swap_prev_mark()
 end
 
 local function remove_current_mark()
-  local index = get_mark_index()
-  if index == nil then
-    return
-  end
+	local index = get_mark_index()
+	if index == nil then
+		return
+	end
 
-  local marks = require("harpoon").get_mark_config().marks
-  table.remove(marks, index)
-  require("harpoon.mark").set_mark_list(marks)
+	local marks = require("harpoon").get_mark_config().marks
+	table.remove(marks, index)
+	require("harpoon.mark").set_mark_list(marks)
 end
 
 return {
@@ -78,11 +78,11 @@ return {
 				end,
 				opts,
 			},
-      {
-        "<space>hr",
-        remove_current_mark,
-        opts,
-      },
+			{
+				"<space>hr",
+				remove_current_mark,
+				opts,
+			},
 			{
 				"<space>hc",
 				function()
@@ -184,7 +184,7 @@ return {
 			vim.cmd("highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7")
 			vim.cmd("highlight! TabLineFill guibg=#1E2030 guifg=white")
-      require("harpoon").setup(config)
+			require("harpoon").setup(config)
 		end,
 	},
 }

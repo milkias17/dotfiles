@@ -112,6 +112,18 @@ return {
 			"DiffviewRefresh",
 			"DiffviewFileHistory",
 		},
+		keys = {
+			{
+				"<space>do",
+				mode = "n",
+				"<cmd>DiffviewOpen<cr>",
+			},
+      {
+        "<space>dc",
+        mode = "n",
+        "<cmd>DiffviewClose<cr>",
+      }
+		},
 	},
 	-- {
 	-- 	"SuperBo/fugit2.nvim",
@@ -125,7 +137,6 @@ return {
 	-- 		"nvim-lua/plenary.nvim",
 	-- 		{
 	-- 			"chrisgrieser/nvim-tinygit", -- optional: for Github PR view
-	-- 			dependencies = { "stevearc/dressing.nvim" },
 	-- 		},
 	-- 	},
 	-- 	cmd = { "Fugit2", "Fugit2Blame", "Fugit2Diff", "Fugit2Graph" },

@@ -9,12 +9,12 @@ end
 map("n", "0", "^")
 map("n", "^", "0")
 map("x", "<space>p", '"_dP')
-map({"n", "v"}, "<leader>y", '"+y')
-map({"n", "v"}, "<leader>Y", '"+y$')
-map({"n", "v"}, "<leader>d", '"+d')
-map({"n", "v"}, "<leader>p", '"+p')
-map({"n", "v"}, "<leader>P", '"+P')
-
+map({ "n", "v" }, "<leader>y", '"+y')
+map({ "n", "v" }, "<leader>Y", '"+y$')
+map({ "n", "v" }, "<leader>d", '"+d')
+map({ "n", "v" }, "<leader>p", '"+p')
+map({ "n", "v" }, "<leader>P", '"+P')
+map("n", "yc", "yygccp")
 
 -- File Operations
 map("n", "<leader>w", "<cmd>w!<CR>")
@@ -67,7 +67,6 @@ map("n", "<space>n", "<cmd>lnext<CR>")
 map("n", "<space>p", "<cmd>lprev<CR>")
 
 map("n", "<space>ot", "<cmd>terminal<CR>")
-
 
 map("n", "]b", "<cmd>bnext<CR>")
 map("n", "[b", "<cmd>bprev<CR>")

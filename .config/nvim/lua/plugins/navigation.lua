@@ -25,7 +25,11 @@ local config = {
 
 local function neo_config()
 	vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+	local function on_move(data)
+		Snacks.rename.on_rename_file(data.source, data.destination)
+	end
 
+	local events = require("neo-tree.events")
 	local opts = {
 		window = {
 			position = "right",
@@ -42,6 +46,10 @@ local function neo_config()
 			follow_current_file = {
 				enabled = true,
 			},
+		},
+		event_handlers = {
+			{ event = events.FILE_MOVED, handler = on_move },
+			{ event = events.FILE_RENAMED, handler = on_move },
 		},
 	}
 
@@ -85,7 +93,7 @@ return {
 			{
 				"-",
 				function()
-					require("oil").open_float(".")
+					require("oil").open_float()
 				end,
 				opts,
 			},

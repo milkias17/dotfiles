@@ -65,16 +65,16 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 	},
 
-	{
-		"rcarriga/nvim-notify",
-		config = function()
-			vim.notify = require("notify")
-			vim.keymap.set("n", "<space>nd", function()
-				require("notify").dismiss()
-			end, { silent = true, noremap = true })
-		end,
-		event = "VeryLazy",
-	},
+	-- {
+	-- 	"rcarriga/nvim-notify",
+	-- 	config = function()
+	-- 		vim.notify = require("notify")
+	-- 		vim.keymap.set("n", "<space>nd", function()
+	-- 			require("notify").dismiss()
+	-- 		end, { silent = true, noremap = true })
+	-- 	end,
+	-- 	event = "VeryLazy",
+	-- },
 
 	-- themes
 	{
@@ -84,21 +84,18 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				flavour = "macchiato",
-				custom_highlights = function(colors)
-					return {
-						MiniJump = { bg = colors.red },
-					}
-				end,
 				integrations = {
 					neogit = true,
 					gitsigns = true,
 					neotree = true,
+					snacks = true,
 					mason = true,
 					telescope = {
 						enabled = true,
 					},
+					fzf = true,
 					notify = true,
-					cmp = true,
+					cmp = false,
 					native_lsp = {
 						enabled = true,
 					},
@@ -114,7 +111,33 @@ return {
 					mini = {
 						enabled = true,
 					},
-					flash = false,
+					flash = true,
+					blink_cmp = true,
+				},
+				custom_highlights = function(colors)
+					return {
+						BlinkCmpMenuBorder = { fg = colors.blue },
+						BlinkCmpMenu = { fg = colors.text },
+						BlinkCmpDocBorder = { fg = colors.blue },
+						BlinkCmpSignatureHelpActiveParameter = { fg = colors.mauve },
+						BlinkCmpSignatureHelpBorder = { fg = colors.blue },
+
+						MiniJump = { bg = colors.red },
+					}
+				end,
+				styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+					comments = { "italic" }, -- Change the style of comments
+					conditionals = { "italic" },
+					loops = {},
+					functions = {},
+					keywords = {},
+					strings = {},
+					variables = {},
+					numbers = {},
+					booleans = {},
+					properties = {},
+					types = {},
+					operators = {},
 				},
 			})
 			vim.cmd.colorscheme("catppuccin")
@@ -134,34 +157,21 @@ return {
 	{ "navarasu/onedark.nvim", priority = 1000, lazy = true },
 	{ "folke/tokyonight.nvim", priority = 1000, lazy = true },
 	-- lazy.nvim
-	-- {
-	-- 	"folke/noice.nvim",
-	-- 	event = "VeryLazy",
-	-- 	opts = {
-	-- 		lsp = {
-	-- 			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-	-- 			override = {
-	-- 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-	-- 				["vim.lsp.util.stylize_markdown"] = true,
-	-- 				["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-	-- 			},
-	-- 		},
-	-- 		-- you can enable a preset for easier configuration
-	-- 		presets = {
-	-- 			bottom_search = true, -- use a classic bottom cmdline for search
-	-- 			command_palette = true, -- position the cmdline and popupmenu together
-	-- 			long_message_to_split = true, -- long messages will be sent to a split
-	-- 			inc_rename = false, -- enables an input dialog for inc-rename.nvim
-	-- 			lsp_doc_border = false, -- add a border to hover docs and signature help
-	-- 		},
-	-- 	},
-	-- 	dependencies = {
-	-- 		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		-- OPTIONAL:
-	-- 		--   `nvim-notify` is only needed, if you want to use the notification view.
-	-- 		--   If not available, we use `mini` as the fallback
-	-- 		"rcarriga/nvim-notify",
-	-- 	},
-	-- },
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- you can enable a preset for easier configuration
+			presets = {
+				bottom_search = true, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+	},
 }

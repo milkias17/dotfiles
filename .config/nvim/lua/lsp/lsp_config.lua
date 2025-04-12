@@ -14,7 +14,7 @@ local on_attach = function(ev)
 	end, opts)
 	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-	vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+	-- vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
 	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
 	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
@@ -33,7 +33,6 @@ local on_attach = function(ev)
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 	end, opts)
 	-- buf_set_keymap("n", "<space>ds", vim.lsp.buf.document_symbol, opts)
-
 end
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -44,6 +43,7 @@ end
 
 local M = {}
 M.on_attach = on_attach
-M.capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- M.capabilities = require("cmp_nvim_lsp").default_capabilities()
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 return M

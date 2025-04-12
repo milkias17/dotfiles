@@ -9,7 +9,7 @@ return {
 	-- { "nvim-telescope/telescope-dap.nvim", dependencies = { "mfussenegger/nvim-dap" } },
 	-- "mfussenegger/nvim-dap-python",
 
-	{ "nvim-lua/plenary.nvim", lazy = true },
+	{ "nvim-lua/plenary.nvim", lazy = true, branch = "master" },
 	{ "nvim-lua/popup.nvim", lazy = true },
 	{
 		"iamcco/markdown-preview.nvim",
@@ -55,16 +55,50 @@ return {
 			has_line_number = true,
 		},
 	},
+	-- {
+	-- 	"akinsho/toggleterm.nvim",
+	-- 	version = "*",
+	-- 	opts = {
+	-- 		open_mapping = [[<c-\>]],
+	-- 		insert_mappings = true,
+	-- 		shell = "fish",
+	-- 	},
+	-- 	cmd = { "ToggleTerm", "ToggleTermToggleAll" },
+	-- 	event = "VeryLazy",
+	-- },
 	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		opts = {
-			open_mapping = [[<c-\>]],
-			insert_mappings = true,
-			shell = "fish",
-		},
-		cmd = { "ToggleTerm", "ToggleTermToggleAll" },
-		event = "VeryLazy",
-	},
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
 
+		-- @type snacks.Config
+		opts = {
+			input = { enabled = true },
+			indent = { enabled = true },
+			bigfile = { enabled = true },
+			image = { enabled = true },
+			dashboard = { enabled = true },
+			notifier = { enabled = true },
+			quickfile = { enabled = true },
+			rename = {
+				enabled = true,
+			},
+		},
+		keys = {
+			{
+				"<space>ns",
+				function()
+					Snacks.notifier.hide()
+				end,
+				opts,
+			},
+			{
+				"<space>nh",
+				function()
+					Snacks.notifier.show_history()
+				end,
+				opts,
+			},
+		},
+	},
 }

@@ -1,3 +1,5 @@
+local ls = require("luasnip")
+
 return {
 	s("kitauth", {
 		t({
@@ -8,4 +10,5 @@ return {
 			"}",
 		}),
 	}),
+  ls.parser.parse_snippet("cl", "console.log($1);$0"),
 }

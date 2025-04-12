@@ -72,13 +72,13 @@ local cmp_config = function()
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 	return {
-    preselect = cmp.PreselectMode.None,
+		preselect = cmp.PreselectMode.None,
 		snippet = {
 			expand = function(args)
 				require("luasnip").lsp_expand(args.body)
 			end,
 		},
-		mapping =  {
+		mapping = {
 			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
@@ -179,20 +179,77 @@ local cmp_config = function()
 end
 
 return {
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	version = false,
+	-- 	dependencies = {
+	-- 		"hrsh7th/cmp-nvim-lsp",
+	-- 		"hrsh7th/cmp-buffer",
+	-- 		"hrsh7th/cmp-path",
+	-- 		"saadparwaiz1/cmp_luasnip",
+	-- 		-- "hrsh7th/cmp-nvim-lsp-signature-help",
+	-- 		{ "petertriho/cmp-git", dependencies = "nvim-lua/plenary.nvim" },
+	-- 		"lukas-reineke/cmp-rg",
+	-- 		"hrsh7th/cmp-nvim-lua",
+	-- 	},
+	-- 	opts = cmp_config,
+	-- 	event = "InsertEnter",
+	-- },
 	{
-		"hrsh7th/nvim-cmp",
-		version = false,
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
-			-- "hrsh7th/cmp-nvim-lsp-signature-help",
-			{ "petertriho/cmp-git", dependencies = "nvim-lua/plenary.nvim" },
-			"lukas-reineke/cmp-rg",
-			"hrsh7th/cmp-nvim-lua",
-		},
-		opts = cmp_config,
+		"saghen/blink.cmp",
 		event = "InsertEnter",
+		version = "*",
+
+		dependencies = { "L3MON4D3/LuaSnip" },
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			keymap = {
+				preset = "default",
+				["<CR>"] = { "accept", "fallback" },
+				-- ["<C-y>"] = { "select_and_accept" },
+				["<c-j>"] = {},
+				["<Tab>"] = {},
+				["<S-Tab>"] = {},
+			},
+			snippets = {
+				preset = "luasnip",
+			},
+			completion = {
+				menu = {
+					border = "rounded",
+					draw = {
+						columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+					},
+					auto_show = function(ctx)
+						return ctx.mode ~= "cmdline"
+					end,
+				},
+				documentation = {
+					auto_show = true,
+					window = {
+						border = "rounded",
+					},
+				},
+
+				ghost_text = {
+					enabled = true,
+				},
+			},
+			appearance = {
+				use_nvim_cmp_as_default = false,
+				kind_icons = lsp_icons,
+			},
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer", "dadbod" },
+				providers = {
+					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				},
+			},
+			cmdline = {},
+			-- experimental signature help support
+			signature = { enabled = true },
+		},
 	},
 }
