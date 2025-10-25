@@ -1,7 +1,7 @@
 local formatters = {
 	lua = { "stylua" },
 	htmldjango = { "djlint" },
-	-- ["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
+	["svelte,typescript,javascript,javascriptreact,typescriptreact,html,css"] = { "prettierd" },
 	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "biome" },
 	-- ["svelte,html,css"] = { "prettierd" },
 	-- ["javascript,javascriptreact,typescript,typescriptreact"] = { "eslint_d" },
@@ -104,7 +104,7 @@ return {
 			{
 				"<leader>f",
 				function()
-					require("conform").format({ async = true, lsp_fallback = true })
+					require("conform").format({ async = true, lsp_format = "fallback" })
 				end,
 				mode = "",
 			},

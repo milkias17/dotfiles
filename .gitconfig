@@ -2,20 +2,35 @@
     ; email = 66522725+milkias17@users.noreply.github.com
     email = milkias.yeheyis@yahoo.com
 	name = Milkias Yeheyis
-	signingkey = A2E0FAB0B36DC0002C865054B9F7046028FA4A9B
+	signingkey = /home/mike/.ssh/id_ed25519.pub
 [core]
     editor = nvim
+	preloadIndex = true
 [init]
 	defaultBranch = main
 [color]
 	ui = auto
 [pull]
-	ff = only
-    ; rebase = true
+	; ff = only
+    rebase = true
+[rebase]
+    autoStash = true
 [alias]
 	c = commit -m
 	ac = commit -am
     staash = stash --all
 
+[url "git@github.com:milkias17/"]
+    insteadOf = "mike:"
+
+[url "git@github.com:"]
+    insteadOf = "gh:"
+
+; [commit]
+; 	gpgSign = true
+[log]
+	date = format:%Y-%m-%d %I:%M %p
 [commit]
-	gpgSign = true
+	gpgsign = true
+[gpg]
+	format = ssh

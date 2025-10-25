@@ -13,7 +13,7 @@ local config = {
 		-- Using this option may slow down your editor, and you may see some duplicate highlights.
 		-- Instead of true it can also be a list of languages
 		-- additional_vim_regex_highlighting = { "html" },
-		additional_vim_regex_highlighting = { "svelte", "python" },
+		additional_vim_regex_highlighting = { "python" },
 	},
 	indent = {
 		enable = false,
@@ -120,6 +120,15 @@ return {
 			{
 				"nvim-treesitter/nvim-treesitter-context",
 				config = true,
+				keys = {
+					{
+						"[c",
+						function()
+							require("treesitter-context").go_to_context(vim.v.count1)
+						end,
+						desc = "Next Context",
+					},
+				},
 			},
 
 			-- { "nushell/tree-sitter-nu", build = ":TSUpdate nu" },

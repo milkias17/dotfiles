@@ -43,6 +43,7 @@ local options = {
 	breakindent = true,
 	showtabline = 2,
 	inccommand = "split",
+  jumpoptions = "stack"
 	-- spelllang = "en_us",
 	-- spell = true,
 	-- foldmethod = "expr",
@@ -123,4 +124,36 @@ vim.filetype.add({
 	extension = {
 		mdx = "mdx",
 	},
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "qf",
+	callback = function()
+		local function delete_qf_lines(start_line, end_line)
+			local qflist = vim.fn.getqflist()
+
+			for i = end_line, start_line, -1 do
+				table.remove(qflist, i)
+			end
+			vim.fn.setqflist(qflist, "r")
+			vim.cmd("copen")
+			vim.api.nvim_win_set_cursor(0, { math.min(start_line + 1, #qflist), 0 })
+		end
+
+		-- Normal mode `dd` to delete current line
+		vim.keymap.set("n", "dd", function()
+			local lnum = vim.fn.line(".")
+			delete_qf_lines(lnum, lnum)
+		end, { buffer = true, desc = "Delete quickfix entry" })
+
+		-- Visual Line mode `d` to delete selected lines
+		vim.keymap.set("x", "d", function()
+			local start_line = vim.fn.line("v")
+			local end_line = vim.fn.line(".")
+			if start_line > end_line then
+				start_line, end_line = end_line, start_line
+			end
+			delete_qf_lines(start_line, end_line)
+		end, { buffer = true, desc = "Delete selected quickfix entries" })
+	end,
 })

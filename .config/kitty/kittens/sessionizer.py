@@ -4,8 +4,9 @@ import sys
 from typing import Dict, List
 
 from kitty.boss import Boss
+from kittens.tui.loop import debug
 
-SHELL = "nu"
+SHELL = "fish"
 SESSIONS_LOCATION = "~/.config/kitty/sessions"
 
 

@@ -1,22 +1,43 @@
+-- local colors = {
+-- 	foreground = "#abb2bf",
+-- 	background = "#2c323d",
+-- 	black = "#2c323c",
+-- 	red = "#e06c75",
+-- 	green = "#98c379",
+-- 	yellow = "#e5c07b",
+-- 	blue = "#61afef",
+-- 	magenta = "#c678dd",
+-- 	cyan = "#56b6c2",
+-- 	white = "#5c6370",
+-- 	black_alt = "#3e4452",
+-- 	red_alt = "#e06c75",
+-- 	green_alt = "#98c379",
+-- 	yellow_alt = "#e5c07b",
+-- 	blue_alt = "#61afef",
+-- 	magenta_alt = "#c678dd",
+-- 	cyan_alt = "#56b6c2",
+-- 	white_alt = "#abb2bf",
+-- }
+
 local colors = {
-	foreground = "#abb2bf",
-	background = "#2c323d",
-	black = "#2c323c",
-	red = "#e06c75",
-	green = "#98c379",
-	yellow = "#e5c07b",
-	blue = "#61afef",
-	magenta = "#c678dd",
-	cyan = "#56b6c2",
-	white = "#5c6370",
-	black_alt = "#3e4452",
-	red_alt = "#e06c75",
-	green_alt = "#98c379",
-	yellow_alt = "#e5c07b",
-	blue_alt = "#61afef",
-	magenta_alt = "#c678dd",
-	cyan_alt = "#56b6c2",
-	white_alt = "#abb2bf",
+	foreground = "#B8C0E0",
+	background = "#24273A",
+	black = "#494D64",
+	red = "#ED8796",
+	green = "#A6DA95",
+	yellow = "#EED49F",
+	blue = "#8AADF4",
+	magenta = "#F5BDE6",
+	cyan = "#8BD5CA",
+	white = "#5B6078",
+	black_alt = "#5B6078",
+	red_alt = "#ED8796",
+	green_alt = "#A6DA95",
+	yellow_alt = "#EED49F",
+	blue_alt = "#8AADF4",
+	magenta_alt = "#F5BDE6",
+	cyan_alt = "#8BD5CA",
+	white_alt = "#A5ADCB",
 }
 
 local conditions = {
@@ -24,7 +45,7 @@ local conditions = {
 		return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
 	end,
 	hide_in_width = function()
-		return vim.api.nvim_get_option("columns") > 110
+		return vim.api.nvim_get_option_value("columns", {}) > 110
 	end,
 	check_git_workspace = function()
 		local filepath = vim.fn.expand("%:p:h")
@@ -32,7 +53,7 @@ local conditions = {
 		return gitdir and #gitdir > 0 and #gitdir < #filepath
 	end,
 	lsp_active = function()
-		local clients = vim.lsp.get_active_clients()
+		local clients = vim.lsp.get_clients()
 		return next(clients) ~= nil
 	end,
 	lsp_loading = function()
@@ -50,15 +71,17 @@ local branch = {
 local filename = {
 	"filename",
 	file_status = true,
+	newfile_status = true,
 	path = 1,
 	color = { fg = colors.blue, gui = "bold" },
+	padding = { left = 0, right = 0 },
 }
 
 local location = {
-	function()
-		return "Ln " .. vim.fn.line(".") .. ",Col " .. vim.fn.col(".")
-	end,
-	color = { fg = colors.blue, gui = "bold" },
+	"location",
+	-- icon = "",
+	color = { fg = colors.fg, gui = "bold" },
+	padding = { left = 0, right = 0 },
 	cond = conditions.hide_in_width,
 }
 
@@ -169,8 +192,8 @@ local config = {
 	options = {
 		theme = "auto",
 		globalstatus = true,
-		section_separators = { "", "" },
-		component_separators = { "", "" },
+		section_separators = "",
+		component_separators = "",
 		-- section_separators = { "", "" },
 		-- component_separators = { "", "" },
 		-- always_divide_middle = true,
@@ -195,7 +218,13 @@ local config = {
 		lualine_c = {},
 		lualine_x = {},
 	},
-	extensions = { "quickfix", "nvim-tree", "fzf" },
+	extensions = { "quickfix", "neo-tree", "fzf", "lazy", "man", "mason", "oil", "nvim-dap-ui", "trouble" },
+	-- tabline = {
+	-- 	lualine_a = { {
+	-- 		"buffers",
+	-- 		show_filename_only = false,
+	-- 	} },
+	-- },
 }
 
 local function ins_left(component)
@@ -206,18 +235,14 @@ local function ins_right(component)
 	table.insert(config.sections.lualine_x, component)
 end
 
-ins_left({
-	function()
-		return "▊"
-	end,
-	color = { fg = colors.blue }, -- Sets highlighting of component
-	padding = { left = 0, right = 1 }, -- We don't need space before this
-})
-
-ins_left({
-	function()
-		return vim.fn.mode():upper()
-		-- return ""
+local vim_mode = {
+	-- function()
+	-- 	return vim.fn.mode():upper()
+	-- 	-- return ""
+	-- end,
+	"mode",
+	fmt = function(str)
+		return str:sub(1, 1):upper()
 	end,
 	color = function()
 		local mode_color = {
@@ -246,61 +271,130 @@ ins_left({
 	end,
 	-- color = "LualineMode",
 	padding = { right = 1 },
-})
+}
 
-ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+local function get_codecompanion_component()
+	local M = require("lualine.component"):extend()
 
-ins_left({
-	"diagnostics",
-	sources = { "nvim_diagnostic" },
-	symbols = { error = " ", warn = " ", info = " " },
-	diagnostics_color = {
-		color_error = { fg = colors.red },
-		color_warn = { fg = colors.yellow },
-		color_info = { fg = colors.cyan },
-	},
-})
+	M.processing = false
+	M.spinner_index = 1
 
--- ins_left(lsp_progress)
+	local spinner_symbols = {
+		"⠋",
+		"⠙",
+		"⠹",
+		"⠸",
+		"⠼",
+		"⠴",
+		"⠦",
+		"⠧",
+		"⠇",
+		"⠏",
+	}
+	local spinner_symbols_len = 10
 
-ins_left("%=")
+	-- Initializer
+	function M:init(options)
+		M.super.init(self, options)
 
-ins_left({
-	"filetype",
-	colored = true,
-	icon_only = true,
-	padding = 0,
-})
-ins_left(filename)
+		local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
 
-ins_right(lsp)
+		vim.api.nvim_create_autocmd({ "User" }, {
+			pattern = "CodeCompanionRequest*",
+			group = group,
+			callback = function(request)
+				if request.match == "CodeCompanionRequestStarted" then
+					self.processing = true
+				elseif request.match == "CodeCompanionRequestFinished" then
+					self.processing = false
+				end
+			end,
+		})
+	end
 
-ins_right({
-	spaces,
-	color = { fg = colors.yellow, gui = "bold" },
-})
+	-- Function that runs every time statusline is updated
+	function M:update_status()
+		if self.processing then
+			self.spinner_index = (self.spinner_index % spinner_symbols_len) + 1
+			return spinner_symbols[self.spinner_index]
+		else
+			return nil
+		end
+	end
 
-ins_right(branch)
-
-ins_right({
-	"diff",
-	symbols = { added = " ", modified = "柳 ", removed = " " },
-	diff_color = {
-		added = { fg = colors.green },
-		modified = { fg = colors.yellow },
-		removed = { fg = colors.red },
-	},
-	cond = conditions.hide_in_width,
-})
-
-ins_right({
-	function()
-		return "▊"
-	end,
-	color = { fg = colors.blue },
-	padding = { left = 1 },
-})
+	return M
+end
 
 return {
-	{ "nvim-lualine/lualine.nvim", opts = config, event = "VeryLazy" },
+	{
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			local code_companion_component = get_codecompanion_component()
+
+			ins_left({
+				function()
+					return "▊"
+				end,
+				color = { fg = colors.blue }, -- Sets highlighting of component
+				padding = { left = 0, right = 1 }, -- We don't need space before this
+			})
+			ins_left(vim_mode)
+
+			ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+			ins_left(location)
+
+			ins_left({
+				"diagnostics",
+				sources = { "nvim_diagnostic" },
+				-- symbols = { error = " ", warn = " ", info = " " },
+				symbols = { error = " ", warn = " ", info = " ", hint = " " },
+			})
+
+			-- ins_left(lsp_progress)
+
+			ins_left("%=")
+
+			ins_left({
+				"filetype",
+				colored = true,
+				icon_only = true,
+				padding = 0,
+			})
+			ins_left(filename)
+
+			ins_right(code_companion_component)
+			-- ins_right("lsp_status")
+			ins_right(lsp)
+
+			-- ins_right(location)
+			ins_right({
+				spaces,
+				color = { fg = colors.yellow, gui = "bold" },
+			})
+
+			ins_right(branch)
+
+			ins_right({
+				"diff",
+				symbols = { added = " ", modified = " ", removed = " " },
+				diff_color = {
+					added = { fg = colors.green },
+					modified = { fg = colors.yellow },
+					removed = { fg = colors.red },
+				},
+				cond = conditions.hide_in_width,
+			})
+
+			ins_right({
+				function()
+					return "▊"
+				end,
+				color = { fg = colors.blue },
+				padding = { left = 1 },
+			})
+
+			require("lualine").setup(config)
+		end,
+		event = "VeryLazy",
+	},
 }

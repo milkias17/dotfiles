@@ -19,21 +19,24 @@ end
 
 local function setup_server(config_name, opts, override_default)
 	if override_default then
-		lspconfig[config_name].setup(opts)
+		vim.lsp.config(config_name, opts)
+		-- lspconfig[config_name].setup(opts)
 		return
 	end
 
 	local default_opts = {
-		root_dir = function()
-			return vim.loop.cwd()
-		end,
-		capabilities = capabilities,
+		-- root_dir = function()
+		-- 	return vim.loop.cwd()
+		-- end,
+		-- capabilities = capabilities,
 	}
 
 	if opts == nil or vim.tbl_count(opts) == 0 then
-		lspconfig[config_name].setup(default_opts)
+		-- lspconfig[config_name].setup(default_opts)
+		vim.lsp.config(config_name, default_opts)
 	else
-		lspconfig[config_name].setup(vim.tbl_deep_extend("force", default_opts, opts))
+		-- lspconfig[config_name].setup(vim.tbl_deep_extend("force", default_opts, opts))
+		vim.lsp.config(config_name, vim.tbl_deep_extend("force", default_opts, opts))
 	end
 end
 
@@ -54,6 +57,7 @@ local servers = {
 			}
 		end,
 	},
+	"djlsp",
 	{
 		name = "clangd",
 		opts = function()
@@ -66,42 +70,54 @@ local servers = {
 	},
 	{
 		name = "svelte",
-		opts = function()
-			local svelte_capabilities = vim.lsp.protocol.make_client_capabilities()
-			svelte_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-			return {
-				capabilities = svelte_capabilities,
-			}
-		end,
+		-- opts = function()
+		-- 	local svelte_capabilities = vim.lsp.protocol.make_client_capabilities()
+		-- 	svelte_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+		-- 	return {
+		-- 		capabilities = svelte_capabilities,
+		-- 	}
+		-- end,
 	},
-	{
-		name = "tailwindcss",
-		opts = {
-			capabilities = capabilities,
-			root_dir = function(fname)
-				return require("lspconfig.util").root_pattern(
-					"tailwind.config.js",
-					"tailwind.config.ts",
-					"tailwind.config.cjs"
-				)(fname) or require("lspconfig.util").root_pattern(
-					"postcss.config.js",
-					"postcss.config.ts",
-					"postcss.config.cjs"
-				)(fname) or require("lspconfig.util").root_pattern("theme")(fname)
-			end,
-			settings = {
-				tailwindCSS = {
-					experimental = {
-						classRegex = {
-							{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-							{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-						},
-					},
-				},
-			},
-		},
-		override_default = true,
-	},
+	"tailwindcss",
+	-- {
+	-- 	name = "tailwindcss",
+	-- 	opts = {
+	-- 		capabilities = capabilities,
+	-- 		filetypes = {
+	-- 			"templ",
+	-- 			"vue",
+	-- 			"html",
+	-- 			"astro",
+	-- 			"javascript",
+	-- 			"typescript",
+	-- 			"react",
+	-- 			"htmlangular",
+	-- 			"htmldjango",
+	-- 		},
+	-- 		-- root_dir = function(fname)
+	-- 		-- 	return require("lspconfig.util").root_pattern(
+	-- 		-- 		"tailwind.config.js",
+	-- 		-- 		"tailwind.config.ts",
+	-- 		-- 		"tailwind.config.cjs"
+	-- 		-- 	)(fname) or require("lspconfig.util").root_pattern(
+	-- 		-- 		"postcss.config.js",
+	-- 		-- 		"postcss.config.ts",
+	-- 		-- 		"postcss.config.cjs"
+	-- 		-- 	)(fname) or require("lspconfig.util").root_pattern("theme")(fname)
+	-- 		-- end,
+	-- 		settings = {
+	-- 			tailwindCSS = {
+	-- 				experimental = {
+	-- 					classRegex = {
+	-- 						{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+	-- 						{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	-- override_default = true,
+	-- },
 	{
 		name = "prismals",
 		opts = {
@@ -123,8 +139,8 @@ local servers = {
 					workspace = {
 						checkThirdParty = false,
 						library = {
-							-- vim.env.VIMRUNTIME,
-							-- "$XDG_DATA_HOME/nvim/lazy",
+							vim.env.VIMRUNTIME,
+							"$XDG_DATA_HOME/nvim/lazy",
 							-- Depending on the usage, you might want to add additional paths here.
 							-- "${3rd}/luv/library"
 							-- "${3rd}/busted/library",
@@ -192,7 +208,7 @@ local servers = {
 			},
 		},
 	},
-  -- "ruff",
+	-- "ruff",
 	{
 		name = "dockerls",
 		opts = {},
@@ -233,9 +249,8 @@ local servers = {
 	},
 	{
 		name = "emmet_ls",
-		disable = true,
 		opts = {
-			filetypes = { "html", "css" },
+			filetypes = { "html", "css", "htmldjango" },
 		},
 		disable = true,
 	},
@@ -267,6 +282,7 @@ local servers = {
 	},
 	{
 		name = "biome",
+    disable = true
 	},
 	"phpactor",
 	{
@@ -329,6 +345,25 @@ for _, lsp in ipairs(servers) do
 	::continue::
 end
 
+local all_lsp_names = {}
+for _, lsp in ipairs(servers) do
+	if type(lsp) == "string" then
+		table.insert(all_lsp_names, lsp)
+	end
+
+	if lsp.disable or (lsp.cond ~= nil and lsp.cond() == true) then
+		goto continue
+	end
+
+	if type(lsp) == "table" then
+		table.insert(all_lsp_names, lsp.name)
+	end
+
+	::continue::
+end
+
+vim.lsp.enable(all_lsp_names)
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(args)
@@ -343,12 +378,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- 		end
 		-- 	end,
 		-- })
+
 		on_attach(args)
-		for _, client in pairs((vim.lsp.get_clients({}))) do
-			if client.name == "tailwindcss" then
-				client.server_capabilities.completionProvider.triggerCharacters =
-					{ '"', "'", "`", ".", "(", "[", "!", "/", ":" }
-			end
-		end
+
+		-- for _, client in pairs((vim.lsp.get_clients({}))) do
+		-- 	if client.name == "tailwindcss" then
+		-- 		client.server_capabilities.completionProvider.triggerCharacters =
+		-- 			{ '"', "'", "`", ".", "(", "[", "!", "/", ":" }
+		-- 	end
+		-- end
 	end,
 })

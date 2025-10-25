@@ -69,6 +69,8 @@ end
 return {
 	{
 		"ThePrimeagen/harpoon",
+    dev = true,
+    dir="~/Dev/Github Repos/harpoon",
 		event = "VeryLazy",
 		keys = {
 			{

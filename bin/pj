@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-tmp=$(find "$HOME/.config/kitty/sessions/" -type f)
+tmp=$(find "$HOME/.config/kitty/sessions/" -type f -printf '%A@ %p\n' | sort -nr | cut -d" " -f2-)
 options=()
 for option in $tmp; do
 	options+=($(echo "$option" | cut -d'/' -f 7))

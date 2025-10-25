@@ -15,13 +15,13 @@ local autopairs_config = {
 
 return {
 	{ "windwp/nvim-autopairs", opts = autopairs_config, event = "InsertEnter" },
-	-- {
-	-- 	"andymass/vim-matchup",
-	-- 	config = function()
-	-- 		vim.g.matchup_matchparen_offscreen = { method = "popup" }
-	-- 	end,
-	-- 	ft = { "svelte", "htmldjango" },
-	-- },
+	{
+		"andymass/vim-matchup",
+		config = function()
+			vim.g.matchup_matchparen_offscreen = { method = "popup" }
+		end,
+		ft = { "svelte", "htmldjango" },
+	},
 	{
 		"windwp/nvim-ts-autotag",
 		opts = {
@@ -52,12 +52,12 @@ return {
 		event = "InsertEnter",
 		ft = { "html", "htmldjango", "javascript", "typescript", "svelte", "vue" },
 	},
-	{ "echasnovski/mini.splitjoin", version = "*", config = true, event = "VeryLazy" },
+	{ "nvim-mini/mini.splitjoin", version = "*", config = true, event = "VeryLazy" },
 	{
-		"echasnovski/mini.trailspace",
+		"nvim-mini/mini.trailspace",
 		version = "*",
 		config = true,
-    event = "VeryLazy",
+		event = "VeryLazy",
 		keys = {
 			{
 				"<leader>tw",
@@ -69,7 +69,7 @@ return {
 		},
 	},
 	-- {
-	-- 	"echasnovski/mini.jump",
+	-- 	"nvim-mini/mini.jump",
 	-- 	version = false,
 	-- 	config = true,
 	-- 	event = "VeryLazy",
@@ -121,5 +121,44 @@ return {
 		-- 		desc = "Toggle Flash Search",
 		-- 	},
 		-- },
+	},
+	{
+		"bennypowers/nvim-regexplainer",
+		config = true,
+		opts = {
+			mode = "graphical",
+			deps = {
+				auto_install = true, -- automatically install Python dependencies
+			},
+			filetypes = {
+				"html",
+				"js",
+				"cjs",
+				"mjs",
+				"ts",
+				"jsx",
+				"tsx",
+				"cjsx",
+				"mjsx",
+				"python",
+			},
+		},
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"MunifTanjim/nui.nvim",
+			{ "edluffy/hologram.nvim", config = true },
+		},
+		cmd = {
+			"RegexplainerShowSplit",
+			"RegexplainerShowPopup",
+			"RegexplainerHide",
+			"RegexplainerToggle",
+		},
+		keys = {
+			{
+				"<space>r",
+				"<cmd>RegexplainerToggle<cr>",
+			},
+		},
 	},
 }

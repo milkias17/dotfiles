@@ -8,12 +8,17 @@ local neogit_opts = {
 	disable_insert_on_commit = "auto",
 	commit_editor = {
 		kind = "split",
+    show_staged_diff = false
 	},
 	graph_style = "kitty",
+  commit_date_format = "%Y-%m-%d %I:%M:%S %p",
+	integrations = {
+		fzf_lua = true,
+		diffview = true,
+	},
 }
 --
 local opts = { noremap = true, silent = true }
---
 
 local gitsigns_opts = {
 	on_attach = function(bufnr)
@@ -118,11 +123,11 @@ return {
 				mode = "n",
 				"<cmd>DiffviewOpen<cr>",
 			},
-      {
-        "<space>dc",
-        mode = "n",
-        "<cmd>DiffviewClose<cr>",
-      }
+			{
+				"<space>dc",
+				mode = "n",
+				"<cmd>DiffviewClose<cr>",
+			},
 		},
 	},
 	-- {

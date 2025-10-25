@@ -85,13 +85,17 @@ return {
 			require("catppuccin").setup({
 				flavour = "macchiato",
 				integrations = {
+					dadbod_ui = false,
 					neogit = true,
+					diffview = true,
 					gitsigns = true,
 					neotree = true,
-					snacks = true,
+					snacks = {
+						enabled = true,
+					},
 					mason = true,
 					telescope = {
-						enabled = true,
+						enabled = false,
 					},
 					fzf = true,
 					notify = true,
@@ -112,15 +116,18 @@ return {
 						enabled = true,
 					},
 					flash = true,
+					noice = true,
+					nvim_surround = true,
+					render_markdown = true,
 					blink_cmp = true,
 				},
 				custom_highlights = function(colors)
 					return {
-						BlinkCmpMenuBorder = { fg = colors.blue },
-						BlinkCmpMenu = { fg = colors.text },
-						BlinkCmpDocBorder = { fg = colors.blue },
-						BlinkCmpSignatureHelpActiveParameter = { fg = colors.mauve },
-						BlinkCmpSignatureHelpBorder = { fg = colors.blue },
+						-- BlinkCmpMenuBorder = { fg = colors.blue },
+						-- BlinkCmpMenu = { fg = colors.text },
+						-- BlinkCmpDocBorder = { fg = colors.blue },
+						-- BlinkCmpSignatureHelpActiveParameter = { fg = colors.mauve },
+						-- BlinkCmpSignatureHelpBorder = { fg = colors.blue },
 
 						MiniJump = { bg = colors.red },
 					}
@@ -168,6 +175,12 @@ return {
 				long_message_to_split = true, -- long messages will be sent to a split
 				inc_rename = false, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
+			routes = {
+				{
+					view = "notify",
+					filter = { event = "msg_showmode" },
+				},
 			},
 		},
 		dependencies = {

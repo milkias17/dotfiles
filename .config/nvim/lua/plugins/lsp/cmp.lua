@@ -209,6 +209,7 @@ return {
 				["<CR>"] = { "accept", "fallback" },
 				-- ["<C-y>"] = { "select_and_accept" },
 				["<c-j>"] = {},
+				["<c-k>"] = {},
 				["<Tab>"] = {},
 				["<S-Tab>"] = {},
 			},

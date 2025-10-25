@@ -1,3 +1,5 @@
+local opts = { noremap = true, silent = true }
+
 return {
 	{ "fladson/vim-kitty" },
 
@@ -76,7 +78,6 @@ return {
 			input = { enabled = true },
 			indent = { enabled = true },
 			bigfile = { enabled = true },
-			image = { enabled = true },
 			dashboard = { enabled = true },
 			notifier = { enabled = true },
 			quickfile = { enabled = true },
@@ -84,6 +85,16 @@ return {
 				enabled = true,
 			},
 		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "OilActionsPost",
+				callback = function(event)
+					if event.data.actions[1].type == "move" then
+						Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+					end
+				end,
+			})
+		end,
 		keys = {
 			{
 				"<space>ns",
@@ -98,6 +109,12 @@ return {
 					Snacks.notifier.show_history()
 				end,
 				opts,
+			},
+			{
+				"<space>.",
+				function()
+					Snacks.scratch()
+				end,
 			},
 		},
 	},

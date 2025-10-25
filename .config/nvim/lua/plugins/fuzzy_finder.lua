@@ -76,7 +76,7 @@ return {
 	{
 		"ibhagwan/fzf-lua",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		lazy = true,
+		lazy = false,
 		cmd = "FzfLua",
 		config = function()
 			local fzf_opts = {
@@ -106,7 +106,7 @@ return {
 			{ "<space>f", "<cmd>FzfLua files<cr>", opts },
 			{ "<space>gf", "<cmd>FzfLua git_files<cr>", opts },
 			{ "<space>gb", "<cmd>FzfLua grep_curbuf<cr>", opts },
-			{ "<space>ca", "<cmd>FzfLua lsp_code_actions<cr>", opts },
+			-- { "<space>ca", "<cmd>FzfLua lsp_code_actions<cr>", opts },
 
 			{ "<space>l", "<cmd>FzfLua live_grep<cr>", opts },
 			{ "<space>b", "<cmd>FzfLua buffers<cr>", opts },

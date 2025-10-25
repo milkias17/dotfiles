@@ -11,19 +11,28 @@ from kitty.tab_bar import (
     as_rgb,
     draw_attributed_string,
     draw_title,
+    draw_tab_with_powerline,
+    draw_tab_with_slant,
+    draw_tab_with_fade,
+    draw_tab_with_separator,
 )
 from kitty.utils import color_as_int
 
 opts = get_options()
-icon_fg = as_rgb(color_as_int(opts.color16))
+icon_fg = as_rgb(color_as_int(opts.color4))
 icon_bg = as_rgb(color_as_int(opts.color8))
 bat_text_color = as_rgb(color_as_int(opts.color15))
 clock_color = as_rgb(color_as_int(opts.color15))
 date_color = as_rgb(color_as_int(opts.color8))
 SEPARATOR_SYMBOL, SOFT_SEPARATOR_SYMBOL = ("", "")
+
 RIGHT_MARGIN = 1
 REFRESH_TIME = 1
 ICON = "  "
+# ICON = "  "
+ICON = "   "
+# ICON = " 󰮊  "
+# ICON = " 󰄛 "
 UNPLUGGED_ICONS = {
     10: "󰁺",
     20: "󰁻",
@@ -70,6 +79,21 @@ def _draw_icon(screen: Screen, index: int) -> int:
     screen.cursor.fg, screen.cursor.bg = fg, bg
     screen.cursor.x = len(ICON)
     return screen.cursor.x
+
+
+# def _draw_left_status(
+#     draw_data: DrawData,
+#     screen: Screen,
+#     tab: TabBarData,
+#     before: int,
+#     max_title_length: int,
+#     index: int,
+#     is_last: bool,
+#     extra_data: ExtraData,
+# ) -> int:
+#     draw_tab_with_powerline(
+#         draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
+#     )
 
 
 def _draw_left_status(

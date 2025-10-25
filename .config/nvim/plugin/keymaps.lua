@@ -30,10 +30,6 @@ map("i", "<M-k>", "<Esc>:m -2<CR>==gi")
 map("v", "<M-j>", ":m '>+1<CR>gv=gv")
 map("v", "<M-k>", ":m '<-2<CR>gv=gv")
 
--- Insert new line and stay in normal mode
-map("n", "[<Space>", "O<ESC>")
-map("n", "]<Space>", "o<ESC>")
-
 -- Reselect visual selection after indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
@@ -59,15 +55,7 @@ map("n", "<M-w>", "<C-w>")
 -- Quickfix and Locallist Binds
 map("n", "<space>qo", "<cmd>copen<CR>")
 map("n", "<space>qc", "<cmd>cclose<CR>")
-map("n", "<C-n>", "<cmd>cnext<CR>")
-map("n", "<C-p>", "<cmd>cprev<CR>")
 map("n", "<space>lo", "<cmd>lopen<CR>")
 map("n", "<space>lc", "<cmd>lclose<CR>")
-map("n", "<space>n", "<cmd>lnext<CR>")
-map("n", "<space>p", "<cmd>lprev<CR>")
 
-map("n", "<space>ot", "<cmd>terminal<CR>")
-
-map("n", "]b", "<cmd>bnext<CR>")
-map("n", "[b", "<cmd>bprev<CR>")
 map("n", "<leader>bd", "<cmd>bd<CR>")

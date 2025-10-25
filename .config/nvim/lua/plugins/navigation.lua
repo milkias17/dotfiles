@@ -86,7 +86,12 @@ return {
 	},
 	{
 		"stevearc/oil.nvim",
-		opts = {},
+		opts = {
+      watch_for_changes = true,
+      float = {
+        border = "rounded"
+      }
+    },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = {
 			{ "<space>oi", "<cmd>Oil<cr>", opts },

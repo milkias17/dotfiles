@@ -26,6 +26,17 @@ local plugins = {
 			-- },
 		},
 	},
+	-- {
+	-- 	"luckasRanarison/tailwind-tools.nvim",
+	-- 	name = "tailwind-tools",
+	-- 	build = ":UpdateRemotePlugins",
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-telescope/telescope.nvim", -- optional
+	-- 		"neovim/nvim-lspconfig", -- optional
+	-- 	},
+	-- 	opts = {}, -- your configuration
+	-- },
 	{ "folke/neodev.nvim", config = true, ft = "lua" },
 	-- {
 	-- 	"pmizio/typescript-tools.nvim",
@@ -105,21 +116,46 @@ local plugins = {
 	-- 		})
 	-- 	end,
 	-- },
+	{
+		"supermaven-inc/supermaven-nvim",
+		event = "InsertEnter",
+		config = function()
+			require("supermaven-nvim").setup({
+				keymaps = {
+					accept_suggestion = "<C-g>",
+					accept_word = "<c-q>",
+				},
+				ignore_filetypes = {
+					"gitcommit",
+					"neo-tree",
+					"oil",
+				},
+			})
+		end,
+	},
 	-- {
-	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	"Exafunction/windsurf.nvim",
 	-- 	event = "InsertEnter",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
 	-- 	config = function()
-	-- 		require("supermaven-nvim").setup({
-	-- 			keymaps = {
-	-- 				accept_suggestion = "<C-g>",
-	-- 				accept_word = "<c-q>",
+	-- 		local opts = {
+	--        enable_cmp_source = false,
+	-- 			virtual_text = {
+	-- 				enabled = true,
+	-- 				key_bindings = {
+	-- 					accept = "<A-a>",
+	-- 					accept_word = "<A-w>",
+	-- 					accept_line = "<A-l>",
+	-- 					clear = "<A-c>",
+	-- 					next = "<A-n>",
+	-- 					prev = "<A-p>",
+	-- 				},
 	-- 			},
-	-- 			ignore_filetypes = {
-	-- 				"gitcommit",
-	-- 				"neo-tree",
-	-- 				"oil",
-	-- 			},
-	-- 		})
+	-- 		}
+	--
+	-- 		require("codeium").setup(opts)
 	-- 	end,
 	-- },
 	{
@@ -136,26 +172,124 @@ local plugins = {
 				"<cmd>CodeCompanionActions<CR>",
 				opts,
 			},
+			{
+				"<leader>gc",
+				"<cmd>CodeCompanionGitCommit<CR>",
+				opts,
+			},
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			-- The following are optional:
-			{ "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } },
+			{
+				"jinzhongjia/codecompanion-gitcommit.nvim",
+				ft = "gitcommit",
+				cmd = "CodeCompanionGitCommit",
+				-- keys = {
+				-- 	{ "<leader>cm", "<cmd>CodeCompanionGitCommit<CR>", opts },
+				-- },
+			},
+			-- -- The following are optional:
+			{ "MeanderingProgrammer/render-markdown.nvim", ft = { "codecompanion" } },
 		},
 		config = function()
 			require("codecompanion").setup({
+				opts = {
+					log_level = "DEBUG",
+				},
+				adapters = {
+					http = {
+						groq = function()
+							return require("codecompanion.adapters").extend("openai", {
+								env = {
+									api_key = vim.env.GROQ_API_KEY,
+								},
+								name = "Groq",
+								url = "https://api.groq.com/openai/v1/chat/completions",
+								schema = {
+									model = {
+										-- default = "gemma2-9b-it",
+										-- default = "meta-llama/llama-4-scout-17b-16e-instruct",
+										-- default = "deepseek-r1-distill-llama-70b",
+										default = "moonshotai/kimi-k2-instruct-0905",
+										-- default = "openai/gpt-oss-120b",
+									},
+								},
+								max_tokens = {
+									default = 8192,
+								},
+								temperature = {
+									default = 1,
+								},
+							})
+						end,
+					},
+					acp = {
+						gemini_cli = function()
+							return require("codecompanion.adapters").extend("gemini_cli", {
+								defaults = {
+									auth_method = "gemini-api-key", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
+								},
+								env = {
+									GEMINI_API_KEY = vim.env.GEMINI_API_KEY,
+								},
+							})
+						end,
+					},
+				},
 				display = {
 					chat = {
-						show_header_separator = false,
+						show_header_separator = true,
+					},
+					action_palette = {
+						opts = {
+							show_default_actions = true,
+						},
 					},
 				},
 				strategies = {
 					chat = {
-						adapter = "gemini",
+						adapter = "groq",
 					},
 					inline = {
 						adapter = "gemini",
+					},
+				},
+				extensions = {
+					gitcommit = {
+						callback = "codecompanion._extensions.gitcommit",
+						opts = {
+							-- File filtering (optional)
+							exclude_files = {
+								"*.pb.go",
+								"*.min.js",
+								"*.min.css",
+								"package-lock.json",
+								"yarn.lock",
+								"*.log",
+								"dist/*",
+								"build/*",
+								".next/*",
+								"node_modules/*",
+								"vendor/*",
+							},
+
+							-- Buffer integration
+							buffer = {
+								enabled = false, -- Enable gitcommit buffer keymaps
+								keymap = "<leader>gc", -- Keymap for generating commit messages
+								auto_generate = false, -- Auto-generate on buffer enter
+								auto_generate_delay = 200, -- Auto-generation delay (ms)
+							},
+
+							-- Feature toggles
+							add_slash_command = true, -- Add /gitcommit slash command
+							add_git_tool = true, -- Add @git_read and @git_edit tools
+							enable_git_read = true, -- Enable read-only Git operations
+							enable_git_edit = true, -- Enable write-access Git operations
+							enable_git_bot = true, -- Enable @git_bot tool group (requires both read/write enabled)
+							add_git_commands = true, -- Add :CodeCompanionGitCommit commands
+						},
 					},
 				},
 				-- adapters = {
