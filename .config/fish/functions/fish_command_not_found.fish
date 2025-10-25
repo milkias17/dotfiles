@@ -64,7 +64,6 @@ function print_message
     set -a messages "If shit was music, you'd be an orchestra."
     set -a messages "How many times do I have to flush before you go away?"
 
-    set RANDOM (random 1 (count $messages))
-    set message $messages[$RANDOM]
+    set message (random choice $messages)
     printf "\\n %s\\n\\n" (tput bold)(tput setaf 1)$message(tput sgr0) >&2
 end
