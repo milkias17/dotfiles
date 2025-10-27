@@ -15,23 +15,6 @@ setmetatable(windows.dropdowns, {
 	end,
 })
 
-local function set_dropdown_label(buf, win, index)
-	-- clear any previous label
-	vim.api.nvim_buf_clear_namespace(buf, idx_ns, 0, -1)
-	local text = "Terminal [" .. index .. "]"
-	local win_width = vim.api.nvim_win_get_width(win)
-
-	-- number of spaces needed to roughly centre the text
-	local pad = math.max(0, math.floor((win_width - #text) / 2))
-	local padded = string.rep(" ", pad) .. text
-
-	vim.api.nvim_buf_set_extmark(buf, idx_ns, 0, 0, {
-		virt_text = { { padded, "FloatTerminalLabel" } },
-		virt_text_pos = "overlay", -- draw on top of the first line
-		hl_mode = "combine",
-	})
-end
-
 local function create_dropdown_window(buf_id, index)
 	local buf = nil
 	if buf_id ~= nil and vim.api.nvim_buf_is_valid(buf_id) then
@@ -41,7 +24,7 @@ local function create_dropdown_window(buf_id, index)
 	end
 
 	local width = vim.o.columns
-	local height = 10
+	local height = 15
 	-- local row = vim.o.lines - height - vim.o.cmdheight
 	-- local col = 0
 	local opts = {
@@ -54,11 +37,7 @@ local function create_dropdown_window(buf_id, index)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	vim.defer_fn(function()
-		if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_win_is_valid(win) then
-			set_dropdown_label(buf, win, index)
-		end
-	end, 20)
+  vim.wo[win].winbar = "%#FloatTerminalLabel# %=Terminal [" .. index .. "]%= %*"
 	return { buf = buf, win = win }
 end
 
