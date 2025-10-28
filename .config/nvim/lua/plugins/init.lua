@@ -48,7 +48,7 @@ return {
 	{
 		"mistricky/codesnap.nvim",
 		build = "make",
-		cmd = { "CodeSnap", "CodeSnapSave" },
+		cmd = { "CodeSnap", "CodeSnapSave", "CodeSnapHighlight", "CodeSnapSaveHighligh", "CodeSnapASCII" },
 		opts = {
 			has_breadcrumbs = true,
 			save_path = "~/Pictures/Code_Snap",

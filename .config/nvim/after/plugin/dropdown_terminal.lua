@@ -2,9 +2,12 @@ local windows = {
 	dropdowns = {},
 }
 
-local idx_ns = vim.api.nvim_create_namespace("floatterminal_index")
+local MAX_TERM = 9
 
-vim.api.nvim_set_hl(0, "FloatTerminalLabel", { fg = "#ffcc00", bg = "NONE", bold = true })
+local idx_ns = vim.api.nvim_create_namespace("dropdownterminal_index")
+local last_opened = nil
+
+vim.api.nvim_set_hl(0, "DropDownTerminalLabel", { fg = "#ffcc00", bg = "NONE", bold = true })
 
 setmetatable(windows.dropdowns, {
 	__index = function(t, k)
@@ -37,16 +40,21 @@ local function create_dropdown_window(buf_id, index)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-  vim.wo[win].winbar = "%#FloatTerminalLabel# %=Terminal [" .. index .. "]%= %*"
+	vim.wo[win].winbar = "%#DropDownTerminalLabel# %=Terminal [" .. index .. "]%= %*"
 	return { buf = buf, win = win }
 end
 
 local function toggle_dropdown()
 	local index = 1
-	if vim.v.count > 0 then
-		index = vim.v.count
+	if last_opened ~= nil then
+		index = last_opened
 	end
+	if vim.v.count > 0 then
+		index = math.min(vim.v.count, MAX_TERM)
+	end
+
 	local window = windows.dropdowns[index]
+
 	if not vim.api.nvim_win_is_valid(window.win) then
 		windows.dropdowns[index] = create_dropdown_window(window.buf, index)
 		window = windows.dropdowns[index]
@@ -58,6 +66,7 @@ local function toggle_dropdown()
 		vim.api.nvim_win_hide(window.win)
 		vim.api.nvim_buf_clear_namespace(window.buf, idx_ns, 0, -1)
 	end
+	last_opened = index
 end
 
 -- create a command to open the dropdown window

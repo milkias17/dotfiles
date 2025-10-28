@@ -185,6 +185,10 @@ local plugins = {
 				"jinzhongjia/codecompanion-gitcommit.nvim",
 				ft = "gitcommit",
 				cmd = "CodeCompanionGitCommit",
+				opts = {
+					adapter = "groq",
+					model = "meta-llama/llama-4-scout-17b-16e-instruct",
+				},
 				-- keys = {
 				-- 	{ "<leader>cm", "<cmd>CodeCompanionGitCommit<CR>", opts },
 				-- },

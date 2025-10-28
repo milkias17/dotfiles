@@ -70,7 +70,7 @@ return {
 	{
 		"ThePrimeagen/harpoon",
     dev = true,
-    dir="~/Dev/Github Repos/harpoon",
+    dir="~/Dev/Github_Repos/harpoon",
 		event = "VeryLazy",
 		keys = {
 			{
