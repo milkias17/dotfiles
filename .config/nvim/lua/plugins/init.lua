@@ -6,11 +6,6 @@ return {
 	-- Lsp
 	{ "mfussenegger/nvim-jdtls", ft = "java" },
 
-	-- Debugging
-	-- { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
-	-- { "nvim-telescope/telescope-dap.nvim", dependencies = { "mfussenegger/nvim-dap" } },
-	-- "mfussenegger/nvim-dap-python",
-
 	{ "nvim-lua/plenary.nvim", lazy = true, branch = "master" },
 	{ "nvim-lua/popup.nvim", lazy = true },
 	{
@@ -38,10 +33,6 @@ return {
 		},
 	},
 	{
-		"mbbill/undotree",
-		cmd = "UndotreeToggle",
-	},
-	{
 		"wakatime/vim-wakatime",
 		event = "VeryLazy",
 	},
@@ -57,17 +48,6 @@ return {
 			has_line_number = true,
 		},
 	},
-	-- {
-	-- 	"akinsho/toggleterm.nvim",
-	-- 	version = "*",
-	-- 	opts = {
-	-- 		open_mapping = [[<c-\>]],
-	-- 		insert_mappings = true,
-	-- 		shell = "fish",
-	-- 	},
-	-- 	cmd = { "ToggleTerm", "ToggleTermToggleAll" },
-	-- 	event = "VeryLazy",
-	-- },
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -75,8 +55,9 @@ return {
 
 		-- @type snacks.Config
 		opts = {
+			image = { enabled = true },
 			input = { enabled = true },
-			indent = { enabled = true },
+			indent = { enabled = true, only_current = true },
 			bigfile = { enabled = true },
 			dashboard = { enabled = true },
 			notifier = { enabled = true },
@@ -116,6 +97,22 @@ return {
 					Snacks.scratch()
 				end,
 			},
+		},
+	},
+
+	{
+		"xeluxee/competitest.nvim",
+		dependencies = "MunifTanjim/nui.nvim",
+		config = function()
+			require("competitest").setup({
+				received_contests_directory = "$(HOME)/Dev/competitive-programming/$(JUDGE)/$(CONTEST)",
+			})
+		end,
+		cmd = { "CompetiTest" },
+		keys = {
+			{ "<space>cr", "<cmd>CompetiTest run<cr>", opts },
+			{ "<space>ctp", "<cmd>CompetiTest receive problem<cr>", opts },
+			{ "<space>ctc", "<cmd>CompetiTest receive contest<cr>", opts },
 		},
 	},
 }

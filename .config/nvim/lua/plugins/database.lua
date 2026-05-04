@@ -5,23 +5,24 @@ return {
 			vim.g.db_ui_use_nerd_fonts = 1
 			vim.g.db_ui_use_nvim_notify = 1
 		end,
+		cmd = {
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
+		},
 		dependencies = {
-			{ "tpope/vim-dadbod", cmd = "DB" },
+			{ "tpope/vim-dadbod", cmd = "DB", lazy = true },
 			{
 				"kristijanhusak/vim-dadbod-completion",
-				dependencies = {
-					{ "tpope/vim-dadbod", cmd = "DB" },
-				},
-				-- config = function()
-				--   vim.cmd(
-				--     "autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })"
-				--   )
-				-- end,
+				ft = { "sql", "mysql", "plsql" },
+				lazy = true,
 			},
 		},
 		keys = {
 			{ "<space>st", "<cmd>DBUIToggle<cr>", { noremap = true } },
 			{ "<space>sa", "<cmd>DBUIAddConnection<cr>", { noremap = true } },
+			{ "<space>sb", "<cmd>DBUIFindBuffer<cr>", { noremap = true } },
 		},
 	},
 }

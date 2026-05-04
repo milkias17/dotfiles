@@ -84,14 +84,23 @@ return {
 			{ "<A-s>", "<cmd>Neotree toggle<cr>", opts },
 		},
 	},
+	-- {
+	-- 	"A7Lavinraj/fyler.nvim",
+	-- 	dependencies = { "nvim-mini/mini.icons" },
+	-- 	branch = "stable",
+	-- 	opts = {},
+	-- 	keys = {
+	-- 		{ "-", "<cmd>Fyler kind=float<cr>", opts },
+	-- 	},
+	-- },
 	{
 		"stevearc/oil.nvim",
 		opts = {
-      watch_for_changes = true,
-      float = {
-        border = "rounded"
-      }
-    },
+			watch_for_changes = true,
+			float = {
+				border = "rounded",
+			},
+		},
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = {
 			{ "<space>oi", "<cmd>Oil<cr>", opts },

@@ -152,7 +152,7 @@ local servers = {
 	},
 	{
 		name = "pyright",
-		disable = false,
+		disable = true,
 		opts = {
 			settings = {
 				python = {
@@ -165,6 +165,19 @@ local servers = {
 				},
 			},
 			-- single_file_support = true,
+		},
+	},
+	{
+		name = "ty",
+    disable = false,
+		opts = {
+			settings = {
+				ty = {
+					analysis = {
+						typeCheckingMode = "off",
+					},
+				},
+			},
 		},
 	},
 	{
@@ -209,6 +222,10 @@ local servers = {
 		},
 	},
 	-- "ruff",
+
+	{ name = "qmlls", opts = {
+		cmd = { "pyside6-qmlls", "-d", "/usr/share/doc/qt6" },
+	} },
 	{
 		name = "dockerls",
 		opts = {},
@@ -282,7 +299,7 @@ local servers = {
 	},
 	{
 		name = "biome",
-    disable = true
+		disable = true,
 	},
 	"phpactor",
 	{
@@ -361,6 +378,7 @@ for _, lsp in ipairs(servers) do
 
 	::continue::
 end
+
 
 vim.lsp.enable(all_lsp_names)
 

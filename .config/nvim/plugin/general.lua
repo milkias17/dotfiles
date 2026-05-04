@@ -43,12 +43,15 @@ local options = {
 	breakindent = true,
 	showtabline = 2,
 	inccommand = "split",
-  jumpoptions = "stack"
+	jumpoptions = "stack",
 	-- spelllang = "en_us",
 	-- spell = true,
 	-- foldmethod = "expr",
 	-- foldexpr = "nvim_treesitter#foldexpr()"
 }
+
+-- Remove the ~ from the end of the file
+vim.opt.fillchars = { eob = " " }
 
 -- This is needed by completion plugins
 vim.opt.shortmess:append("c")
@@ -127,6 +130,13 @@ vim.filetype.add({
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python", "lua", "rust", "go", "c", "cpp" },
+	callback = function()
+		vim.treesitter.start()
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function()
 		local function delete_qf_lines(start_line, end_line)
@@ -157,3 +167,5 @@ vim.api.nvim_create_autocmd("FileType", {
 		end, { buffer = true, desc = "Delete selected quickfix entries" })
 	end,
 })
+
+-- vim.cmd.packadd("nvim.undotree")

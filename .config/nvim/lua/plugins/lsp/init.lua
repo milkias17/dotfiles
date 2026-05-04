@@ -1,60 +1,28 @@
 local opts = { noremap = true, silent = true }
 
+local supermaven_cond = function()
+	local cwd = vim.fn.getcwd()
+
+	local cond = not string.find(cwd, "competitive-programming", 1, true)
+	return cond
+end
+
 local plugins = {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile", "BufReadPost" },
-		dependencies = {
-			{
-				-- "hrsh7th/cmp-nvim-lsp",
-				-- enabled = function()
-				-- 	return require("lazy.core.config").plugins["nvim-cmp"] ~= nil
-				-- end,
-			},
-			-- {
-			-- 	"jose-elias-alvarez/typescript.nvim",
-			-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
-			-- },
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"b0o/SchemaStore.nvim",
-			"saghen/blink.cmp",
-			-- {
-			-- 	"j-hui/fidget.nvim",
-			-- 	tag = "v1.0.0",
-			-- 	config = true,
-			-- },
-		},
+		lazy = true,
 	},
-	-- {
-	-- 	"luckasRanarison/tailwind-tools.nvim",
-	-- 	name = "tailwind-tools",
-	-- 	build = ":UpdateRemotePlugins",
-	-- 	dependencies = {
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 		"nvim-telescope/telescope.nvim", -- optional
-	-- 		"neovim/nvim-lspconfig", -- optional
-	-- 	},
-	-- 	opts = {}, -- your configuration
-	-- },
 	{ "folke/neodev.nvim", config = true, ft = "lua" },
-	-- {
-	-- 	"pmizio/typescript-tools.nvim",
-	-- 	dependencies = { "williamboman/mason.nvim", "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-	-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-	-- 	config = function()
-	-- 		require("typescript-tools").setup({
-	-- 			settings = {
-	-- 				expose_as_code_action = "all",
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-	-- {
-	-- 	"dmmulroy/ts-error-translator.nvim",
-	-- 	config = true,
-	-- 	ft = { "typescript", "typescriptreact" },
-	-- },
+	{
+		"dmmulroy/ts-error-translator.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+		},
+		opts = {
+			auto_attach = true,
+		},
+		ft = { "typescript", "typescriptreact" },
+	},
 	{
 		"williamboman/mason.nvim",
 		opts = {
@@ -63,21 +31,23 @@ local plugins = {
 		},
 		build = ":MasonUpdate",
 		cmd = "Mason",
-		dependencies = {
-			"williamboman/mason-lspconfig.nvim",
-		},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		lazy = true,
+		event = { "BufReadPre", "BufNewFile", "BufReadPost" },
 		opts = {
-			ensure_installed = { "pyright", "tsserver", "lua_ls" },
+			ensure_installed = { "pyright", "tsserver", "lua_ls", "ty" },
 			automatic_installation = true,
 		},
 		dependencies = {
+			"b0o/SchemaStore.nvim",
 			"williamboman/mason.nvim",
+			"neovim/nvim-lspconfig",
 		},
 		config = function()
+			require("mason-lspconfig").setup({
+				automatic_enable = false,
+			})
 			require("lsp.lang_servers")
 		end,
 	},
@@ -130,8 +100,12 @@ local plugins = {
 					"neo-tree",
 					"oil",
 				},
+				condition = function()
+					return not supermaven_cond()
+				end,
 			})
 		end,
+		enabled = supermaven_cond,
 	},
 	-- {
 	-- 	"Exafunction/windsurf.nvim",
@@ -194,7 +168,7 @@ local plugins = {
 				-- },
 			},
 			-- -- The following are optional:
-			{ "MeanderingProgrammer/render-markdown.nvim", ft = { "codecompanion" } },
+			-- { "MeanderingProgrammer/render-markdown.nvim", ft = { "codecompanion" } },
 		},
 		config = function()
 			require("codecompanion").setup({
@@ -215,7 +189,8 @@ local plugins = {
 										-- default = "gemma2-9b-it",
 										-- default = "meta-llama/llama-4-scout-17b-16e-instruct",
 										-- default = "deepseek-r1-distill-llama-70b",
-										default = "moonshotai/kimi-k2-instruct-0905",
+										-- default = "moonshotai/kimi-k2-instruct-0905",
+										default = "llama-3.3-70b-versatile",
 										-- default = "openai/gpt-oss-120b",
 									},
 								},

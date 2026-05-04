@@ -12,9 +12,6 @@ return {
 					require("luasnip.loaders.from_vscode").lazy_load({
 						exclude = { "svelte", "html", "css", "typescriptreact", "javascriptreact" },
 					})
-					-- require("luasnip.loaders.from_vscode").load({
-					--   exclude = {"typescriptreact", "javascriptreact", "svelte", "html", "css"},
-					-- })
 				end,
 			},
 		},

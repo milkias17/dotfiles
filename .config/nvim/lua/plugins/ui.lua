@@ -84,6 +84,7 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				flavour = "macchiato",
+        auto_integrations = true,
 				integrations = {
 					dadbod_ui = false,
 					neogit = true,

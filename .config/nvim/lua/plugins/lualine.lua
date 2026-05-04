@@ -190,7 +190,7 @@ local lsp = {
 
 local config = {
 	options = {
-		theme = "catppuccin",
+		theme = "auto",
 		globalstatus = true,
 		section_separators = "",
 		component_separators = "",
