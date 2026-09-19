@@ -1,0 +1,21 @@
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		local client = vim.lsp.start({
+			name = "educationallsp",
+			cmd = { "/home/mike/Dev/tut-projects/educational-lsp/main" },
+			on_attach = require("lsp.lsp_config").on_attach,
+		})
+
+		if not client then
+			vim.notify("Failed to start educationallsp")
+			return
+		end
+		local success = vim.lsp.buf_attach_client(0, client)
+    if not success then
+      vim.notify("Failed to attach to educationallsp")
+    else
+      vim.notify("Attached to educationallsp")
+    end
+	end,
+})

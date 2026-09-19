@@ -26,46 +26,46 @@ local lsp_icons = {
 	TypeParameter = "",
 }
 
-local codicons = {
-	Text = "",
-	Method = "",
-	Function = "",
-	Constructor = "",
-	Field = "",
-	Variable = "",
-	Class = "",
-	Interface = "",
-	Module = "",
-	Property = "",
-	Unit = "",
-	Value = "",
-	Enum = "",
-	Keyword = "",
-	Snippet = "",
-	Color = "",
-	File = "",
-	Reference = "",
-	Folder = "",
-	EnumMember = "",
-	Constant = "",
-	Struct = "",
-	Event = "",
-	Operator = "",
-	TypeParameter = "",
-}
+-- local codicons = {
+-- 	Text = "",
+-- 	Method = "",
+-- 	Function = "",
+-- 	Constructor = "",
+-- 	Field = "",
+-- 	Variable = "",
+-- 	Class = "",
+-- 	Interface = "",
+-- 	Module = "",
+-- 	Property = "",
+-- 	Unit = "",
+-- 	Value = "",
+-- 	Enum = "",
+-- 	Keyword = "",
+-- 	Snippet = "",
+-- 	Color = "",
+-- 	File = "",
+-- 	Reference = "",
+-- 	Folder = "",
+-- 	EnumMember = "",
+-- 	Constant = "",
+-- 	Struct = "",
+-- 	Event = "",
+-- 	Operator = "",
+-- 	TypeParameter = "",
+-- }
 
-local function border(hl_name)
-	return {
-		{ "╭", hl_name },
-		{ "─", hl_name },
-		{ "╮", hl_name },
-		{ "│", hl_name },
-		{ "╯", hl_name },
-		{ "─", hl_name },
-		{ "╰", hl_name },
-		{ "│", hl_name },
-	}
-end
+-- local function border(hl_name)
+-- 	return {
+-- 		{ "╭", hl_name },
+-- 		{ "─", hl_name },
+-- 		{ "╮", hl_name },
+-- 		{ "│", hl_name },
+-- 		{ "╯", hl_name },
+-- 		{ "─", hl_name },
+-- 		{ "╰", hl_name },
+-- 		{ "│", hl_name },
+-- 	}
+-- end
 
 return {
 	{
@@ -109,6 +109,7 @@ return {
 				ghost_text = {
 					enabled = true,
 				},
+				accept = { auto_brackets = { enabled = false } },
 			},
 			appearance = {
 				use_nvim_cmp_as_default = false,

@@ -168,7 +168,7 @@ local plugins = {
 				-- },
 			},
 			-- -- The following are optional:
-			-- { "MeanderingProgrammer/render-markdown.nvim", ft = { "codecompanion" } },
+			{ "MeanderingProgrammer/render-markdown.nvim", ft = { "codecompanion", "markdown" } },
 		},
 		config = function()
 			require("codecompanion").setup({
@@ -177,6 +177,25 @@ local plugins = {
 				},
 				adapters = {
 					http = {
+						openrouter = function()
+							return require("codecompanion.adapters").extend("openai", {
+								env = {
+									api_key = vim.env.OPENROUTER_API_KEY,
+								},
+								name = "Openrouter",
+								url = "https://openrouter.ai/api/v1/chat/completions",
+								schema = {
+									model = {
+										-- default = "google/gemini-2.0-flash-exp:free",
+										-- default = "nvidia/nemotron-3-super-120b-a12b:free",
+										-- default = "openrouter/owl-alpha"
+										-- default = "inclusionai/ring-2.6-1t:free",
+										-- default = "poolside/laguna-m.1:free",
+                    -- default = "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+									},
+								},
+							})
+						end,
 						groq = function()
 							return require("codecompanion.adapters").extend("openai", {
 								env = {
@@ -190,8 +209,8 @@ local plugins = {
 										-- default = "meta-llama/llama-4-scout-17b-16e-instruct",
 										-- default = "deepseek-r1-distill-llama-70b",
 										-- default = "moonshotai/kimi-k2-instruct-0905",
-										default = "llama-3.3-70b-versatile",
-										-- default = "openai/gpt-oss-120b",
+										-- default = "llama-3.3-70b-versatile",
+										default = "openai/gpt-oss-120b",
 									},
 								},
 								max_tokens = {
@@ -227,11 +246,14 @@ local plugins = {
 					},
 				},
 				strategies = {
+					-- chat = { adapter = "openrouter" },
+					-- inline = { adapter = "openrouter" },
+					agent = { adapter = "openrouter" },
 					chat = {
 						adapter = "groq",
 					},
 					inline = {
-						adapter = "gemini",
+						adapter = "groq",
 					},
 				},
 				extensions = {

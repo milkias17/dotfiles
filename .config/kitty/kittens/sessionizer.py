@@ -7,7 +7,7 @@ from kitty.boss import Boss
 from kittens.tui.loop import debug
 
 SHELL = "fish"
-SESSIONS_LOCATION = "~/.config/kitty/sessions"
+SESSIONS_LOCATION = "~/.local/share/kitty/sessions"
 
 
 def main(args: List[str]) -> str:

@@ -169,7 +169,6 @@ return {
 		},
 		config = function()
 			require("nvim-treesitter").setup(config)
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(args)
 					-- 1. Ignore "Special" buffers (Harpoon, Telescope, Floats, Help, etc.)
@@ -189,10 +188,15 @@ return {
 					end
 
 					-- 4. Final Check: Only start if a parser/query actually exists
-					local has_query = pcall(vim.treesitter.query.get, lang, "highlights")
-					if has_query then
+					local has_highlight = pcall(vim.treesitter.query.get, lang, "highlights")
+					if has_highlight then
 						pcall(vim.treesitter.start, args.buf, lang)
 					end
+
+					-- local has_indent = pcall(vim.treesitter.query.get, lang, "indents")
+					-- if has_indent then
+					-- 	vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					-- end
 				end,
 			})
 		end,
@@ -296,12 +300,12 @@ return {
 
 			-- Go to either the start or the end, whichever is closer.
 			-- Use if you want more granular movements
-			vim.keymap.set({ "n", "x", "o" }, "]d", function()
-				require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects")
-			end)
-			vim.keymap.set({ "n", "x", "o" }, "[d", function()
-				require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects")
-			end)
+			-- vim.keymap.set({ "n", "x", "o" }, "]d", function()
+			-- 	require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects")
+			-- end)
+			-- vim.keymap.set({ "n", "x", "o" }, "[d", function()
+			-- 	require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects")
+			-- end)
 		end,
 	},
 }

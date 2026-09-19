@@ -1,3 +1,5 @@
+local parse = require("luasnip").parser.parse_snippet
+
 return {
 	s(
 		"ptf",
@@ -178,5 +180,159 @@ def nCr(n, r):
 				i(7, "n"),
 			}
 		)
+	),
+
+	-- Geometry Functions (Extracted from PDF) [cite: 2159, 2164]
+	parse(
+		"geom_inter_circle",
+		[[
+def find_intersection_with_circle(xl, yl, xr, yr, r):
+    while True:
+        xm = (xr + xl) / 2
+        ym = (yr + yl) / 2
+        dis = (xm * xm + ym * ym)**0.5
+        if abs(dis - r) < 1e-7:
+            return (xm, ym)
+        elif dis < r:
+            xl, yl = xm, ym
+        else:
+            xr, yr = xm, ym
+]]
+	),
+
+	parse(
+		"geom_line",
+		[[
+def find_slope(x1, y1, x2, y2):
+    if x1 == x2: return float("inf")
+    return (y2 - y1) / (x2 - x1)
+
+def find_intercept(x, y, m):
+    if m == float("inf"): return x
+    return y - m * x
+
+def find_intersection(m1, b1, m2, b2):
+    if m1 == m2: return None
+    if m1 == float("inf"):
+        x0 = b1
+        y0 = m2 * x0 + b2
+    elif m2 == float("inf"):
+        x0 = b2
+        y0 = m1 * x0 + b1
+    else:
+        x0 = (b2 - b1) / (m1 - m2)
+        y0 = m1 * x0 + b1
+    return (x0, y0)
+]]
+	),
+
+	-- Union-Find (Translated from C++) [cite: 2551, 2574, 2598]
+	parse(
+		"union_find",
+		[[
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.n_disjoint = n
+
+    def find(self, i):
+        root = i
+        while self.parent[root] != root:
+            root = self.parent[root]
+        
+        while self.parent[i] != root:
+            next_node = self.parent[i]
+            self.parent[i] = root
+            i = next_node
+
+        return root
+
+    def unite(self, i, j):
+        root_i = self.find(i)
+        root_j = self.find(j)
+        if root_i == root_j:
+          return False
+
+        if self.rank[root_i] < self.rank[root_j]:
+            self.parent[root_i] = root_j
+        elif self.rank[root_i] > self.rank[root_j]:
+            self.parent[root_j] = root_i
+        else:
+            self.parent[root_j] = root_i
+            self.rank[root_i] += 1
+        self.n_disjoint -= 1
+        return True
+]]
+	),
+
+	-- Dijkstra (Translated from C++) [cite: 2371, 2385]
+	parse(
+		"dijkstra",
+		[[
+import heapq
+
+def dijkstra(adj, source, n):
+    dist = [float('inf')] * n
+    dist[source] = 0
+    pq = [(0, source)]
+    
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]: continue
+        for v, weight in adj[u]:
+            if dist[u] + weight < dist[v]:
+                dist[v] = dist[u] + weight
+                heapq.heappush(pq, (dist[v], v))
+    return dist
+]]
+	),
+
+	-- KMP (Translated from C++) [cite: 2643, 2657, 2682]
+	parse(
+		"kmp_match",
+		[[
+def compute_prefix(P):
+    m = len(P)
+    pf = [-1] * m
+    k = -1
+    for q in range(1, m):
+        while k >= 0 and P[k+1] != P[q]:
+            k = pf[k]
+        if P[k+1] == P[q]: k += 1
+        pf[q] = k
+    return pf
+
+def kmp_match(T, P):
+    n, m = len(T), len(P)
+    if m == 0: return []
+    pf = compute_prefix(P)
+    matches = []
+    q = -1
+    for i in range(n):
+        while q >= 0 and P[q+1] != T[i]:
+            q = pf[q]
+        if P[q+1] == T[i]: q += 1
+        if q == m - 1:
+            matches.append(i - m + 1)
+            q = pf[q]
+    return matches
+]]
+	),
+
+	-- Cumulative Sum of Divisors (CSOD) [cite: 2179, 2182]
+	parse(
+		"csod",
+		[[
+def csod(n):
+    ans = 0
+    i = 2
+    while i * i <= n:
+        j = n // i
+        ans += (i + j) * (j - i + 1) // 2
+        ans += i * (j - i)
+        i += 1
+    return ans
+]]
 	),
 }

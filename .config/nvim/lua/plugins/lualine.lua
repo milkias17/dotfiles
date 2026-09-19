@@ -73,14 +73,14 @@ local filename = {
 	file_status = true,
 	newfile_status = true,
 	path = 1,
-	color = { fg = colors.blue, gui = "bold" },
-	padding = { left = 0, right = 0 },
+	color = { fg = colors.cyan, gui = "bold" },
+	padding = { left = 1, right = 0 },
 }
 
 local location = {
 	"location",
 	-- icon = "",
-	color = { fg = colors.fg, gui = "bold" },
+	color = { fg = colors.foreground, gui = "bold" },
 	padding = { left = 0, right = 0 },
 	cond = conditions.hide_in_width,
 }
@@ -184,7 +184,7 @@ local lsp = {
 	end,
 	-- icon = " LSP:",
 	icon = " ",
-	color = { fg = colors.white_alt, gui = "bold" },
+	color = { fg = colors.foreground, gui = "bold" },
 	cond = conditions.hide_in_width,
 }
 
@@ -340,7 +340,7 @@ return {
 			})
 			ins_left(vim_mode)
 
-			ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+			ins_left({ "progress", color = { fg = colors.foreground, gui = "bold" } })
 			ins_left(location)
 
 			ins_left({
