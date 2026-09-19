@@ -1,0 +1,150 @@
+# Ghostty configuration
+# Validate with:  ghostty +validate-config
+# Reload a running window: ctrl+shift+,
+
+# ── Font ────────────────────────────────────────────────────────────────
+# Static OTF family, deliberately NOT "Monaspace Neon Var". fontconfig on
+# this box mis-matches weight and slant on the variable family:
+#   fc-match "Monaspace Neon Var:bold"   -> style Regular
+#   fc-match "Monaspace Neon Var:italic" -> style ExtraLight Italic
+# (the VF's fvar wght default is 200, and its instances land on shifted
+# fontconfig weights, so a bold request matches Regular and Ghostty falls
+# back to SYNTHETIC bold). The static family resolves all four styles
+# correctly: Regular / Bold / Italic / Bold Italic.
+# Two consequences: font-variation does nothing here, and font-thicken is
+# macOS-only, so there is no supported weight knob on Linux. If you want
+# heavier text, "Monaspace Neon Medium" works as font-family, but it has no
+# bold face of its own, so pair it with font-family-bold = Monaspace Neon.
+font-family = Source Code Pro
+
+# Fallback for nerd/icon glyphs (herdr sidebar, git prompts, file managers).
+# Mono is required, not cosmetic: every glyph in it is exactly 1.000em wide,
+# while plain "Symbols Nerd Font" has 838 distinct advances spanning
+# 0.65em-1.15em, so its icons overflow into neighbouring cells.
+# Powerline separators (U+E0B0 etc.) are not affected by this either way --
+# Ghostty draws those from its internal sprites.
+font-family = Symbols Nerd Font Mono
+font-size = 13
+
+# Monaspace stylistic sets. Real names, read out of the font's name table
+# (there is no ss10+ despite what some dotfiles claim):
+#   ss01 Equal Symbols     ss02 Comparisons      ss03 Arrows
+#   ss04 HTML Tags         ss05 F# Shapes        ss06 Markdown Strings
+#   ss07 Centered Colon    ss08 Centered Period  ss09 Double Arrows
+# ss05 is left off because it only suits F# and changes how Elixir pipes
+# look; ss07/ss08 are purely cosmetic.
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+font-feature = ss06
+# liga and calt are already enabled by default in HarfBuzz. They are listed
+# to document intent, not because they change anything. Texture healing
+# lives in calt, so it was and remains active.
+font-feature = liga
+font-feature = calt
+
+# ── Theme ───────────────────────────────────────────────────────────────
+# Matches herdr's [theme] name = "catppuccin".
+# The old "catppuccin-macchiato" line was dead config: the Fedora ghostty
+# package ships no themes, so Ghostty silently fell back to its default.
+# Theme files now live in ~/.config/ghostty/themes/.
+theme = catppuccin-macchiato
+# Also downloaded, swap the line above to use:
+#   catppuccin-mocha, catppuccin-frappe, catppuccin-latte (light)
+
+# ── Shell ───────────────────────────────────────────────────────────────
+# Matches herdr's [terminal] default_shell = "/usr/bin/fish".
+# shell-integration = detect reads this filename, finds "fish", and injects
+# the integration (cwd reporting, prompt jumping, no close-confirm at prompt).
+command = /usr/bin/fish
+shell-integration = detect
+
+# ── Window ──────────────────────────────────────────────────────────────
+# No titlebar or client-side decorations. gtk-titlebar is deliberately not
+# set: it does nothing when window-decoration is none.
+window-decoration = false
+# herdr draws its own tab row, so keep Ghostty's GTK tab strip out of the way.
+gtk-tabs-location = hidden
+
+# ── Input ───────────────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+
+# ── herdr owns multiplexing ─────────────────────────────────────────────
+# herdr binds ctrl+tab / ctrl+shift+tab to previous/next tab and ctrl+1..9 to
+# switch tab. Ghostty bound those same keys and won the race, so herdr never
+# received them. Ghostty's tab and split actions are unbound below; every
+# multiplexing job belongs to herdr.
+
+keybind = ctrl+tab=unbind
+keybind = ctrl+shift+tab=unbind
+keybind = ctrl+page_up=unbind
+keybind = ctrl+page_down=unbind
+keybind = ctrl+shift+arrow_left=unbind
+keybind = ctrl+shift+arrow_right=unbind
+
+# Ghostty tabs -> off
+keybind = ctrl+shift+t=unbind
+keybind = ctrl+shift+n=unbind
+keybind = ctrl+shift+w=unbind
+keybind = alt+1=unbind
+keybind = alt+2=unbind
+keybind = alt+3=unbind
+keybind = alt+4=unbind
+keybind = alt+5=unbind
+keybind = alt+6=unbind
+keybind = alt+7=unbind
+keybind = alt+8=unbind
+keybind = alt+9=unbind
+keybind = alt+digit_1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+digit_4=unbind
+keybind = alt+digit_5=unbind
+keybind = alt+digit_6=unbind
+keybind = alt+digit_7=unbind
+keybind = alt+digit_8=unbind
+keybind = alt+digit_9=unbind
+
+# Ghostty splits -> off
+keybind = ctrl+shift+o=unbind
+keybind = ctrl+shift+e=unbind
+keybind = ctrl+alt+arrow_up=unbind
+keybind = ctrl+alt+arrow_down=unbind
+keybind = ctrl+alt+arrow_left=unbind
+keybind = ctrl+alt+arrow_right=unbind
+keybind = super+ctrl+[=unbind
+keybind = super+ctrl+]=unbind
+keybind = super+ctrl+shift+arrow_up=unbind
+keybind = super+ctrl+shift+arrow_down=unbind
+keybind = super+ctrl+shift+arrow_left=unbind
+keybind = super+ctrl+shift+arrow_right=unbind
+
+# ── Keys that shadow pane apps ──────────────────────────────────────────
+# These Ghostty defaults steal keys that editors and TUIs expect, and Ghostty
+# gets them before herdr or the pane app ever sees them.
+keybind = ctrl+shift+i=unbind
+keybind = ctrl+shift+q=unbind
+keybind = ctrl+shift+a=unbind
+
+# Command palette moved off ctrl+shift+p, which VS Code, JetBrains and a pile
+# of TUIs all claim for themselves. ctrl+alt+shift+p collides with nothing in
+# Ghostty, herdr, or KDE's global shortcuts.
+# The unbind is required: binding a new key does not remove the default one.
+keybind = ctrl+shift+p=unbind
+keybind = ctrl+alt+shift+p=toggle_command_palette
+
+# Left on Ghostty's defaults (a few worth knowing, not exhaustive):
+#   ctrl+shift+c / ctrl+shift+v        copy / paste
+#   ctrl+,                             open config
+#   ctrl+shift+,                       reload config
+#   ctrl+shift+f                       search scrollback
+#   ctrl+enter                         fullscreen
+#   alt+f4                             close window. This is now the only way
+#                                      out of Ghostty: window-decoration =
+#                                      false removed the close button and
+#                                      ctrl+shift+q is unbound above.
+#   shift+page_up / shift+page_down    scroll through scrollback
+#
+# Still bound, also shadows pane apps if you care:
+#   ctrl+shift+j    write_screen_file (VS Code uses it for toggle panel)

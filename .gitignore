@@ -12,3 +12,11 @@
 .pi/agent/missions/
 .pi/agent/trust.json
 .agents/.skill-lock.json
+# ghostty/herdr: backups, logs, sockets, and runtime state must never be tracked
+.config/ghostty/*.bak.*
+.config/herdr/*.bak.*
+.config/herdr/*.log
+.config/herdr/*.sock
+.config/herdr/session.json
+.config/herdr/release-notes.json
+.config/herdr/.plugins.lock
