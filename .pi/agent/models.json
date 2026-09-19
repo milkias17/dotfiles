@@ -1,0 +1,14 @@
+{
+  "providers": {
+    "openrouter": {
+      "modelOverrides": {
+        "minimax/minimax-m3": {
+          "maxTokens": 524288
+        },
+        "minimax/minimax-m3:free": {
+          "maxTokens": 524288
+        }
+      }
+    }
+  }
+}

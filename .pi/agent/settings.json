@@ -1,0 +1,33 @@
+{
+  "lastChangelogVersion": "0.85.1",
+  "theme": "catppuccin-mocha",
+  "packages": [
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@narumitw/pi-goal",
+    "npm:pi-undo-redo",
+    "npm:@firstpick/pi-themes-bundle",
+    "npm:pi-web-access",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-subagents",
+    "npm:@quintinshaw/pi-dynamic-workflows",
+    "npm:pi-context-view",
+    "npm:@narumitw/pi-btw"
+  ],
+  "defaultProvider": "openrouter",
+  "defaultModel": "stealth/ox-alpha",
+  "defaultThinkingLevel": "max",
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "tuiMode": "fullscreen",
+  "enabledModels": [
+    "opencode-go/muse-spark-1.3-contributor",
+    "opencode-go/deepseek-v4.1-flash",
+    "opencode/muse-spark-1.3-contributor-free",
+    "opencode/muse-spark-1.2-contributor-free",
+    "opencode-go/muse-spark-1.2-contributor",
+    "opencode-go/mimo-v2.5",
+    "opencode-go/longcat-2.0"
+  ],
+  "hideThinkingBlock": false
+}
