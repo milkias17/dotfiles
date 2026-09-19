@@ -1,8 +1,8 @@
 /**
  * Copy Last Prompt
  *
- * Ctrl+Shift+X copies the text of your most recent user message
- * (your last prompt) to the clipboard.
+ * Ctrl+Shift+X (or /copy-prompt) copies the text of your most recent
+ * user message (your last prompt) to the clipboard.
  */
 
 import { copyToClipboard } from "@earendil-works/pi-coding-agent";
@@ -35,21 +35,29 @@ function lastPrompt(ctx: ExtensionContext): string | undefined {
 	return undefined;
 }
 
+async function copyLastPrompt(ctx: ExtensionContext): Promise<void> {
+	const prompt = lastPrompt(ctx);
+	if (!prompt) {
+		ctx.ui.notify("No user prompt to copy yet", "error");
+		return;
+	}
+	try {
+		await copyToClipboard(prompt);
+		ctx.ui.notify(`Copied last prompt (${prompt.length} chars)`, "info");
+	} catch (error) {
+		ctx.ui.notify(`Copy failed: ${(error as Error).message}`, "error");
+	}
+}
+
 export default function (pi: ExtensionAPI) {
 	pi.registerShortcut("ctrl+shift+x", {
 		description: "Copy last prompt to clipboard",
-		handler: async (ctx) => {
-			const prompt = lastPrompt(ctx);
-			if (!prompt) {
-				ctx.ui.notify("No user prompt to copy yet", "error");
-				return;
-			}
-			try {
-				await copyToClipboard(prompt);
-				ctx.ui.notify(`Copied last prompt (${prompt.length} chars)`, "info");
-			} catch (error) {
-				ctx.ui.notify(`Copy failed: ${(error as Error).message}`, "error");
-			}
+		handler: copyLastPrompt,
+	});
+	pi.registerCommand("copy-prompt", {
+		description: "Copy last prompt to clipboard",
+		handler: async (_args, ctx) => {
+			await copyLastPrompt(ctx);
 		},
 	});
 }

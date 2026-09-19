@@ -11,3 +11,4 @@
 .pi/agent/git/
 .pi/agent/missions/
 .pi/agent/trust.json
+.agents/.skill-lock.json
