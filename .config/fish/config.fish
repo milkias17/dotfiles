@@ -2,7 +2,7 @@
 set -Ux TERMINAL kitty
 set -g EDITOR nvim
 set -Ux BROWSER google-chrome
-set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/', '.bun/'}bin/ $HOME/.local/share/coursier/bin /opt/appimages/ $HOME/Documents/Apps/flutter/bin $HOME/Documents/Apps/android-studio/bin $HOME/.deta/bin $HOME/.local/share/bob/nvim-bin
+set -U fish_user_paths $HOME/{'', '.local/', 'go/', '.cargo/', '.bun/'}bin/ $HOME/.local/share/bob/nvim-bin
 set -Ux FZF_DEFAULT_COMMAND "rg -g '!{**/node_modules/*,**/.git/*,**/env/*}' --files"
 # set -Ux FZF_DEFAULT_OPTS "\
 # --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -34,14 +34,6 @@ alias grep="grep --color=auto"
 alias ..="cd .."
 alias kg="kitty +kitten hyperlinked_grep --smart-case"
 alias icat="kitty +kitten icat"
-alias ggc="git clone"
 alias ggs="git status"
 alias ggl="git log"
-alias pc="protonvpn c -f"
 alias pa='source $(poetry env info --path)/bin/activate.fish'
-
-function zeal-docs-fix
-    pushd "$HOME/.local/share/Zeal/Zeal/docsets" >/dev/null || return
-    find . -iname 'react-main*.js' -exec rm '{}' \;
-    popd >/dev/null || exit
-end
