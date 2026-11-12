@@ -22,6 +22,8 @@
 .config/herdr/.plugins.lock
 
 # pi: managed runtime / machine-local state that must never be tracked
+.pi/agent/sandbox.json.*
+.pi/agent/sandbox.json2
 .pi/agent/install/
 .pi/agent/bin/
 .pi/agent/mcp-auth.json
