@@ -1,0 +1,59 @@
+{
+  "enabled": true,
+  "sandboxUserShell": false,
+  "permissionPromptTimeoutSeconds": 120,
+  "allowBrowserProcess": true,
+  "network": {
+    "allowLocalBinding": true,
+    "allowAllUnixSockets": true,
+    "allowUnauthenticatedSocksProxy": true,
+    "allowedDomains": [
+      "api.anthropic.com",
+      "api.openai.com",
+      "generativelanguage.googleapis.com",
+      "github.com",
+      "registry.npmjs.org",
+      "pypi.org",
+      "files.pythonhosted.org",
+      "backend.composio.dev",
+      "api.composio.dev",
+      "opintopolku.fi",
+      "universityadmissions.se",
+      "www.universityadmissions.se"
+    ],
+    "deniedDomains": []
+  },
+  "filesystem": {
+    "denyMandatoryCwdFiles": false,
+    "denyRead": [
+      "/home",
+      "~/.ssh",
+      "~/.aws",
+      "~/.gnupg",
+      "~/.env",
+      "~/.bashrc",
+      "~/.config/fish/",
+      "~/.pi/agent/auth.json"
+    ],
+    "allowRead": [
+      ".",
+      "~/.config",
+      "~/.local",
+      "~/.agents/",
+      "~/.pi/",
+      "~/.composio",
+      "~/.gitconfig",
+      "~/.config/git"
+    ],
+    "allowWrite": [
+      ".",
+      "/tmp"
+    ],
+    "denyWrite": [
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key"
+    ]
+  }
+}

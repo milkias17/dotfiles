@@ -20,3 +20,12 @@
 .config/herdr/session.json
 .config/herdr/release-notes.json
 .config/herdr/.plugins.lock
+
+# pi: managed runtime / machine-local state that must never be tracked
+.pi/agent/install/
+.pi/agent/bin/
+.pi/agent/mcp-auth.json
+.pi/agent/opencode-go-keys.json
+.pi/agent/opencode-go-keys.json.*
+.pi/tasks/
+.pi/workflows/projects/

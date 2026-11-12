@@ -1,0 +1,68 @@
+{
+  "enabled": true,
+  "sandboxUserShell": false,
+  "permissionPromptTimeoutSeconds": 120,
+  "allowBrowserProcess": true,
+  "network": {
+    "allowLocalBinding": true,
+    "allowAllUnixSockets": true,
+    "allowUnauthenticatedSocksProxy": true,
+    "allowedDomains": ["*"],
+    "deniedDomains": [
+      "169.254.169.254",
+      "169.254.169.253",
+      "169.254.170.2",
+      "fd00:ec2::254",
+      "metadata.google.internal",
+      "metadata.goog",
+      "100.100.100.200",
+      "metadata.packet.net"
+    ]
+  },
+  "filesystem": {
+    "denyMandatoryCwdFiles": false,
+    "denyRead": [
+      "/home",
+      "~/.ssh",
+      "~/.aws",
+      "~/.gnupg",
+      "~/.env",
+      "~/.config/gcloud",
+      "~/.zshrc",
+      "~/.kube",
+      "~/.bashrc",
+      "~/.config/fish/",
+      "~/.pi/agent/auth.json",
+      "~/.pi/agent/opencode-go-keys.json",
+      "~/.feynman/agent/auth.json",
+      "~/.sword"
+    ],
+    "allowRead": [
+      ".",
+      "~/Projects/Personal",
+      "~/.config",
+      "~/.local",
+      "~/.agents/",
+      "~/.pi/agent/skills",
+      "~/.pi/agent/extensions",
+      "~/.pi/agent/npm",
+      "~/.pi/agent/sessions",
+      "~/.composio",
+      "~/.gitconfig",
+      "~/.config/git",
+      "~/.cache"
+    ],
+    "allowWrite": [
+      ".",
+      "/tmp",
+      "~/.cache",
+      "~/.pi/"
+    ],
+    "denyWrite": [
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key"
+    ]
+  }
+}

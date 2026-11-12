@@ -1,0 +1,7 @@
+{
+  "tiers": {
+    "small": "opencode/deepseek-v4.1-flash:low",
+    "medium": "opencode-go/deepseek-v4.1-flash:high",
+    "big": "opencode-go/deepseek-v4.1-flash:max"
+  }
+}
