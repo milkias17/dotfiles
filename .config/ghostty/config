@@ -16,6 +16,7 @@
 # heavier text, "Monaspace Neon Medium" works as font-family, but it has no
 # bold face of its own, so pair it with font-family-bold = Monaspace Neon.
 font-family = Source Code Pro
+# font-family = JetBrains Mono
 
 # Fallback for nerd/icon glyphs (herdr sidebar, git prompts, file managers).
 # Mono is required, not cosmetic: every glyph in it is exactly 1.000em wide,
