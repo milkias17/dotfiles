@@ -68,9 +68,7 @@ end
 
 return {
 	{
-		"ThePrimeagen/harpoon",
-    dev = true,
-    dir="~/Projects/Github_Repos/harpoon",
+		"git@github.com:milkias17/harpoon-bak.git",
 		event = "VeryLazy",
 		keys = {
 			{

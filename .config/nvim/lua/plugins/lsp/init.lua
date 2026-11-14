@@ -86,27 +86,27 @@ local plugins = {
 	-- 		})
 	-- 	end,
 	-- },
-	{
-		"supermaven-inc/supermaven-nvim",
-		event = "InsertEnter",
-		config = function()
-			require("supermaven-nvim").setup({
-				keymaps = {
-					accept_suggestion = "<C-g>",
-					accept_word = "<c-q>",
-				},
-				ignore_filetypes = {
-					"gitcommit",
-					"neo-tree",
-					"oil",
-				},
-				condition = function()
-					return not supermaven_cond()
-				end,
-			})
-		end,
-		enabled = supermaven_cond,
-	},
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	event = "InsertEnter",
+	-- 	config = function()
+	-- 		require("supermaven-nvim").setup({
+	-- 			keymaps = {
+	-- 				accept_suggestion = "<C-g>",
+	-- 				accept_word = "<c-q>",
+	-- 			},
+	-- 			ignore_filetypes = {
+	-- 				"gitcommit",
+	-- 				"neo-tree",
+	-- 				"oil",
+	-- 			},
+	-- 			condition = function()
+	-- 				return not supermaven_cond()
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- 	enabled = supermaven_cond,
+	-- },
 	-- {
 	-- 	"Exafunction/windsurf.nvim",
 	-- 	event = "InsertEnter",
